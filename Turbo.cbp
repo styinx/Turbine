@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Turbo" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Turbo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Turbo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="collection/forum/admin.html" />
+		<Unit filename="collection/forum/editor.html" />
+		<Unit filename="collection/forum/entry.html" />
+		<Unit filename="collection/forum/forum.html" />
+		<Unit filename="collection/forum/register.html" />
+		<Unit filename="collection/forum/subsection.html" />
+		<Unit filename="collection/forum/topic.html" />
+		<Unit filename="collection/organminer/index.html" />
+		<Unit filename="php/include/ini.php" />
+		<Unit filename="php/include/lib/captcha/captcha.php" />
+		<Unit filename="php/include/lib/chart/chart.php" />
+		<Unit filename="php/include/lib/db/database.php" />
+		<Unit filename="php/include/lib/db/database_control.php" />
+		<Unit filename="php/include/lib/db/default_forum.php" />
+		<Unit filename="php/include/lib/dir/directory.php" />
+		<Unit filename="php/include/lib/email/email.php" />
+		<Unit filename="php/include/lib/html/html.php" />
+		<Unit filename="php/include/lib/http/http.php" />
+		<Unit filename="php/include/lib/parser/code_parser.php" />
+		<Unit filename="php/include/lib/parser/file_parser.php" />
+		<Unit filename="php/include/lib/parser/wiki_parser.php" />
+		<Unit filename="php/include/lib/session/session.php" />
+		<Unit filename="php/include/lib/time/time.php" />
+		<Unit filename="php/source/forum/captcha/makecaptcha.php" />
+		<Unit filename="php/source/forum/forum.php" />
+		<Unit filename="php/source/forum/manager.php" />
+		<Unit filename="php/source/script/script_docu.php" />
+		<Unit filename="php/source/script/script_forum.php" />
+		<Unit filename="php/source/script/script_forum_admin.php" />
+		<Unit filename="php/source/script/script_setup.php" />
+		<Unit filename="script/forum/script_forum.js" />
+		<Unit filename="script/forum/script_forum_admin.js" />
+		<Unit filename="script/script.js" />
+		<Unit filename="script/script_docu.js" />
+		<Unit filename="script/script_register.js" />
+		<Unit filename="style/forum/style_forum.css" />
+		<Unit filename="style/forum/style_forum_admin.css" />
+		<Unit filename="style/organminer/organminer.css" />
+		<Unit filename="style/style.css" />
+		<Unit filename="style/style_code.css" />
+		<Unit filename="style/style_register.css" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

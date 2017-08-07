@@ -1,0 +1,93 @@
+div.page
+{
+    overflow:                       hidden;
+}
+
+div.tabs
+{
+    min-width:						800px;
+    max-height:						32px;
+
+    text-align:                     center;
+}
+
+div.tab
+{
+    display:                        inline;
+}
+
+.tab input[type="radio"]
+{
+    display:                        none;
+}
+
+.tab label
+{
+    min-width:                      150px;
+    width:                          150px;
+
+    margin:                         2px 0px 2px 0px;
+    padding:                        5px 5px 5px 5px;
+
+    display:                        inline-block;
+    outline:                        0px;
+    cursor:                         pointer;
+    border-radius:                  2px;
+    border:                         1px solid #999900;
+
+    background:                     #222222 linear-gradient(#333333, #222222);
+
+    text-align:                     center;
+
+    transition:                     all 500ms ease;
+}
+
+.tab label:hover
+{
+    border:                         1px solid #CCCC00;
+
+    background:                     #444444;
+}
+
+.tab label:active, .tab-radio:checked + label
+{
+    border:                         1px solid #FFFF00;
+
+    background:                     #444444 linear-gradient(#333333, #444444);
+}
+
+div.content
+{
+    position:                       absolute;
+    left:                           10%;
+    top:                            200px;
+
+    width:                          calc(80% - 100px);
+
+    margin:                         50px 0px 50px 0px;
+    padding:                        50px 50px 50px 50px;
+
+    border:                         1px solid #999900;
+    border-radius:                  2px;
+    display:                        none;
+
+    background:                     linear-gradient(#111111, #222222);
+}
+
+.content table
+{
+    display:                        block;
+}
+
+.content td
+{
+    padding:                        2px 0px 2px 0px;
+
+    min-width:                      200px;
+    width:                          auto;
+}
+
+.tab-radio:checked ~ .content
+{
+    display:                        block;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Shadow of the Past - Forum</title>
+		<base href="../../">
+		<link rel="stylesheet" type="text/css" href="style/forum/style.css">
+		<link rel="stylesheet" type="text/css" href="style/forum/style_forum.css">
+		<link rel="stylesheet" type="text/css" href="style/forum/style_register.css">
+		<script type="text/javascript" src="script/script.js"></script>
+		<script type="text/javascript" src="script/forum/script_forum.js"></script>
+		<script type="text/javascript" src="script/script_register.js"></script>
+		<script type="text/javascript" src="script/plugins/zxcvbn.js"></script>
+	</head>
+	<body>
+		<nav>
+			<div class="navbar">
+                <ol>
+                		<a href="collection/forum/forum.html" id="navbar-icon-left">
+                			<img id="navbar-icon-left" src="resources/icons/Turbo.png"/>
+						</a>
+                	<li>
+						<a href="">Section</a>
+                	</li><li>
+                		<a href="">SubSection</a>
+                	</li><li>
+                		<a href="l">Topic</a>
+                	</li>
+                </ol>
+			</div>
+		</nav>
+		<div class="background"></div>
+		<div class="page">
+			<div class="">
+				<div class="register">
+					<table>
+						<form onsubmit="return false;">
+						<tr>
+							<td align="left">
+								<p id="registerusername">Username</p>
+							</td>
+							<td align="center">
+								<input id="username" type="text" placeholder="Username" maxlength="30"/>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registeremail">E-Mail</p>
+							</td>
+							<td align="center">
+								<input id="email" type="email" placeholder="me@host.com"/>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerpassword">Password</p>
+							</td>
+							<td align="center">
+								<input id="password" type="password" maxlength="50" oninput="checkPassword();"/>
+								<div class="strengthmeter">
+									<span name="meter" id="meter-1"></span>
+								</div>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td align="left">
+
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerpwconfirm">Confirm Password</p>
+							</td>
+							<td align="center">
+								<input id="pwconfirm" type="password" maxlength="50" oninput="checkPasswordConfirm();"/>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerfirstname">Firstname</p>
+							</td>
+							<td align="center">
+								<input id="firstname" type="text" placeholder="Firstname" maxlength="25" oninput="setId('realname', getId('firstname').value + ' ' + getId('lastname').value);"/>
+							</td>
+							<td>(*)</td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerlastname">Lastname</p>
+							</td>
+							<td align="center">
+								<input id="lastname" type="text" placeholder="Lastname" maxlength="24" oninput="setId('realname', getId('firstname').value + ' ' + getId('lastname').value);"/>
+							</td>
+							<td>(*)</td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerrealname">Realname</p>
+							</td>
+							<td align="center">
+								<p id="realname"></p>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registerage">Birthdate</p>
+							</td>
+							<td align="center">
+								<select id="day">
+									<option value=""></option>
+								</select>
+								<select id="month" onchange="clearSelect('day');makeSelect('day', days[getMonthNum(getId('month').value)], 1, 0);">
+									<option value=""></option>
+								</select>
+								<select id="year" onchange="setFeb();clearSelect('day');makeSelect('day', days[getMonthNum(getId('month').value)], 1, 0);">
+									<option value=""></option>
+								</select>
+							</td>
+							<td>(*)</td>
+						</tr>
+						<tr>
+							<td align="left">
+								<p id="registercountry">Country</p>
+							</td>
+							<td align="center">
+								<select id="country">
+									<option value=""></option>
+									<option value="be">Belgique</option>
+									<option value="dk">Danmark</option>
+									<option value="de">Deutschland</option>
+									<option value="es">Espa&ntilde;a</option>
+									<option value="fr">France</option>
+									<option value="en">Great Britain</option>
+									<option value="it">Italia</option>
+									<option value="nl">Nederland</option>
+									<option value="se">Norge</option>
+									<option value="at">&Ouml;sterreich</option>
+									<option value="ru">Россия</option>
+									<option value="pl">Polska</option>
+									<option value="ch">Schweiz</option>
+									<option value="no">Sverige</option>
+									<option value="fi">Suomi</option>
+									<option value="us">United States</option>
+									<option value="other">Other</option>
+								</select>
+							</td>
+							<td>(*)</td>
+						</tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr><td colspan="100%" style="text-align: center;"><img id="captcha" src=""/></td></tr>
+						<tr><td colspan="100%" style="text-align: center;"><input id="captchaVal" type="text" oninput="checkCaptcha();" placeholder="Type captcha content here"/><button onclick="loadCaptcha();">Reload</button></td></tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr><td colspan="100%" style="text-align: center;"><button id="registerregister" onclick="checkRegister();">Register</button></td></tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr><td colspan="100%" style="text-align: center;"><p id="error">&nbsp;</p></td></tr>
+						<tr><td colspan="100%">&nbsp;</td></tr>
+						<tr>
+							<td colspan="100%">
+								<p id="registertip" style="font-size:10pt; text-align: center;">(*) Leave empty if you dont want to share that much information</p>
+								<p id="passwordtip" style="font-size:10pt; text-align: center;">Your password will be encrypted.</p>
+							</td>
+						</tr>
+						</form>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			window.onload = makeSelect('month', 0, 0, months);
+			window.onload = makeSelect('year', now, 1900, null);
+			loadCaptcha();
+		</script>
+	</body>
+</html>

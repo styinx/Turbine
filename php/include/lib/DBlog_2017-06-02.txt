@@ -1,0 +1,246 @@
+02.06.2017 14:15:10 : 	[INFO]	SESSION START
+02.06.2017 14:15:10 : 	[INFO]	Connected with database.
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:15:10 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'forum'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'forum' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'section'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'section' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'sub_section'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'sub_section' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'topic'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'topic' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'entry'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'entry' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'user'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'user' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'news'
+02.06.2017 14:15:10 : 	[WARNING]	Table 'news' already exists. (No table was created)
+02.06.2017 14:15:10 : 	[INFO]	Query request: SHOW TABLES LIKE 'comment'
+02.06.2017 14:15:11 : 	[INFO]	Query request: CREATE TABLE comment (id INT(12) NOT NULL , creation TIMESTAMP NOT NULL , user INT(12) NOT NULL , content VARCHAR(200) NOT NULL , entry INT(12) NOT NULL , topic INT(12) NOT NULL , PRIMARY KEY(id));
+02.06.2017 14:15:11 : 	[INFO]	Table comment was created.
+02.06.2017 14:15:11 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:15:11 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM section LIMIT 10
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM section WHERE id = '0'
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM sub_section WHERE section = '0' LIMIT 10
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM sub_section WHERE id = '0'
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM sub_section WHERE id = '1'
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM news LIMIT 10
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM news WHERE id = '0'
+02.06.2017 14:15:11 : 	[INFO]	Query request: SELECT * FROM news WHERE id = '1'
+02.06.2017 14:15:42 : 	[INFO]	SESSION START
+02.06.2017 14:15:42 : 	[INFO]	Connected with database.
+02.06.2017 14:15:42 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:15:42 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:15:42 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:15:42 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:15:42 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:15:43 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:15:43 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:15:43 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:15:43 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:16:38 : 	[INFO]	SESSION START
+02.06.2017 14:16:38 : 	[INFO]	Connected with database.
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:16:38 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:16:38 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:16:38 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:21:46 : 	[INFO]	SESSION START
+02.06.2017 14:21:46 : 	[INFO]	Connected with database.
+02.06.2017 14:22:21 : 	[INFO]	SESSION START
+02.06.2017 14:22:21 : 	[INFO]	Connected with database.
+02.06.2017 14:23:24 : 	[INFO]	SESSION START
+02.06.2017 14:23:24 : 	[INFO]	Connected with database.
+02.06.2017 14:23:54 : 	[INFO]	SESSION START
+02.06.2017 14:23:54 : 	[INFO]	Connected with database.
+02.06.2017 14:24:09 : 	[INFO]	SESSION START
+02.06.2017 14:24:09 : 	[INFO]	Connected with database.
+02.06.2017 14:24:31 : 	[INFO]	SESSION START
+02.06.2017 14:24:31 : 	[INFO]	Connected with database.
+02.06.2017 14:24:43 : 	[INFO]	SESSION START
+02.06.2017 14:24:44 : 	[INFO]	Connected with database.
+02.06.2017 14:25:39 : 	[INFO]	SESSION START
+02.06.2017 14:25:39 : 	[INFO]	Connected with database.
+02.06.2017 14:25:56 : 	[INFO]	SESSION START
+02.06.2017 14:25:56 : 	[INFO]	Connected with database.
+02.06.2017 14:26:15 : 	[INFO]	SESSION START
+02.06.2017 14:26:15 : 	[INFO]	Connected with database.
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:26:15 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM comment
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM forum
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:26:15 : 	[INFO]	Query request: SHOW COLUMNS FROM user
+02.06.2017 14:26:27 : 	[INFO]	SESSION START
+02.06.2017 14:26:27 : 	[INFO]	Connected with database.
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:26:27 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:26:27 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:26:27 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:27:36 : 	[INFO]	SESSION START
+02.06.2017 14:27:36 : 	[INFO]	Connected with database.
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:27:36 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:27:36 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:27:36 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:28:28 : 	[INFO]	SESSION START
+02.06.2017 14:28:28 : 	[INFO]	Connected with database.
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:28 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:28 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:28 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:28:47 : 	[INFO]	SESSION START
+02.06.2017 14:28:47 : 	[INFO]	Connected with database.
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:47 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:47 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:47 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:28:58 : 	[INFO]	SESSION START
+02.06.2017 14:28:58 : 	[INFO]	Connected with database.
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:58 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:58 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:28:58 : 	[INFO]	Query request: SELECT * FROM user
+02.06.2017 14:29:17 : 	[INFO]	SESSION START
+02.06.2017 14:29:17 : 	[INFO]	Connected with database.
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:29:17 : 	[INFO]	Select Database 'turbo'
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW TABLES
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM comment
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW COLUMNS FROM entry
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM entry
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM forum
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW COLUMNS FROM news
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM news
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW COLUMNS FROM section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW COLUMNS FROM sub_section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM sub_section
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:29:17 : 	[INFO]	Query request: SHOW COLUMNS FROM topic
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM topic
+02.06.2017 14:29:17 : 	[INFO]	Query request: SELECT * FROM user

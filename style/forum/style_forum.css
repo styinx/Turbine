@@ -1,0 +1,279 @@
+body
+{
+	margin:							0px 0px 0px 0px;
+	padding:						0px 0px 0px 0px;
+}
+
+a, a:visited
+{
+	color:							#FFFF00;
+
+	text-decoration:				none;
+}
+
+div.forum
+{
+	margin:							150px calc(10% + 50px) 100px calc(10% + 50px);
+	padding:						5px 5px 5px 5px;
+
+	min-width:						calc(50% + 300px);
+	max-width:						100%;
+
+	z-index:						2;
+
+	color:							#FFFFFF;
+}
+
+div.background
+{
+	position:						fixed;
+	width:							100%;
+	height:							100%;
+
+	z-index:						-1;
+	opacity: 						0.4;
+	background:						url('../../resources/background/hexagon.png');
+}
+
+/*
+ *	Section
+ */
+div.section
+{
+	padding:						0px 0px 0px 0px;
+	margin:							10px 0px 30px 0px;
+
+	min-width:						calc(100%);
+	max-width:						calc(100%);
+}
+
+.section td
+{
+	text-align:						left;
+}
+
+div.head
+{
+	padding:						0px 0px 0px 25px;
+	margin:							0px 0px 0px 0px;
+
+	min-width:						calc(100% - 27px);
+	max-width:						calc(100% - 27px);
+
+	border:							2px solid transparent;
+	border-radius:					5px 5px 0px 0px;
+
+	display:						block;
+
+	background-color:				#555555;
+}
+
+.head #heading
+{
+	color:							#FFFF00;
+
+	font-size:						20pt;
+	font-weight:					bold;
+	text-shadow: 					-1px 0 black, 0 2px black, 1px 0 black, 0 -1px black;
+}
+
+.head #header
+{
+	font-size:						14pt;
+	text-shadow: 					-1px 0 black, 0 2px black, 1px 0 black, 0 -1px black;
+}
+
+div.section-entry
+{
+	padding:						0px 0px 0px 0px;
+	margin:							2px 0px 2px 0px;
+
+	min-width:						calc(100%);
+	max-width:						calc(100%);
+
+	border:							1px solid #555555;
+}
+
+.section-entry a
+{
+	text-decoration:				none;
+}
+
+div.body
+{
+	padding:						5px 0px 5px 50px;
+	margin:							0px 0px 0px 0px;
+
+	border-left:					2px solid transparent;
+	border-radius:					0px 0px 0px 0px;
+
+	display:						block;
+
+	background-color:				#222222;
+	color:							#FFFFFF;
+
+	font-size:						16pt;
+
+	-webkit-transition:				300ms ease;
+    -moz-transition:				300ms ease;
+    -o-transition:					300ms ease;
+    transition:						300ms ease;
+    transition:						all 300ms;
+}
+
+.body:hover
+{
+	border-left:					2px solid #FFFF00;
+
+	background-color:				#333333;
+}
+
+.body a:hover
+{
+	text-decoration:				underline;
+}
+
+.body #heading
+{
+
+}
+
+.body #header
+{
+	text-decoration:				none;
+}
+
+.body #content
+{
+	font-size:						10pt;
+	text-decoration:				none;
+}
+
+/*
+ *	Subsection
+ */
+div.subsection
+{
+	padding:						0px;
+	margin:							2px 0px 2px 0px;
+
+	min-width:						calc(100%);
+	max-width:						calc(100%);
+}
+
+div.subsection-entry
+{
+	padding:						0px 0px 0px 0px;
+	margin:							2px 0px 2px 0px;
+
+	border:							1px solid #555555;
+}
+
+.subsection-entry a
+{
+	text-decoration:				none;
+}
+
+.subsection-entry #heading
+{
+	font-size:						11pt;
+}
+
+/*
+ *	Topic
+ */
+div.topic
+{
+	padding:						10px 50px 10px 50px;
+	margin:							0px 0px 0px 0px;
+}
+
+div.topic-entry-wrapper
+{
+	padding:						0px 0px 10px 30px;
+	margin:							0px 0px 0px 0px;
+}
+
+div.topic-entry
+{
+	padding:						0px 50px 0px 50px;
+	margin:							0px 0px 0px 0px;
+
+	border:							1px solid #AAAA00;
+	border-radius:					3px;
+
+	background-color:				rgba(50, 50, 50, 0.85);
+}
+
+.topic-entry #text
+{
+	padding:						20px 0px 50px 0px;
+	margin:							0px 0px 0px 0px;
+
+	border-bottom:					1px solid #AAAA00;
+
+	font-size:						11pt;
+}
+
+.topic-entry #author
+{
+	display:						inline-block;
+	font-size:						8pt;
+}
+
+.topic-entry #time
+{
+	display:						inline-block;
+	float:							right;
+	font-size:						8pt;
+}
+
+div.topic-entry-subbar
+{
+	display:						block;
+    text-align: 					right;
+}
+
+div.entry
+{
+
+}
+
+div.news
+{
+	margin:							100px calc(10% + 50px) 100px calc(10% + 50px);
+	padding:						5px 5px 5px 5px;
+
+	min-width:						calc(50% + 300px);
+	max-width:						100%;
+
+	z-index:						2;
+	color:							#FFFFFF;
+}
+
+div.news-container
+{
+	margin:							5px 5px 5px 0px;
+	padding:						5px 5px 5px 5px;
+
+	min-height:						100px;
+	max-height:						300px;
+	min-width:						300px;
+	max-width:						100%;
+
+	border:							1px solid #777700;
+	display:						inline-block;
+
+	background-color:				rgba(100, 100, 100, 0.7);
+
+	-webkit-transition:				300ms ease;
+    -moz-transition:				300ms ease;
+    -o-transition:					300ms ease;
+    transition:						300ms ease;
+    transition:						all 300ms;
+}
+
+.news-container:hover
+{
+	background-color:				rgba(100, 100, 100, 0.9);
+}

@@ -1,0 +1,147 @@
+div.code
+{
+	position: relative;
+
+	min-width: 100ch;
+	max-width: 100%;
+	width: calc(100% - 2px);
+	min-height: auto;
+	max-height: auto;
+	height: auto;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+
+	border: 1px solid #000000;
+	border-radius: 2px;
+
+	white-space: nowrap;
+
+	color: #DDDDDD;
+	background-color: #111111;
+
+	font-family: Courier New, Courier;
+	font-size: 11pt;
+	line-height: 12pt;
+}
+
+.code margin, MARGIN__
+{
+	position: absolute;
+	left: 100ch;
+	height: calc(100% - 2px);
+	border: 1px solid #770000;
+}
+
+.code docu, DOCU__
+{
+	display: inline-block;
+	width: 100ch;
+
+	margin: 0px 0px 0px 0px;
+	padding: 3px 0ch 3px 0ch;
+
+	border-top: 1px solid #770000;
+	border-bottom: 1px solid #770000;
+
+	color: #007700;
+	background-color: #222222;
+
+	text-align: center;
+	font-weight: bold;
+}
+
+.code info, INFO__
+{
+	width: calc(95ch - 8px);
+	height: auto;
+
+	padding: 5px 0px 5px calc(5ch + 8px);
+
+	border-top: 1px solid #770000;
+	border-bottom: 1px solid #770000;
+
+	display: inline-block;
+
+	color: #007700;
+	background-color: #222222;
+	font-weight: bold;
+	line-height: auto;
+}
+
+.code line, LINE__
+{
+	z-index: 2;
+	position: relative;
+	width: 5ch;
+	float: left;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 3px 0px 5px;
+
+	color: #0050AA;
+	background-color: #222222;
+
+	text-align: left;
+	font-weight: bold;
+}
+
+.code tab
+{
+	padding: 0px 0px 0px 4ch;
+}
+
+.code preprocessor, PREPROCESSOR__, SPECIAL__
+{
+	color: #00DD00;
+	font-style: italic;
+}
+
+.code operator, OPERATOR__
+{
+	color: #009900;
+	font-weight: bold;
+}
+
+.code keyword, KEYWORD__
+{
+	color: #0055AA;
+	font-weight: bold;
+}
+
+.code customType, CUSTOMTYPE__
+{
+	color: #990000;
+	font-weight: bold;
+}
+
+.code type, TYPE__
+{
+	color: #0088AA;
+	font-weight: bold;
+}
+
+.code multiComment, MULTICOMMENT__
+{
+	color: #AA33FF;
+	font-style: italic;
+}
+
+.code comment, COMMENT__
+{
+	color: #FF8800;
+	font-style: italic;
+}
+
+.code number, number__
+{
+	color: #AA33AA;
+}
+
+.code char, CHAR__
+{
+	color: #990066;
+}
+
+.code string, STRING__
+{
+	color: #FFFF00;
+}
