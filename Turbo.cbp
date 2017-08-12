@@ -39,6 +39,9 @@
 		<Unit filename="collection/forum/subsection.html" />
 		<Unit filename="collection/forum/topic.html" />
 		<Unit filename="collection/organminer/index.html" />
+		<Unit filename="collection/organminer/newticket.html">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="php/include/ini.php" />
 		<Unit filename="php/include/lib/captcha/captcha.php" />
 		<Unit filename="php/include/lib/chart/chart.php" />

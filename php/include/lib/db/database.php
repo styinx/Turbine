@@ -9,6 +9,7 @@
 		private $time				= null;
 		private $handle				= null;
 		private $logMode			= "";
+        private $log_type           = 0;
 
 		function __construct($path, $file = "DBlog.txt", $logMode = "w+")
 		{
@@ -23,13 +24,16 @@
 		function open()
 		{
 			$success = false;
-			$this->handle = fopen($this->path . "/" . $this->filename, $this->logMode);
-			$this->log("SESSION START");
+            if($this->log_type > 0)
+            {
+			    $this->handle = fopen($this->path . "/" . $this->filename, $this->logMode);
+			    $this->log("SESSION START");
 
-			if($this->handle != null)
-			{
-				$success = true;
-			}
+			    if($this->handle != null)
+			    {
+				    $success = true;
+			    }
+            }
 			return $success;
 		}
 
@@ -53,36 +57,45 @@
 		function log($msg)
 		{
 			$success = false;
-			if($this->isOpen())
-			{
-				$this->time = time();
-				fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[INFO]\t" . $msg . "\r\n");
-				$success = true;
-			}
+            if($this->log_type >= 1)
+            {
+			    if($this->isOpen())
+			    {
+				    $this->time = time();
+				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[INFO]\t" . $msg . "\r\n");
+				    $success = true;
+			    }
+            }
 			return $success;
 		}
 
 		function war($msg)
 		{
 			$success = false;
-			if($this->isOpen())
-			{
-				$this->time = time();
-				fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[WARNING]\t" . $msg . "\r\n");
-				$success = true;
-			}
+            if($this->log_type >= 2)
+            {
+			    if($this->isOpen())
+			    {
+				    $this->time = time();
+				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[WARNING]\t" . $msg . "\r\n");
+				    $success = true;
+			    }
+            }
 			return $success;
 		}
 
 		function err($msg)
 		{
 			$success = false;
-			if($this->isOpen())
-			{
-				$this->time = time();
-				fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[ERROR]\t" . $msg . "\r\n");
-				$success = true;
-			}
+            if($this->log_type >= 3)
+            {
+			    if($this->isOpen())
+			    {
+				    $this->time = time();
+				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[ERROR]\t" . $msg . "\r\n");
+				    $success = true;
+			    }
+            }
 			return $success;
 		}
 	}
@@ -223,6 +236,24 @@
 			else
 				$this->log->err("Query could not be executed. No connection to database.");
 			return $query;
+		}
+
+		/*
+		 * Performs a databse query and returns the result as assoziative array
+		 * @param $info = query
+		 * @return queryresult as array
+		 */
+		public function queryAssoc($info)
+		{
+			$result = array();
+
+			$query = $this->query($info);;
+			while($row = mysqli_fetch_assoc($query))
+			{
+				array_push($result, $row);
+			}
+
+			return $result;
 		}
 
 		/*

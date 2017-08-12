@@ -1,169 +1,23 @@
 <html>
-	<head>
-	    <title>Turbo - Forum</title>
-		<base href="../../">
-		<link rel="stylesheet" type="text/css" href="style/forum/style.css"/>
-		<link rel="stylesheet" type="text/css" href="style/forum/style_forum.css"/>
-		<script type="text/javascript" src="script/forum/script_forum.js"></script>
-		<noscript>It seems like you have disabled your Javascript. Please enable JavaScript to get full experience</noscript>
-	</head>
-	<body>
-	    <div class="background"></div>
-		<div class="page">
-            <div class="forum">
-                <div class="topic">
-                    <h1>test i have a question blabla</h1>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
+        <head>
+            <title>Turbo - Forum</title>
+                <base href="../../">
+                <link rel="stylesheet" type="text/css" href="style/forum/style.css"/>
+                <link rel="stylesheet" type="text/css" href="style/forum/style_forum.css"/>
+                <script type="text/javascript" src="script/forum/script_forum.js"></script>
+                <noscript>It seems like you have disabled your Javascript. Please enable JavaScript to get full experience</noscript>
+        </head>
+        <body>
+            <div class="background"></div>
+                <div class="page">
+                    <div class="forum">
+                        <?php
+                            require_once(dirname(__FILE__) . "/../../php/source/forum/manager.php");
+
+                            echo $forum->showEntryPage($_REQUEST["section"], $_REQUEST["subsection"], $_REQUEST["topic"]);
+                        ?>
+                        <button>Answer</button>
                     </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.ergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.ergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.ergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <div class="topic-entry-wrapper">
-                        <div class="topic-entry">
-                            <p id="text">
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                donumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.ergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            </p>
-                            <p id="author">Darth Vader</p>
-                            <p id="time">12:10 20.1.2016</p>
-                        </div>
-                        <div class="topic-entry-subbar">
-                            <button>Comment</button>
-                        </div>
-                    </div>
-                    <button>Answer</button>
                 </div>
-            </div>
-		</div>
-	</body>
+        </body>
 </html>
