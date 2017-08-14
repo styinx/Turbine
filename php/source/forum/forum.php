@@ -87,9 +87,12 @@
 			$text = "";
 
 			$this->db->selectDatabase($this->db_info["db_name"]);
+
+			$top = new Topic($this->db, $id);
 			$entries = $this->db->query("SELECT * FROM entry WHERE topic = '" . $id . "'");
 
 			$text .= "<div class='topic'>";
+			$text .= "<h1>" . $top->getName() . "</h1>";
 
 			foreach($entries as $entry)
 			{
@@ -243,6 +246,11 @@
 			$this->subsection = $top["subsection"];
 		}
 
+		public function getName()
+		{
+			return $this->name;
+		}
+
 		public function printTopicHTML()
 		{
 			$text = ""
@@ -256,13 +264,9 @@
 											. $this->name
 										. "</a>"
 									. "</td>"
-								. "</tr>"
-								. "<tr>"
 									. "<td>"
 										. "<span id='header'>" . "asd" . "</span>"
 									. "</td>"
-								. "</tr>"
-								. "<tr>"
 									. "<td>"
 										. "<span id='content'>" . "asd" . "</span><br>"
 										. "<span id='content'>" . "asd" . "</span><br>"
@@ -296,12 +300,25 @@
 		public function printEntryHTML()
 		{
 			$text = ""
-				. "<h1>" . "asd" . "</h1>"
 				. "<div class='topic-entry-wrapper'>"
 					. "<div class='topic-entry'>"
 						. "<p id='text'>" . "asd" . "</p>"
 						. "<p id='author'>" . "asd" . "</p>"
 						. "<p id='time'>" . "asd" . "</p>"
+					. "</div>"
+					. "<div class='entry'>"
+						. "<div class='entry-entry'>"
+							. "<p id='text'>" . "asd" . "</p>"
+							. "<p id='author'>" . "asd" . "</p>"
+							. "<p id='time'>" . "asd" . "</p>"
+						. "</div>"
+					. "</div>"
+					. "<div class='entry'>"
+						. "<div class='entry-entry'>"
+							. "<p id='text'>" . "asd" . "</p>"
+							. "<p id='author'>" . "asd" . "</p>"
+							. "<p id='time'>" . "asd" . "</p>"
+						. "</div>"
 					. "</div>"
 					. "<div class='topic-entry-subbar'>"
 						. "<button>comment</button>"

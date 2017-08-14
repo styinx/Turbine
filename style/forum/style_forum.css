@@ -190,7 +190,7 @@ div.topic
 
 div.topic-entry-wrapper
 {
-	padding:						0px 0px 10px 30px;
+	padding:						0px 0px 30px 30px;
 	margin:							0px 0px 0px 0px;
 }
 
@@ -236,7 +236,41 @@ div.topic-entry-subbar
 
 div.entry
 {
+	padding:						0px 0px 0px 0px;
+	margin:							10px 0px 10px 100px;
 
+	border:							1px solid #AAAA00;
+	border-radius:					2px;
+
+	background-color:				rgba(50, 50, 50, 0.85);
+}
+
+div.entry-entry
+{
+	padding:						10px 20px 10px 20px;
+}
+
+.entry-entry #text
+{
+	padding:						10px 0px 10px 0px;
+	margin:							0px 0px 0px 0px;
+
+	border-bottom:					1px solid #AAAA00;
+
+	font-size:						11pt;
+}
+
+.entry-entry #author
+{
+	display:						inline-block;
+	font-size:						8pt;
+}
+
+.entry-entry #time
+{
+	display:						inline-block;
+	float:							right;
+	font-size:						8pt;
 }
 
 div.news
