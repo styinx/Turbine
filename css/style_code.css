@@ -6,10 +6,10 @@ div.code
 	max-width: 100%;
 	width: calc(100% - 2px);
 	min-height: auto;
-	max-height: auto;
+	max-height: initial;
 	height: auto;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
 
 	border: 1px solid #000000;
 	border-radius: 2px;
@@ -19,43 +19,43 @@ div.code
 	color: #DDDDDD;
 	background-color: #111111;
 
-	font-family: Courier New, Courier;
+	font-family: Courier New, Courier, sans-serif;
 	font-size: 11pt;
 	line-height: 12pt;
 }
 
-.code margin, MARGIN__
+.code margin__
 {
 	position: absolute;
 	left: 100ch;
 	height: calc(100% - 2px);
-	border: 1px solid #770000;
+	border: 1px solid #990000;
 }
 
-.code docu, DOCU__
+.code docu__
 {
 	display: inline-block;
 	width: 100ch;
 
-	margin: 0px 0px 0px 0px;
-	padding: 3px 0ch 3px 0ch;
+	margin: 0 0 0 0;
+	padding: 3px 0 3px 0;
 
-	border-top: 1px solid #770000;
-	border-bottom: 1px solid #770000;
+    border: 1px solid #AAAAAA;
+    border-left: 0;
 
-	color: #007700;
+    color: #AAAAAA;
 	background-color: #222222;
 
 	text-align: center;
 	font-weight: bold;
 }
 
-.code info, INFO__
+.code info__
 {
 	width: calc(95ch - 8px);
 	height: auto;
 
-	padding: 5px 0px 5px calc(5ch + 8px);
+	padding: 5px 0 5px calc(5ch + 8px);
 
 	border-top: 1px solid #770000;
 	border-bottom: 1px solid #770000;
@@ -65,17 +65,17 @@ div.code
 	color: #007700;
 	background-color: #222222;
 	font-weight: bold;
-	line-height: auto;
+	line-height: initial;
 }
 
-.code line, LINE__
+.code line__
 {
 	z-index: 2;
 	position: relative;
 	width: 5ch;
 	float: left;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 3px 0px 5px;
+	margin: 0 0 0 0;
+	padding: 0 3px 0 5px;
 
 	color: #0050AA;
 	background-color: #222222;
@@ -84,64 +84,64 @@ div.code
 	font-weight: bold;
 }
 
-.code tab
+.code tab__
 {
-	padding: 0px 0px 0px 4ch;
+	padding: 0 0 0 4ch;
 }
 
-.code preprocessor, PREPROCESSOR__, SPECIAL__
+.code preprocessor__, special__
 {
 	color: #00DD00;
 	font-style: italic;
 }
 
-.code operator, OPERATOR__
+.code operator__
 {
 	color: #009900;
 	font-weight: bold;
 }
 
-.code keyword, KEYWORD__
+.code keyword__
 {
 	color: #0055AA;
 	font-weight: bold;
 }
 
-.code customType, CUSTOMTYPE__
+.code customtype__
 {
 	color: #990000;
 	font-weight: bold;
 }
 
-.code type, TYPE__
+.code type__
 {
 	color: #0088AA;
 	font-weight: bold;
 }
 
-.code multiComment, MULTICOMMENT__
+.code multicomment__
 {
 	color: #AA33FF;
 	font-style: italic;
 }
 
-.code comment, COMMENT__
+.code comment__
 {
 	color: #FF8800;
 	font-style: italic;
 }
 
-.code number, number__
+.code number__
 {
 	color: #AA33AA;
 }
 
-.code char, CHAR__
+.code char__
 {
 	color: #990066;
 }
 
-.code string, STRING__
+.code string__
 {
 	color: #FFFF00;
 }

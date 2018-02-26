@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="../css/style_code.css"/>
+</head>
+<body>
+    <body>
+        <script src="../js/include/lib/html/style.js"></script>
+        <script src="../js/include/lib/html/html.js"></script>
+        <script>
+            var headers = [];
+            var values = [];
+
+            for(var i = 0; i < 10; ++i)
+            {
+                headers.push("header" + i);
+                var row = [];
+                for(var j = 0; j < Math.random() * 100 % 10; ++j)
+                {
+                    row.push("row" + j);
+                }
+                values.push(row);
+            }
+
+            var doc = new Document();
+
+            var table = new TableWidget(headers, values)
+                .setStyle({"backgroundColor" : "red", "color" : "green", "border" : "5px solid blue"}, range(0, 10, 2))
+                .setStyle({"backgroundColor" : "green", "color" : "red", "border" : "5px solid blue"}, range(1, 9, 2))
+                .getTableWidget();
+
+            var list1 = new ListWidget("asdasd")
+                .addEntry("new")
+                .addEntry("new2")
+                .setStyle({"color" : "red", "background" : "orange", "padding" : "0 0 0 100px", "list-style-type" : "none"}, [1]);
+
+            var list2 = new ListWidget("asdasd")
+                .getListWidget()
+                .setStyle({"backgroundColor" : "black", "color" : "white", "border" : "1px solid gray"})
+                .add(list1.getListWidget());
+
+            var list3 = new ListWidget("dddssss")
+                .getListWidget()
+                .add(list2);
+
+            var tab = new TabWidget(null, null)
+                .addTab("Test1", new TableWidget(["asdasd", "das"], [["ddas", "a"], ["ddas"]]).getTableWidget())
+                .addTab("Test1", new TableWidget(["asdasd"], [["ddas"], ["ddas"]]).getTableWidget())
+                .getTabWidget();
+
+            doc.append(table.getEntity());
+            doc.append(list3.getEntity());
+            doc.append(tab.getEntity());
+
+        </script>
+</body>
+</html>
