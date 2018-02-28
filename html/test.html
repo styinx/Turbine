@@ -11,9 +11,28 @@
         <script src="../js/include/lib/html/html.js"></script>
         <script>
             var doc = Document();
-            var a = TableWidget();
-            a.addColumn('test', -1);
-            doc.append(a.getObject());
+            var list = new ListWidget(
+                [
+                    new ListWidgetEntry("a"),
+                    new ListWidgetEntry("b")
+                ], "ul");
+            var table = new TableWidget(
+                [
+                    new TableWidgetRow(
+                        [
+                            new TableWidgetHeader("a"),
+                            new TableWidgetHeader("b")
+                        ]),
+                    new TableWidgetRow(
+                        [
+                            new TableWidgetCell("aa"),
+                            new TableWidgetCell("ab")
+                        ]
+                    )
+                ]
+            );
+            doc.append(list);
+            doc.append(table);
         </script>
 </body>
 </html>

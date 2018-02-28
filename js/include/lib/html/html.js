@@ -54,9 +54,9 @@ function init(obj, def)
  */
 function Document()
 {
-    this.append = function(element)
+    this.append = function(object)
     {
-        document.body.appendChild(element);
+        document.body.appendChild(object.element);
     };
 
     return this;
@@ -83,7 +83,7 @@ function Object()
 
     this.setChild = function(object)
     {
-        this.element.innerHTML = object;
+        this.element.setChild(object.element);
         return this;
     };
 
@@ -118,6 +118,10 @@ function Widget()
  */
 function Layout()
 {
+    this.appendChild = function(child)
+    {
+        this.element.appendChild(child.element);
+    };
     Object.call(this);
     return this;
 }
@@ -141,10 +145,29 @@ function Box(orientation)
  * @returns {TableWidgetRow}
  * @constructor
  */
-function TableWidgetRow()
+function TableWidgetRow(entries)
 {
+    this.addEntry = function(entry)
+    {
+        if(entry instanceof TableWidgetHeader || entry instanceof TableWidgetCell)
+        {
+            this.appendChild(entry);
+        }
+        return this;
+    };
+
+    this.addEntries = function(entries)
+    {
+        for(var entry in entries)
+        {
+            this.addEntry(entries[entry]);
+        }
+        return this;
+    };
+
     Layout.call(this);
     this.element = document.createElement('tr');
+    this.addEntries(init(entries, {}));
     return this;
 }
 
@@ -194,22 +217,32 @@ function TableWidget(headers, entries)
         {
             this.headers.splice(this.headers.length, 0, header);
         }
-        this.element.innerHTML = "<tr><td>asd</td></tr>";
+        this.appendChild(new TableWidgetHeader(header).add(new TableWidgetCell(entries[0])));
+        return this;
     };
 
     this.addColumns = function(headers, entries)
     {
-
+        this.add(new TableWidgetRow(headers[0]).add(new TableWidgetCell(entries[0])));
+        return this;
     };
 
     this.addRow = function(row, index)
     {
-
+        if(row instanceof TableWidgetRow)
+        {
+            this.add(row);
+        }
+        return this;
     };
 
     this.addRows = function(rows)
     {
-
+        for(var row in rows)
+        {
+            this.addRow(rows[row]);
+        }
+        return this;
     };
 
     Layout.call(this);
@@ -223,14 +256,47 @@ function TableWidget(headers, entries)
 
 /**
  *
- * @param list
+ * @param value
+ * @returns {ListWidgetEntry}
+ * @constructor
+ */
+function ListWidgetEntry(value)
+{
+    Object.call(this);
+    this.element = document.createElement('li');
+    this.setValue(init(value, ""));
+    return this;
+}
+
+/**
+ *
+ * @param entries
  * @param type
  * @returns {ListWidget}
  * @constructor
  */
-function ListWidget(list, type)
+function ListWidget(entries, type)
 {
+    this.addEntry = function(entry)
+    {
+        if(entry instanceof ListWidgetEntry)
+        {
+            this.appendChild(entry);
+        }
+    };
+
+    this.addEntries = function(entries)
+    {
+        for(var entry in entries)
+        {
+            this.addEntry(entries[entry]);
+        }
+    };
+
     Layout.call(this);
+    type = (type === 'ul') ? 'ul' : 'ol';
+    this.element = document.createElement(type);
+    this.addEntries(init(entries, {}));
     return this;
 }
 
@@ -243,6 +309,29 @@ function ListWidget(list, type)
  */
 function TabWidget(headers, entries)
 {
+    this.addTab = function(tab, entry)
+    {
+        // change from tab to tab.name
+          this.contents[tab] = init(entry, {});
+    };
+
+    this.addTabs = function(tabs, entries)
+    {
+        for(var i = 0; i < Math.max(tabs.length, entries); ++i)
+        {
+            this.addTab(init(tabs[i], ""), init(entries[i], ""));
+        }
+    };
+
+    this.setTabContent = function(tab, content)
+    {
+        this.contents[tab] = content;
+    };
+
     Layout.call(this);
+    this.element = document.createElement('div');
+    this.headers = document.createElement('div');
+    this.contents = {};
+    this.addTabs(headers, entries);
     return this;
 }
