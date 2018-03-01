@@ -36,15 +36,20 @@ function odd(list)
 
 function empty(obj)
 {
-    return obj === 'undefined';
+    if(!obj instanceof Object)
+        return obj === "undefined" || obj.length === 0;
 }
 
 function init(obj, def)
 {
-    if(empty(obj))
-        return def;
-    else
-        return obj;
+    if(typeof obj === typeof def)
+    {
+        if(!empty(obj))
+        {
+            return obj;
+        }
+    }
+    return def;
 }
 
 /**
@@ -57,6 +62,7 @@ function Document()
     this.append = function(object)
     {
         document.body.appendChild(object.element);
+        return this;
     };
 
     return this;
@@ -73,7 +79,7 @@ function Object()
     {
         for(var style in styles)
         {
-            if(this.element.hasOwnProperty(style))
+            if(this.element.style.hasOwnProperty(style))
             {
                 this.element.style[style] = styles[style];
             }
@@ -90,6 +96,7 @@ function Object()
     this.setValue = function(value)
     {
         this.element.innerHTML = value;
+        return this;
     };
 
     this.getObject = function()
@@ -97,7 +104,7 @@ function Object()
         return this.element;
     };
 
-    this.element = document.createElement('div');
+    this.element = document.createElement("div");
     return this;
 }
 
@@ -121,6 +128,7 @@ function Layout()
     this.appendChild = function(child)
     {
         this.element.appendChild(child.element);
+        return this;
     };
     Object.call(this);
     return this;
@@ -139,19 +147,62 @@ function Box(orientation)
     return this;
 }
 
+/**
+ *
+ * @param value
+ * @returns {TableWidgetCell}
+ * @constructor
+ */
+function TableWidgetCell(value)
+{
+    Widget.call(this);
+    this.element = document.createElement("td");
+    this.setValue(init(value, ""));
+    this.setStyle(STYLE.TableWidgetCell);
+    return this;
+}
 
 /**
  *
+ * @returns {TableWidgetHeader}
+ * @constructor
+ */
+function TableWidgetHeader(value)
+{
+    Widget.call(this);
+    this.element = document.createElement("th");
+    this.setValue(init(value, ""));
+    this.setStyle(STYLE.TableWidgetHeader);
+    return this;
+}
+
+/**
+ *
+ * @param entries
  * @returns {TableWidgetRow}
  * @constructor
  */
 function TableWidgetRow(entries)
 {
+    this.setEntry = function(entry, index)
+    {
+        return this;
+    };
+
+    this.setEntries = function(entries, index)
+    {
+        return this;
+    };
+
     this.addEntry = function(entry)
     {
-        if(entry instanceof TableWidgetHeader || entry instanceof TableWidgetCell)
+        if(entry instanceof TableWidgetCell)
         {
             this.appendChild(entry);
+        }
+        else
+        {
+            this.appendChild(new TableWidgetCell(entry));
         }
         return this;
     };
@@ -166,72 +217,124 @@ function TableWidgetRow(entries)
     };
 
     Layout.call(this);
-    this.element = document.createElement('tr');
-    this.addEntries(init(entries, {}));
+    this.element = document.createElement("tr");
+    this.addEntries(init(entries, []));
+    this.setStyle(STYLE.TableWidgetRow);
     return this;
 }
 
 /**
  *
- * @returns {TableWidgetHeader}
- * @constructor
- */
-function TableWidgetHeader(value)
-{
-    Widget.call(this);
-    this.element = document.createElement('th');
-    this.setValue(init(value, ""));
-    return this;
-}
-
-/**
- *
- * @param value
- * @returns {TableWidgetCell}
- * @constructor
- */
-function TableWidgetCell(value)
-{
-    Widget.call(this);
-    this.element = document.createElement('td');
-    this.setValue(init(value, ""));
-    return this;
-}
-
-/**
- *
- * @param headers
  * @param entries
- * @returns {TableWidget}
+ * @returns {TableWidgetHeaderRow}
  * @constructor
  */
-function TableWidget(headers, entries)
+function TableWidgetHeaderRow(entries)
 {
-    this.addColumn = function(header, index, entries)
+    this.setEntry = function(entry, index)
     {
-        if(init(index, -1) >= -1)
+        return this;
+    };
+
+    this.setEntries = function(entries, index)
+    {
+        return this;
+    };
+
+    this.addEntry = function(entry)
+    {
+        if(entry instanceof TableWidgetHeader)
         {
-            this.headers.splice(index, 0, header);
+            this.appendChild(entry);
         }
         else
         {
-            this.headers.splice(this.headers.length, 0, header);
+            this.appendChild(new TableWidgetHeader(entry));
         }
-        this.appendChild(new TableWidgetHeader(header).add(new TableWidgetCell(entries[0])));
         return this;
     };
 
-    this.addColumns = function(headers, entries)
+    this.addEntries = function(entries)
     {
-        this.add(new TableWidgetRow(headers[0]).add(new TableWidgetCell(entries[0])));
+        for(var entry in entries)
+        {
+            this.addEntry(entries[entry]);
+        }
         return this;
     };
 
-    this.addRow = function(row, index)
+    Layout.call(this);
+    this.element = document.createElement("tr");
+    this.addEntries(init(entries, []));
+    this.setStyle(STYLE.TableWidgetHeaderRow);
+    return this;
+}
+
+/**
+ *
+ * @param entries
+ * @returns {TableWidgetHead}
+ * @constructor
+ */
+function TableWidgetHead(entries)
+{
+    this.setHeader = function(row, index)
+    {
+        return this;
+    };
+
+    this.setHeaders = function(rows, index)
+    {
+        return this;
+    };
+
+    this.addHeader = function(entry)
+    {
+        this.row.addEntry(entry);
+        return this;
+    };
+
+    this.addHeaders = function(entries)
+    {
+        this.row.addEntries(entries);
+        return this;
+    };
+
+    Layout.call(this);
+    this.element = document.createElement("thead");
+    this.row = new TableWidgetHeaderRow(entries);
+    this.appendChild(this.row);
+    this.setStyle(STYLE.TableWidgetHead);
+    return this;
+}
+
+/**
+ *
+ * @param rows
+ * @returns {TableWidgetBody}
+ * @constructor
+ */
+function TableWidgetBody(rows)
+{
+    this.setRow = function(row, index)
+    {
+        return this;
+    };
+
+    this.setRows = function(rows, index)
+    {
+        return this;
+    };
+
+    this.addRow = function(row)
     {
         if(row instanceof TableWidgetRow)
         {
-            this.add(row);
+            this.appendChild(row);
+        }
+        else
+        {
+            this.appendChild(new TableWidgetRow(row));
         }
         return this;
     };
@@ -246,11 +349,86 @@ function TableWidget(headers, entries)
     };
 
     Layout.call(this);
-    this.element = document.createElement('table');
-    this.headers = [];
-    this.entries = [];
-    this.addColumns(init(headers, {}));
-    this.addRows(init(entries, {}));
+    this.element = document.createElement("tbody");
+    this.addRows(init(rows, []));
+    this.setStyle(STYLE.TableWidgetBody);
+    return this;
+}
+
+/**
+ *
+ * @param rows
+ * @param headers
+ * @returns {TableWidget}
+ * @constructor
+ */
+function TableWidget(rows, headers)
+{
+    this.setHeader = function(header, index)
+    {
+        this.table_header.setHeader(header, index);
+        return this;
+    };
+
+    this.setHeaders = function(headers, index)
+    {
+        this.table_header.setHeaders(headers, index);
+        return this;
+    };
+
+    this.addHeader = function(header)
+    {
+        this.table_header.addHeader(header);
+        return this;
+    };
+
+    this.addHeaders = function(headers)
+    {
+        this.table_header.addHeaders(headers);
+        return this;
+    };
+
+    this.setRow = function(row, index)
+    {
+        this.table_body.setRow(row, index);
+        return this;
+    };
+
+    this.setRows = function(rows, index)
+    {
+        this.table_body.setRows(rows, index);
+        return this;
+    };
+
+    this.addRow = function(row)
+    {
+        this.table_body.addRow(row);
+        return this;
+    };
+
+    this.addRows = function(rows)
+    {
+        this.table_body.addRows(rows);
+        return this;
+    };
+
+    Layout.call(this);
+    this.element = document.createElement("table");
+
+    if(init(headers, true))
+    {
+        this.table_header = new TableWidgetHead(rows[0]);
+        rows.splice(0, 1);
+        this.table_body = new TableWidgetBody(rows);
+    }
+    else
+    {
+        this.table_header = new TableWidgetHead();
+        this.table_body = new TableWidgetBody(rows);
+    }
+    this.appendChild(this.table_header);
+    this.appendChild(this.table_body);
+    this.setStyle(STYLE.TableWidget);
     return this;
 }
 
@@ -262,9 +440,10 @@ function TableWidget(headers, entries)
  */
 function ListWidgetEntry(value)
 {
-    Object.call(this);
-    this.element = document.createElement('li');
+    Widget.call(this);
+    this.element = document.createElement("li");
     this.setValue(init(value, ""));
+    this.setStyle(STYLE.ListWidgetEntry);
     return this;
 }
 
@@ -283,6 +462,11 @@ function ListWidget(entries, type)
         {
             this.appendChild(entry);
         }
+        else
+        {
+            this.appendChild(new ListWidgetEntry(entry));
+        }
+        return this;
     };
 
     this.addEntries = function(entries)
@@ -291,47 +475,150 @@ function ListWidget(entries, type)
         {
             this.addEntry(entries[entry]);
         }
+        return this;
     };
 
     Layout.call(this);
-    type = (type === 'ul') ? 'ul' : 'ol';
+    type = (type === "ol") ? "ol" : "ul";
     this.element = document.createElement(type);
-    this.addEntries(init(entries, {}));
+    this.addEntries(init(entries, []));
+    this.setStyle(STYLE.ListWidget);
+    return this;
+}
+
+/**
+ *
+ * @param parent
+ * @param string
+ * @returns {TabWidgetTab}
+ * @constructor
+ */
+function TabWidgetTab(parent, string)
+{
+    Widget.call(this);
+    this.element = document.createElement("div");
+    this.parent = parent;
+    this.setValue(string);
+    this.element.onclick = this.parent.setContent(this.element.value);
+    this.setStyle(STYLE.TabWidgetTab);
+    return this;
+}
+
+/**
+ *
+ * @param parent
+ * @param tabs
+ * @returns {TabWidgetHeader}
+ * @constructor
+ */
+function TabWidgetHeader(parent, tabs)
+{
+    this.addTab = function(tab)
+    {
+        if(tab instanceof TabWidgetTab)
+        {
+            this.appendChild(tab);
+        }
+        else
+        {
+            this.appendChild(new TabWidgetTab(this.parent, tab));
+        }
+        return this;
+    };
+
+    this.addTabs = function(tabs)
+    {
+        for(var tab in tabs)
+        {
+            this.addTab(tabs[tab]);
+        }
+        return this;
+    };
+
+    Layout.call(this);
+    this.element = document.createElement("div");
+    this.parent = parent;
+    this.addTabs(init(tabs, []));
+    this.setStyle(STYLE.TabWidgetHeader);
+    return this;
+}
+
+/**
+ *
+ * @param content
+ * @returns {TabWidgetContent}
+ * @constructor
+ */
+function TabWidgetContent(content)
+{
+    this.setContent = function(content)
+    {
+        if(content instanceof Object)
+        {
+            this.setChild(content);
+        }
+        else
+        {
+            this.element.innerHTML = content;
+        }
+        return this;
+    };
+
+    Widget.call(this);
+    this.element = document.createElement("div");
+    this.setContent(init(content, ""));
+    this.setStyle(STYLE.TabWidgetContent);
     return this;
 }
 
 /**
  *
  * @param headers
- * @param entries
+ * @param contents
  * @returns {TabWidget}
  * @constructor
  */
-function TabWidget(headers, entries)
+function TabWidget(headers, contents)
 {
-    this.addTab = function(tab, entry)
+    this.setTab = function(tab, content)
     {
-        // change from tab to tab.name
-          this.contents[tab] = init(entry, {});
+        return this;
     };
 
-    this.addTabs = function(tabs, entries)
+    this.setTabs = function(tabs, contents)
     {
-        for(var i = 0; i < Math.max(tabs.length, entries); ++i)
+        return this;
+    };
+
+    this.setContent = function(content)
+    {
+        this.content.setContent(content);
+        return this;
+    };
+
+    this.addTab = function(tab, content)
+    {
+        this.tabs.addTab(tab);
+        this.content.setContent(content);
+        return this;
+    };
+
+    this.addTabs = function(tabs, contents)
+    {
+        for(var tab in tabs)
         {
-            this.addTab(init(tabs[i], ""), init(entries[i], ""));
+            this.contents.push(contents[tab]);
+            this.addTab(tabs[tab], contents[tab]);
         }
-    };
-
-    this.setTabContent = function(tab, content)
-    {
-        this.contents[tab] = content;
+        return this;
     };
 
     Layout.call(this);
-    this.element = document.createElement('div');
-    this.headers = document.createElement('div');
-    this.contents = {};
-    this.addTabs(headers, entries);
+    this.element = document.createElement("div");
+    this.tabs = new TabWidgetHeader(this, init(headers, [""]));
+    this.contents = init(contents, [""]);
+    this.content = new TabWidgetContent(this.contents[0]);
+    this.appendChild(this.tabs);
+    this.appendChild(this.content);
     return this;
 }

@@ -11,28 +11,16 @@
         <script src="../js/include/lib/html/html.js"></script>
         <script>
             var doc = Document();
-            var list = new ListWidget(
-                [
-                    new ListWidgetEntry("a"),
-                    new ListWidgetEntry("b")
-                ], "ul");
-            var table = new TableWidget(
-                [
-                    new TableWidgetRow(
-                        [
-                            new TableWidgetHeader("a"),
-                            new TableWidgetHeader("b")
-                        ]),
-                    new TableWidgetRow(
-                        [
-                            new TableWidgetCell("aa"),
-                            new TableWidgetCell("ab")
-                        ]
-                    )
-                ]
-            );
+            var list = new ListWidget(["a", "b", "c"]);
+            var table = new TableWidget([["a", "b"], ["c", "d"]], true)
+                .addRows([["a", "b"], ["asd", "das"]]);
+            var nlist = new ListWidget(["1", "2"]);
+            var tab = new TabWidget(["Tab1", "Tab2"], ["asd", "sad"]);
+            tab.setContent(nlist);
+            tab.setContent("asd");
             doc.append(list);
             doc.append(table);
+            doc.append(tab);
         </script>
 </body>
 </html>
