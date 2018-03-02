@@ -7,20 +7,35 @@
 </head>
 <body>
     <body>
-        <script src="../js/include/lib/html/style.js"></script>
+        <script src="../js/include/lib/html/bright_style.js"></script>
+        <script src="../js/include/lib/html/dark_style.js"></script>
         <script src="../js/include/lib/html/html.js"></script>
         <script>
+            var state = 1;
             var doc = Document();
             var list = new ListWidget(["a", "b", "c"]);
             var table = new TableWidget([["a", "b"], ["c", "d"]], true)
                 .addRows([["a", "b"], ["asd", "das"]]);
-            var nlist = new ListWidget(["1", "2"]);
             var tab = new TabWidget(["Tab1", "Tab2"], ["asd", "sad"]);
-            tab.setContent(nlist);
-            tab.setContent("asd");
-            doc.append(list);
-            doc.append(table);
-            doc.append(tab);
+            var button = new Button("Test");
+            var input = new TextInputWidget("", "text");
+            var box = new Box("v");
+            box.appendChild(button).appendChild(input);
+
+            button.element.onclick = function()
+            {
+                state = (state === 0) ? 1 : 0;
+                if(state === 0)
+                {
+                    cascadeStyle(doc, DARK_STYLE);
+                }
+                else if(state === 1)
+                {
+                    cascadeStyle(doc, BRIGHT_STYLE);
+                }
+            };
+
+            doc.append(list).append(table).append(tab.addTab("Test3", box));
         </script>
 </body>
 </html>

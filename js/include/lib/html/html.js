@@ -1,3 +1,112 @@
+var STYLE =
+    {
+        Button:
+        {
+            background:   "#CCCCCC",
+            border:       "1px solid #555555",
+            borderRadius: "2px",
+            fontSize:     "11pt",
+            margin:       "3px 3px 3px 3px",
+            minWidth:     "60px",
+            outline:      "0",
+            padding:      "2px 5px 2px 5px"
+        },
+        Text:
+        {
+            padding: "2px 5px 2px 5px"
+        },
+        TextInputWidget:
+        {
+            background:   "#DDDDDD",
+            border:       "none",
+            borderBottom: "1px solid #555555",
+            fontSize:     "11pt",
+            margin:       "-1px 0",
+            outline:      "0",
+            padding:      "3px 5px 2px 5px"
+        },
+        TableWidget:
+        {
+            border:         "none",
+            borderCollapse: "collapse",
+            borderStyle:    "hidden",
+            margin:         "5px 0px 5px 0px"
+        },
+        TableWidgetHead:
+        {
+            background: "#BBBBBB"
+        },
+        TableWidgetBody:
+        {
+            background: "#DDDDDD"
+        },
+        TableWidgetHeaderRow:
+        {
+            borderBottom: "1px solid #222222"
+        },
+        TableWidgetHeader:
+        {
+            minWidth: "100px",
+            padding:  "2px 2px 2px 2px"
+        },
+        TableWidgetRow:
+        {
+            borderBottom: "1px solid #999999"
+        },
+        TableWidgetCell:
+        {
+            borderRight: "1px solid #AAAAAA",
+            padding:     "2px 5px 2px 5px",
+            textAlign:   "left"
+        },
+        ListWidget:
+        {
+            background:   "#CCCCCC",
+            border:       "1px solid #555555",
+            borderRadius: "5px"
+        },
+        ListWidgetEntry:
+        {
+            padding: "2px 5px 2px 15px"
+        },
+        TabWidget:
+        {
+            minWidth:  "300px"
+        },
+        TabWidgetHeader:
+        {
+            height:    "20px",
+            margin:    "0 10px 0 10px",
+            maxHeight: "20px",
+            minWidth:  "400px",
+            whiteSpace: "nowrap"
+        },
+        TabWidgetTab:
+        {
+            background:   "linear-gradient(#DDDDDD, #AAAAAA)",
+            border:       "1px solid #333333",
+            borderRadius: "3px",
+            cursor:       "pointer",
+            display:      "inline-block",
+            float:        "left",
+            fontFamily:   "Verdana, Arial, sans-serif",
+            fontWeight:   "bold",
+            height: "100%",
+            padding:      "3px",
+            textAlign:    "center",
+            width:        "150px"
+        },
+        TabWidgetContent:
+        {
+            background: "#EEEEEE",
+            border:     "1px solid #333333",
+            height:     "200px",
+            padding:    "10px 0",
+            textAlign:  "left",
+            width:      "100%"
+        }
+    };
+
 function range(from, to, step)
 {
     var l = [];
@@ -37,7 +146,9 @@ function odd(list)
 function empty(obj)
 {
     if(!obj instanceof Object)
+    {
         return obj === "undefined" || obj.length === 0;
+    }
 }
 
 function init(obj, def)
@@ -52,6 +163,22 @@ function init(obj, def)
     return def;
 }
 
+function cascadeStyle(obj, style)
+{
+    if(obj.children !== undefined)
+    {
+        for(var child in obj.children)
+        {
+            var c = obj.children[child];
+            if(style[c.class] !== undefined)
+            {
+                c.setStyles(style[c.class]);
+            }
+            cascadeStyle(obj.children[child], style);
+        }
+    }
+}
+
 /**
  *
  * @returns {Document}
@@ -59,8 +186,11 @@ function init(obj, def)
  */
 function Document()
 {
+    this.children = [];
+    this.class = "Document";
     this.append = function(object)
     {
+        this.children.push(object);
         document.body.appendChild(object.element);
         return this;
     };
@@ -75,27 +205,59 @@ function Document()
  */
 function Object()
 {
-    this.setStyle = function(styles)
+    this.setStyle = function(key, value)
+    {
+        if(this.element.style.hasOwnProperty(key))
+        {
+            this.element.style[key] = value;
+        }
+        else
+        {
+            console.warn("Style has no property:" + key);
+        }
+        return this;
+    };
+
+    this.setStyles = function(styles)
     {
         for(var style in styles)
         {
-            if(this.element.style.hasOwnProperty(style))
-            {
-                this.element.style[style] = styles[style];
-            }
+            this.setStyle(style, styles[style]);
+        }
+        return this;
+    };
+
+    this.setAttribute = function(key, value)
+    {
+        this.element.setAttribute(key, value);
+        return this;
+    };
+
+    this.setAttributes = function(attributes)
+    {
+        for(var attr in attributes)
+        {
+            this.setAttribute(attr, attributes[attr]);
         }
         return this;
     };
 
     this.setChild = function(object)
     {
-        this.element.setChild(object.element);
+        this.element.innerHTML = "";
+        this.element.appendChild(object.element);
+        return this;
+    };
+
+    this.setText = function(text)
+    {
+        this.element.innerHTML = text;
         return this;
     };
 
     this.setValue = function(value)
     {
-        this.element.innerHTML = value;
+        this.element.value = value;
         return this;
     };
 
@@ -105,6 +267,7 @@ function Object()
     };
 
     this.element = document.createElement("div");
+    this.class = "Object";
     return this;
 }
 
@@ -116,6 +279,50 @@ function Object()
 function Widget()
 {
     Object.call(this);
+    this.class = "Widget";
+    return this;
+}
+
+function Text(text)
+{
+    Widget.call(this);
+    this.element = document.createElement("p");
+    this.class = "Text";
+    this.setText(text);
+    this.setStyles(STYLE.Text);
+    return this;
+}
+
+/**
+ *
+ * @param text
+ * @constructor
+ */
+function Button(text)
+{
+    Widget.call(this);
+    this.element = document.createElement("button");
+    this.class = "Button";
+    this.setText(text);
+    this.setStyles(STYLE.Button);
+    return this;
+}
+
+/**
+ *
+ * @param text
+ * @param placeholder
+ * @constructor
+ */
+function TextInputWidget(text, placeholder)
+{
+    Widget.call(this);
+    this.element = document.createElement("input");
+    this.class = "TextInputWidget";
+    this.setValue(text);
+    this.setStyles(STYLE.TextInputWidget);
+    this.setAttribute("type", "text");
+    this.setAttribute("placeholder", placeholder);
     return this;
 }
 
@@ -127,10 +334,13 @@ function Layout()
 {
     this.appendChild = function(child)
     {
+        this.children.push(child);
         this.element.appendChild(child.element);
         return this;
     };
     Object.call(this);
+    this.children = [];
+    this.class = "Layout";
     return this;
 }
 
@@ -144,6 +354,7 @@ function Box(orientation)
 {
     Layout.call(this);
     this.orientation = orientation;
+    this.class = "Box";
     return this;
 }
 
@@ -157,8 +368,9 @@ function TableWidgetCell(value)
 {
     Widget.call(this);
     this.element = document.createElement("td");
-    this.setValue(init(value, ""));
-    this.setStyle(STYLE.TableWidgetCell);
+    this.class = "TableWidgetCell";
+    this.setText(init(value, ""));
+    this.setStyles(STYLE.TableWidgetCell);
     return this;
 }
 
@@ -171,8 +383,9 @@ function TableWidgetHeader(value)
 {
     Widget.call(this);
     this.element = document.createElement("th");
-    this.setValue(init(value, ""));
-    this.setStyle(STYLE.TableWidgetHeader);
+    this.class = "TableWidgetHeader";
+    this.setText(init(value, ""));
+    this.setStyles(STYLE.TableWidgetHeader);
     return this;
 }
 
@@ -218,8 +431,9 @@ function TableWidgetRow(entries)
 
     Layout.call(this);
     this.element = document.createElement("tr");
+    this.class = "TableWidgetRow";
     this.addEntries(init(entries, []));
-    this.setStyle(STYLE.TableWidgetRow);
+    this.setStyles(STYLE.TableWidgetRow);
     return this;
 }
 
@@ -265,8 +479,9 @@ function TableWidgetHeaderRow(entries)
 
     Layout.call(this);
     this.element = document.createElement("tr");
+    this.class = "TableWidgetHeaderRow";
     this.addEntries(init(entries, []));
-    this.setStyle(STYLE.TableWidgetHeaderRow);
+    this.setStyles(STYLE.TableWidgetHeaderRow);
     return this;
 }
 
@@ -302,9 +517,10 @@ function TableWidgetHead(entries)
 
     Layout.call(this);
     this.element = document.createElement("thead");
+    this.class = "TableWidgetHead";
     this.row = new TableWidgetHeaderRow(entries);
     this.appendChild(this.row);
-    this.setStyle(STYLE.TableWidgetHead);
+    this.setStyles(STYLE.TableWidgetHead);
     return this;
 }
 
@@ -350,8 +566,9 @@ function TableWidgetBody(rows)
 
     Layout.call(this);
     this.element = document.createElement("tbody");
+    this.class = "TableWidgetBody";
     this.addRows(init(rows, []));
-    this.setStyle(STYLE.TableWidgetBody);
+    this.setStyles(STYLE.TableWidgetBody);
     return this;
 }
 
@@ -414,6 +631,7 @@ function TableWidget(rows, headers)
 
     Layout.call(this);
     this.element = document.createElement("table");
+    this.class = "TableWidget";
 
     if(init(headers, true))
     {
@@ -428,7 +646,7 @@ function TableWidget(rows, headers)
     }
     this.appendChild(this.table_header);
     this.appendChild(this.table_body);
-    this.setStyle(STYLE.TableWidget);
+    this.setStyles(STYLE.TableWidget);
     return this;
 }
 
@@ -442,8 +660,9 @@ function ListWidgetEntry(value)
 {
     Widget.call(this);
     this.element = document.createElement("li");
-    this.setValue(init(value, ""));
-    this.setStyle(STYLE.ListWidgetEntry);
+    this.class = "ListWidgetEntry";
+    this.setText(init(value, ""));
+    this.setStyles(STYLE.ListWidgetEntry);
     return this;
 }
 
@@ -481,26 +700,33 @@ function ListWidget(entries, type)
     Layout.call(this);
     type = (type === "ol") ? "ol" : "ul";
     this.element = document.createElement(type);
+    this.class = "ListWidget";
     this.addEntries(init(entries, []));
-    this.setStyle(STYLE.ListWidget);
+    this.setStyles(STYLE.ListWidget);
     return this;
 }
 
 /**
  *
  * @param parent
- * @param string
+ * @param text
+ * @param content
  * @returns {TabWidgetTab}
  * @constructor
  */
-function TabWidgetTab(parent, string)
+function TabWidgetTab(parent, text, content)
 {
     Widget.call(this);
     this.element = document.createElement("div");
+    this.class = "TabWidgetTab";
     this.parent = parent;
-    this.setValue(string);
-    this.element.onclick = this.parent.setContent(this.element.value);
-    this.setStyle(STYLE.TabWidgetTab);
+    this.content = content;
+    this.element.onclick = function()
+    {
+        parent.setContent(content)
+    };
+    this.setText(text);
+    this.setStyles(STYLE.TabWidgetTab);
     return this;
 }
 
@@ -508,38 +734,44 @@ function TabWidgetTab(parent, string)
  *
  * @param parent
  * @param tabs
+ * @param contents
  * @returns {TabWidgetHeader}
  * @constructor
  */
-function TabWidgetHeader(parent, tabs)
+function TabWidgetHeader(parent, tabs, contents)
 {
-    this.addTab = function(tab)
+    this.addTab = function(tab, content)
     {
         if(tab instanceof TabWidgetTab)
         {
             this.appendChild(tab);
+            this.tabs.push(tab);
         }
         else
         {
-            this.appendChild(new TabWidgetTab(this.parent, tab));
+            var tab_widget = new TabWidgetTab(this.parent, tab, content);
+            this.appendChild(tab_widget);
+            this.tabs.push(tab_widget);
         }
         return this;
     };
 
-    this.addTabs = function(tabs)
+    this.addTabs = function(tabs, contents)
     {
         for(var tab in tabs)
         {
-            this.addTab(tabs[tab]);
+            this.addTab(tabs[tab], contents[tab]);
         }
         return this;
     };
 
     Layout.call(this);
     this.element = document.createElement("div");
+    this.class = "TabWidgetHeader";
     this.parent = parent;
-    this.addTabs(init(tabs, []));
-    this.setStyle(STYLE.TabWidgetHeader);
+    this.tabs = [];
+    this.addTabs(init(tabs, [""]), init(contents, [""]));
+    this.setStyles(STYLE.TabWidgetHeader);
     return this;
 }
 
@@ -553,7 +785,7 @@ function TabWidgetContent(content)
 {
     this.setContent = function(content)
     {
-        if(content instanceof Object)
+        if(typeof content === "object")
         {
             this.setChild(content);
         }
@@ -566,8 +798,9 @@ function TabWidgetContent(content)
 
     Widget.call(this);
     this.element = document.createElement("div");
+    this.class = "TabWidgetContent";
     this.setContent(init(content, ""));
-    this.setStyle(STYLE.TabWidgetContent);
+    this.setStyles(STYLE.TabWidgetContent);
     return this;
 }
 
@@ -598,8 +831,7 @@ function TabWidget(headers, contents)
 
     this.addTab = function(tab, content)
     {
-        this.tabs.addTab(tab);
-        this.content.setContent(content);
+        this.tabs.addTab(tab, content);
         return this;
     };
 
@@ -607,7 +839,6 @@ function TabWidget(headers, contents)
     {
         for(var tab in tabs)
         {
-            this.contents.push(contents[tab]);
             this.addTab(tabs[tab], contents[tab]);
         }
         return this;
@@ -615,10 +846,11 @@ function TabWidget(headers, contents)
 
     Layout.call(this);
     this.element = document.createElement("div");
-    this.tabs = new TabWidgetHeader(this, init(headers, [""]));
-    this.contents = init(contents, [""]);
-    this.content = new TabWidgetContent(this.contents[0]);
+    this.class = "TabWidget";
+    this.tabs = new TabWidgetHeader(this, init(headers, [""]), init(contents, [""]));
+    this.content = new TabWidgetContent(this.tabs.tabs[0].content);
     this.appendChild(this.tabs);
     this.appendChild(this.content);
+    this.setStyles(STYLE.TabWidget);
     return this;
 }
