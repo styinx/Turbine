@@ -681,7 +681,7 @@ function TextEditTextArea(text)
     Widget.call(this);
     this.class = "TextEditTextArea";
     this.createElement("div");
-    this.setAttribute("contenteditable", "true")
+    this.setAttribute("contenteditable", "true");
     this.setStyles(DEFAULT_STYLE.TextEditTextArea);
     return this;
 }
@@ -693,7 +693,7 @@ function TextEditTextArea(text)
  */
 function TextEdit(text)
 {
-    this.onNewline = function(event)
+    this.onKeyDown = function(event)
     {
         var key = event.keyCode ? event.keyCode : event.which;
         var w = getWidget(this.id);
@@ -703,12 +703,10 @@ function TextEdit(text)
             w.parent.line_area.addLine();
             return false;
         }
-        else if(key === 8)
+        else if(key === 8 || key === 46)
         {
-            document.execCommand('insertHTML', false, "");
-
             var lines = w.element.innerText.split(/\r|\r\n|\n/).length;
-            while(w.parent.line_area.lines > lines)
+            while(w.parent.line_area.lines >= lines)
             {
                 w.parent.line_area.removeLine();
             }
@@ -720,22 +718,7 @@ function TextEdit(text)
     this.class = "TextEdit";
     this.line_area = new TextEditLineNumbers(1);
     this.text_area = new TextEditTextArea();
-    this.text_area.element.onkeydown = this.onNewline;
-    this.text_area.element.onclick = function(){
-        var char = 3, sel; // character at which to place caret
-        var content = this;
-        content.focus();
-        if (document.selection) {
-            sel = document.selection.createRange();
-            sel.moveStart('character', char);
-            sel.select();
-        }
-        else {
-            sel = window.getSelection();
-            sel.moveStart('character', char);
-            sel.select();
-        }
-    };
+    this.text_area.element.onkeydown = this.onKeyDown;
     this.createElement("div");
     this.append([this.line_area, this.text_area]);
     this.setStyles(DEFAULT_STYLE.TextEdit);
