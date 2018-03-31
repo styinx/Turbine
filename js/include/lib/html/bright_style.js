@@ -71,14 +71,14 @@ var BRIGHT_STYLE =
         },
         TabWidget:
         {
-            minWidth:  "300px"
+            minWidth: "300px"
         },
         TabWidgetHeader:
         {
-            height:    "20px",
-            margin:    "0 10px 0 10px",
-            maxHeight: "20px",
-            minWidth:  "400px",
+            height:     "20px",
+            margin:     "0 10px 0 10px",
+            maxHeight:  "20px",
+            minWidth:   "400px",
             whiteSpace: "nowrap"
         },
         TabWidgetTab:
@@ -91,7 +91,7 @@ var BRIGHT_STYLE =
             float:        "left",
             fontFamily:   "Verdana, Arial, sans-serif",
             fontWeight:   "bold",
-            height: "100%",
+            height:       "100%",
             padding:      "3px",
             textAlign:    "center",
             width:        "150px"

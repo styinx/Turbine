@@ -1,7 +1,7 @@
 <?php
 
-	require_once(dirname(__FILE__) . "/../../include/lib/db/database.php");
-	require_once(dirname(__FILE__) . "/../../include/lib/html/html.php");
+	require_once(__DIR__ . "/../../include/lib/db/database.php");
+	require_once(__DIR__ . "/../../include/lib/html/html.php");
 
 	class Forum
 	{
@@ -114,7 +114,7 @@
 			}
 			if($this->db->selectDatabase($this->forum_name))
 			{
-				require_once(dirname(__FILE__) . "/../db/default_forum.php");
+				require_once(__DIR__ . "/../db/default_forum.php");
 
 				foreach($DB_DEFAULT as $table => $vals)
 				{

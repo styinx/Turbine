@@ -1,104 +1,102 @@
 <?php
+
     /*
      * A Logger-Class for the database class. Creates a file and fills with info messages.
      */
-	class Log
-	{
-		private $path				= "";
-		private $filename			= "";
-		private $time				= null;
-		private $handle				= null;
-		private $logMode			= "";
-        private $log_type           = 0;
 
-		function __construct($path, $file = "DBlog.txt", $logMode = "w+")
-		{
-			$this->path = $path;
-			$this->filename = $file;
-			$this->logMode = $logMode;
-			if($this->path == "")
-			    $this->path = dirname(__FILE__);
-			$this->open();
-		}
+    class Log
+    {
+        private $path     = "";
+        private $filename = "";
+        private $time     = null;
+        private $handle   = null;
+        private $logMode  = "";
+        private $log_type = 0;
 
-		function open()
-		{
-			$success = false;
+        function __construct($path, $file = "DBlog.txt", $logMode = "w+")
+        {
+            $this->path     = $path;
+            $this->filename = $file;
+            $this->logMode  = $logMode;
+            if($this->path == "")
+            {
+                $this->path = dirname(__FILE__);
+            }
+            $this->open();
+        }
+
+        function open()
+        {
             if($this->log_type > 0)
             {
-			    $this->handle = fopen($this->path . "/" . $this->filename, $this->logMode);
-			    $this->log("SESSION START");
+                $this->handle = fopen($this->path . "/" . $this->filename, $this->logMode);
+                $this->log("SESSION START");
 
-			    if($this->handle != null)
-			    {
-				    $success = true;
-			    }
+                if($this->handle != null)
+                {
+                    return true;
+                }
             }
-			return $success;
-		}
+            return false;
+        }
 
-		function close()
-		{
-			$success = false;
-			$success = fclose($this->handle);
-			return $success;
-		}
+        function close()
+        {
+            return fclose($this->handle);
+        }
 
-		function isOpen()
-		{
-			$success = false;
-			if($this->handle != null)
-			{
-				$success = true;
-			}
-			return $success;
-		}
+        function isOpen()
+        {
+            $success = false;
+            if($this->handle != null)
+            {
+                $success = true;
+            }
+            return $success;
+        }
 
-		function log($msg)
-		{
-			$success = false;
+        function log($msg)
+        {
             if($this->log_type >= 1)
             {
-			    if($this->isOpen())
-			    {
-				    $this->time = time();
-				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[INFO]\t" . $msg . "\r\n");
-				    $success = true;
-			    }
+                if($this->isOpen())
+                {
+                    $this->time = time();
+                    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[INFO]\t" . $msg . "\r\n");
+                    return true;
+                }
             }
-			return $success;
-		}
+            return false;
+        }
 
-		function war($msg)
-		{
-			$success = false;
+        function war($msg)
+        {
             if($this->log_type >= 2)
             {
-			    if($this->isOpen())
-			    {
-				    $this->time = time();
-				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[WARNING]\t" . $msg . "\r\n");
-				    $success = true;
-			    }
+                if($this->isOpen())
+                {
+                    $this->time = time();
+                    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[WARNING]\t" . $msg . "\r\n");
+                    return true;
+                }
             }
-			return $success;
-		}
+            return false;
+        }
 
-		function err($msg)
-		{
-			$success = false;
+        function err($msg)
+        {
             if($this->log_type >= 3)
             {
-			    if($this->isOpen())
-			    {
-				    $this->time = time();
-				    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[ERROR]\t" . $msg . "\r\n");
-				    $success = true;
-			    }
+                if($this->isOpen())
+                {
+                    $this->time = time();
+                    fwrite($this->handle, date("d.m.Y H:i:s : ") . "\t[ERROR]\t" . $msg . "\r\n");
+                    return true;
+                }
             }
-			return $success;
-		}
-	}
+            return false;
+        }
+    }
 
     /*
      * A PHP Wrapper-Class to perform actions on a database. All common functions are supported
@@ -107,685 +105,658 @@
      * Database -> Table -> Field -> Entry
      *
      */
-	class DB
-	{
-		private $db_server 			= "";
-		private $db_user 			= "";
-		private $db_pw 				= "";
-		private $db_name 			= "";
 
-		private $db_con 			= null;
-		private $db_db 				= "";
-		private $db_tb 				= "";
-		private $db_query 			= "";
-		private $db_query_result 	= null;
+    class DB
+    {
+        private $db_server = "";
+        private $db_user   = "";
+        private $db_pw     = "";
+        private $db_name   = "";
 
-		private $log				= null;
-		private $dailyLog			= true;
+        private $db_con          = null;
+        private $db_db           = "";
+        private $db_tb           = "";
+        private $db_query        = "";
+        private $db_query_result = null;
 
-		private $MYSQL_SECURE_QUERY = 0;
+        private $log      = null;
+        private $dailyLog = true;
 
-		/*
-		 * Creates a new Databasehandler to make interactions with a database
-		 * $server 	= Servername
-		 * $user 	= Username
-		 * $pw		= Passwort
-		 * $name	= Name der Datenbank
-		 */
-		public function __construct($server, $user, $pw, $db = "", $logMode = "w+")
-		{
-			$this->db_server 	= $server;
-			$this->db_user 		= $user;
-			$this->db_pw 		= $pw;
-			$this->db_db		= $db;
+        private $MYSQL_SECURE_QUERY = 0;
 
-			if($this->dailyLog)
-			{
-				$logMode = "a+";
-			}
+        /*
+         * Creates a new Databasehandler to make interactions with a database
+         * $server 	= Servername
+         * $user 	= Username
+         * $pw		= Passwort
+         * $name	= Name der Datenbank
+         */
+        public function __construct($server, $user, $pw, $db = "", $logMode = "w+")
+        {
+            $this->db_server = $server;
+            $this->db_user   = $user;
+            $this->db_pw     = $pw;
+            $this->db_db     = $db;
 
-			$this->log			= new Log(dirname(__file__) . "/..", "DBlog_" . date("Y-m-d", time()) . ".txt", $logMode);
+            if($this->dailyLog)
+            {
+                $logMode = "a+";
+            }
 
-			$this->connect($this->db_server, $this->db_user, $this->db_pw, $this->db_db);
-		}
+            $this->log = new Log(dirname(__file__) . "/..", "DBlog_" . date("Y-m-d", time()) . ".txt", $logMode);
 
-		/*
-		 * Connects with a database
-		 * @param $server	= Serverhost
-		 * @param $user		= Username
-		 * @param $pw		= Password
-		 * @param $db		= Database
-		 * @return success
-		 */
-		private function connect($server, $user, $pw, $db)
-		{
-			$success = false;
+            $this->connect($this->db_server, $this->db_user, $this->db_pw, $this->db_db);
+        }
 
-			if(!$this->isConnected())
-			{
-				$this->db_con = mysqli_connect($server, $user, $pw, $db);
-				if($this->isConnected())
-				{
-					$success = true;
-					$this->log->log("Connected with database.");
-				}
-				else
-				{
-					$this->log->err("No connection possible with database.");
-				}
-			}
-			return $success;
-		}
+        /*
+         * Connects with a database
+         * @param $server	= Serverhost
+         * @param $user		= Username
+         * @param $pw		= Password
+         * @param $db		= Database
+         * @return success
+         */
+        private function connect($server, $user, $pw, $db)
+        {
+            if(!$this->isConnected())
+            {
+                $this->db_con = mysqli_connect($server, $user, $pw, $db);
+                if($this->isConnected())
+                {
+                    $this->log->log("Connected with database.");
+                    return true;
+                }
+                else
+                {
+                    $this->log->err("No connection possible with database.");
+                }
+            }
+            return false;
+        }
 
-		public function getLog()
-		{
-			return $this->log;
-		}
+        public function getLog()
+        {
+            return $this->log;
+        }
 
-		/*
-		 * Returns the current connection
-		 * @return connection
-		 */
-		private function getCon()
-		{
-			$success = null;
+        /*
+         * Returns the current connection
+         * @return connection
+         */
+        private function getCon()
+        {
+            if($this->isConnected())
+            {
+                return $this->db_con;
+            }
+            $this->log->err("No connection to database.");
+            return null;
+        }
 
-			if($this->isConnected())
-			{
-				$result = $this->db_con;
-			}
-			else
-				$this->log->err("No connection to database.");
-			return $result;
-		}
+        /*
+         * Checks the connection with the database
+         * @return success
+         */
+        public function isConnected()
+        {
+            if($this->db_con != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
-		/*
-		 * Checks the connection with the database
-		 * @return success
-		 */
-		public function isConnected()
-		{
-			$success = false;
+        /*
+         * Creates a new database query
+         * @param $info	= query
+         * @return queryresult
+         */
+        public function query($info)
+        {
+            if($this->isConnected())
+            {
+                $this->db_query = $info;
+                if($this->MYSQL_SECURE_QUERY)
+                {
+                    $this->db_query_result = mysqli_prepare($this->db_con, $this->db_query);
+                }            // TODO
+                else
+                {
+                    $this->db_query_result = mysqli_query($this->db_con, $this->db_query);
+                }
+                $this->log->log("Query request: " . $info);
+                return $this->db_query_result;
+            }
+            $this->log->err("Query could not be executed. No connection to database.");
+            return null;
+        }
 
-			if($this->db_con != null)
-			{
-				$success = true;
-			}
-			return $success;
-		}
+        /*
+         * Performs a databse query and returns the result as assoziative array
+         * @param $info = query
+         * @return queryresult as array
+         */
+        public function queryAssoc($info)
+        {
+            $result = array();
 
-		/*
-		 * Creates a new database query
-		 * @param $info	= query
-		 * @return queryresult
-		 */
-		public function query($info)
-		{
-			$query = null;
+            $query = $this->query($info);;
+            while($row = mysqli_fetch_assoc($query))
+            {
+                array_push($result, $row);
+            }
+            return $result;
+        }
 
-			if($this->isConnected())
-			{
-				$this->db_query = $info;
-				if($this->MYSQL_SECURE_QUERY)
-					$this->db_query_result = mysqli_prepare($this->db_con, $this->db_query);			// TODO
-				else
-					$this->db_query_result = mysqli_query($this->db_con, $this->db_query);
-				$query = $this->db_query_result;
-				$this->log->log("Query request: " . $info);
-			}
-			else
-				$this->log->err("Query could not be executed. No connection to database.");
-			return $query;
-		}
+        /*
+         *	Creates a database query and returns first entry from query
+         *	@param $info = query
+         *	@param $assoc = if result is associative or numerical
+         *	@return	database entry
+         */
+        public function singleQueryResult($info, $assoc = true)
+        {
+            $return = null;
+            if(($query = $this->query($info)) != null)
+            {
+                if($assoc)
+                {
+                    $return = mysqli_fetch_assoc($query);
+                }
+                else
+                {
+                    $return = mysqli_fetch_array($query);
+                }
+            }
+            return $return;
+        }
 
-		/*
-		 * Performs a databse query and returns the result as assoziative array
-		 * @param $info = query
-		 * @return queryresult as array
-		 */
-		public function queryAssoc($info)
-		{
-			$result = array();
+        /*
+         * Returns the latest SQL query
+         * @return query
+         */
+        public function getQuery()
+        {
+            return $this->db_query;
+        }
 
-			$query = $this->query($info);;
-			while($row = mysqli_fetch_assoc($query))
-			{
-				array_push($result, $row);
-			}
+        /*
+         * Returns the latest SQL query result
+         * @return query result
+         */
+        public function getQueryResult()
+        {
+            return $this->db_query_result;
+        }
 
-			return $result;
-		}
+        /*
+         * Returns the name of the selected database
+         * @return name of the selected database
+         */
+        public function getDBName()
+        {
+            return $this->db_name;
+        }
 
-		/*
-		 *	Creates a database query and returns first entry from query
-		 *	@param $info = query
-		 *	@param $assoc = if result is associative or numerical
-		 *	@return	database entry
-		 */
-		public function singleQueryResult($info, $assoc = true)
-		{
-			$return = null;
-			if(($query = $this->query($info)) != null)
-			{
-				if($assoc)
-					$return = mysqli_fetch_assoc($query);
-				else
-					$return = mysqli_fetch_array($query);
-			}
-			return $return;
-		}
+        /*
+         * Returns the name of the selected databasetable
+         * @return name of the selected table
+         */
+        public function getTBName()
+        {
+            return $this->db_tb;
+        }
 
-		/*
-		 * Returns the latest SQL query
-		 * @return query
-		 */
-		public function getQuery()
-		{
-			return $this->db_query;
-		}
+        /*
+         * Creates a new database if it does not exist
+         * @param $name 	= name of the database
+         */
+        public function createDatabase($name)
+        {
+            if(!(@mysqli_select_db($this->db_con, $name)))
+            {
+                if($this->query("CREATE DATABASE " . $name) != null)
+                {
+                    $this->log->log("Database $name was created.");
+                    $this->selectDatabase($name);
+                    return true;
+                }
+                else
+                {
+                    $this->log->war("Database '$name' already exists. (No database could be created)");
+                }
+            }
+            return false;
+        }
 
-		/*
-		 * Returns the latest SQL query result
-		 * @return query result
-		 */
-		public function getQueryResult()
-		{
-			return $this->db_query_result;
-		}
+        /*
+         * Selects a database
+         * @param $name		= name of the database
+         * @return success
+         */
+        public function selectDatabase($name)
+        {
+            if($this->db_db = mysqli_select_db($this->db_con, $name) > 0)
+            {
+                $this->db_name = $name;
+                if(mysqli_num_rows($this->query("SHOW TABLES")) > 0)
+                {
+                    $tb          = mysqli_fetch_array($this->db_query_result);
+                    $this->db_tb = $tb[0];
+                }
+                $this->log->log("Select Database '$name'");
+                return true;
+            }
+            $this->log->war("Database '$name' does not exist. (No database could be selected)");
+            return false;
+        }
 
-		/*
-		 * Returns the name of the selected database
-		 * @return name of the selected database
-		 */
-		public function getDBName()
-		{
-			return $this->db_name;
-		}
-
-		/*
-		 * Returns the name of the selected databasetable
-		 * @return name of the selected table
-		 */
-		public function getTBName()
-		{
-			return $this->db_tb;
-		}
-
-		/*
-		 * Creates a new database if it does not exist
-		 * @param $name 	= name of the database
-		 */
-		public function createDatabase($name)
-		{
-			$success = false;
-
-			if(!(@mysqli_select_db($this->db_con, $name)))
-			{
-                if($this->query("CREATE DATABASE ".$name) != null)
-				{
-					$success = true;
-					$this->log->log("Database $name was created.");
-					$this->selectDatabase($name);
-				}
-				else
-				{
-					$this->log->war("Database '$name' already exists. (No database could be created)");
-				}
-			}
-			return $success;
-		}
-
-		/*
-		 * Selects a database
-		 * @param $name		= name of the database
-		 * @return success
-		 */
-		public function selectDatabase($name)
-		{
-			$success = false;
-
-			if($this->db_db = mysqli_select_db($this->db_con, $name) > 0)
-			{
-				$this->db_name = $name;
-				if(mysqli_num_rows($this->query("SHOW TABLES")) > 0)
-				{
-					$tb = mysqli_fetch_array($this->db_query_result);
-					$this->db_tb = $tb[0];
-				}
-				$this->log->log("Select Database '$name'");
-				$success = true;
-			}
-			else
-				$this->log->war("Database '$name' does not exist. (No database could be selected)");
-			return $success;
-		}
-
-		/*
-		 * Deletes a database if it does exist
-		 * @param $name 	= name of the database
-		 * @return success
-		 */
-		public function dropDatabase($name)
-		{
-			$success = false;
-
-			if(mysqli_select_db($this->db_con, $name))
-			{
-				if(($this->query("DROP DATABASE " . $name)) != null)
-				{
-                    $success = true;
+        /*
+         * Deletes a database if it does exist
+         * @param $name 	= name of the database
+         * @return success
+         */
+        public function dropDatabase($name)
+        {
+            if(mysqli_select_db($this->db_con, $name))
+            {
+                if(($this->query("DROP DATABASE " . $name)) != null)
+                {
                     $this->log->log("Database '$name' was deleted.");
-				}
-			}
-			else
-				$this->log->war("No database exists with the name '$name''.");
-			return $success;
-		}
+                    return true;
+                }
+            }
+            $this->log->war("No database exists with the name '$name''.");
+            return false;
+        }
 
-		/*
-		 * Checks if database does exist
-		 * @return success
-		 */
-		public function existsDatabase($name)
-		{
-			$success = false;
+        /*
+         * Checks if database does exist
+         * @return success
+         */
+        public function existsDatabase($name)
+        {
+            if(@mysqli_select_db($this->db_con, $name))
+            {
+                return true;
+            }
+            return false;
+        }
 
-			if(@mysqli_select_db($this->db_con, $name))
-			{
-				$success = true;
-			}
-			return $success;
-		}
+        /*
+         * Creates a new table if it doesnt exist
+         * @param $name		 	= name of the table
+         * @param $fieldName	= array of field identifiers
+         * @param $type			= array of field types
+         * @param $null			= array of
+         * @param $key			= array of
+         * @param $default		= array of field default value
+         * @param $extra		= array of
+         * @return success
+        */
+        public function createTable($name, $fieldName, $type, $null, $key, $default, $extra)
+        {
+            if(!(@mysqli_num_rows($this->query("SHOW TABLES LIKE '" . $name . "'")) == 1))
+            {
+                $statement = "CREATE TABLE " . $name . " (";
 
-		/*
-		 * Creates a new table if it doesnt exist
-		 * @param $name		 	= name of the table
-		 * @param $fieldName	= array of field identifiers
-		 * @param $type			= array of field types
-		 * @param $null			= array of
-		 * @param $key			= array of
-		 * @param $default		= array of field default value
-		 * @param $extra		= array of
-		 * @return success
-		*/
-		public function createTable($name, $fieldName, $type, $null, $key, $default, $extra)
-		{
-			$success = false;
+                for($i = 0; $i < count($fieldName); $i++)
+                {
+                    @$statement .= $fieldName[$i] . " " . $type[$i] . " " . $null[$i] . " " . $extra[$i];
 
-			if(!(@mysqli_num_rows($this->query("SHOW TABLES LIKE '".$name."'"))==1))
-			{
-				$statement = "CREATE TABLE ".$name." (";
+                    if(!empty($default[$i]) && $default[$i] != "")
+                    {
+                        $statement .= " DEFAULT '" . $default[$i] . "'";
+                    }
+                    if($key == "UNIQUE INDEX")
+                    {
+                        $statement .= " UNIQUE INDEX";
+                    }
 
-				for($i = 0; $i < count($fieldName); $i++)
-				{
-					@$statement .= $fieldName[$i]." ".$type[$i]." ".$null[$i]." ".$extra[$i];
-
-					if(!empty($default[$i]) && $default[$i] != "")
-						$statement .= " DEFAULT '".$default[$i]."'";
-					if($key == "UNIQUE INDEX")
-						$statement .= " UNIQUE INDEX";
-
-					if($i != count($fieldName)-1)
-						$statement .= ", ";
-				}
-				for($i = 0; $i < count($fieldName); ++$i)
-				{
-					if($key[$i] == "PRIMARY KEY")
-						$statement .= ", ".$key[$i]."(".$fieldName[$i].")";
-				}
-				$statement .= ");";
-				if($this->query($statement) != null)
-				{
-				    $success = true;
-				    $this->log->log("Table $name was created.");
-				}
-				$this->db_tb = $name;
-			}
-			else
-			{
-			    $this->log->war("Table '$name' already exists. (No table was created)");
-			}
-			return $success;
-		}
+                    if($i != count($fieldName) - 1)
+                    {
+                        $statement .= ", ";
+                    }
+                }
+                for($i = 0; $i < count($fieldName); ++$i)
+                {
+                    if($key[$i] == "PRIMARY KEY")
+                    {
+                        $statement .= ", " . $key[$i] . "(" . $fieldName[$i] . ")";
+                    }
+                }
+                $statement .= ");";
+                if($this->query($statement) != null)
+                {
+                    $this->db_tb = $name;
+                    $this->log->log("Table $name was created.");
+                    return true;
+                }
+            }
+            $this->log->war("Table '$name' already exists. (No table was created)");
+            return false;
+        }
 
         /*
 		 * Selects a databasetable
 		 * @param $name   = Name der Tabelle
 		 */
-		public function selectTable($name)
-		{
-		    $success = false;
-		    $query = $this->query("SHOW TABLES LIKE '" . $name . "'");
+        public function selectTable($name)
+        {
+            $query   = $this->query("SHOW TABLES LIKE '" . $name . "'");
             if(@mysqli_num_rows($query) > 0)
             {
                 $this->db_tb = $name;
-                $success = true;
                 $this->log->log("Select table '$name'.");
+                return true;
             }
-            else
-            {
-                $this->log->war("Table '$name' does not exist. (No table was selected)");
-            }
-            return $success;
-		}
+            $this->log->war("Table '$name' does not exist. (No table was selected)");
+            return false;
+        }
 
-		/*
-		 * Renames a table if it does exist
-		 * @param $name		= table name
-		 * @param $newName 	= new table name
-		 */
-		public function renameTable($name, $newName)
-		{
-			$success = false;
+        /*
+         * Renames a table if it does exist
+         * @param $name		= table name
+         * @param $newName 	= new table name
+         */
+        public function renameTable($name, $newName)
+        {
             if($this->existsTable($name))
             {
-            	$sql = "ALTER TABLE " . $name . " RENAME " . $newName;
-            	if($this->query($sql) != null)
-				{
-					$this->db_tb = $newName;
-					$success = true;
-					$this->log->log("Rename table '$name' to '$newName'.");
-				}
+                $sql = "ALTER TABLE " . $name . " RENAME " . $newName;
+                if($this->query($sql) != null)
+                {
+                    $this->db_tb = $newName;
+                    $this->log->log("Rename table '$name' to '$newName'.");
+                    return true;
+                }
+            }
+            $this->log->war("Table '$name' does not exist. (No table was renamed)");
+            return false;
+        }
+
+        /*
+         * Deletes a table if it does exist
+         * @param $name 	= Name der Tabelle
+         * @return success
+         */
+        public function dropTable($name)
+        {
+            if(@mysqli_num_rows($this->query("SHOW TABLES LIKE '" . $name . "'")) == 1)
+            {
+                if($this->query("DROP TABLE " . $name) != null)
+                {
+                    $this->log->log("Table $name was deleted.");
+                    return true;
+                }
+            }
+            $this->log->war("No table with the name $name found. (No table was deleted)");
+            return false;
+        }
+
+        /*
+         * Checks if a database table does exist
+         * @param $name	= $table name
+         */
+        public function existsTable($name)
+        {
+            return mysqli_num_rows($this->query("SHOW TABLES LIKE '" . $name . "'"));
+        }
+
+        /*
+         * Adds columns to an existing table if it does exist
+         * @param $table	 	= name of the table
+         * @param $names		= array of field identifiers
+         * @param $type			= array of field types
+         * @param $null			= array of
+         * @param $key			= array of
+         * @param $default		= array of field default value
+         * @param $extra		= array of
+         * @param $pos			= array of
+         * @return success
+        */
+        public function insertFields($table, $names, $types, $null, $key, $default, $extra, $pos)
+        {
+            $sql = "ALTER TABLE " . $table;
+
+            for($i = 0; $i < count($names); ++$i)
+            {
+                $sql .= " ADD COLUMN " . $names[$i] . " " . $types[$i] . " " . $null[$i]
+                    . " " . $default[$i] . " " . $extra[$i] . " " . @$pos[$i];
+            }
+
+            if($this->query($sql) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /*
+         * Modifies a existing table if it does exist
+         * @param $table	 	= name of the table
+         * @param $names		= array of field identifiers
+         * @param $newNames		= array of new field identifiers
+         * @param $type			= array of field types
+         * @param $null			= array of
+         * @param $key			= array of
+         * @param $default		= array of field default value
+         * @param $extra		= array of
+         * @param $pos			= array of
+         * @return success
+        */
+        public function modifyFields($table, $names, $newNames, $types, $null, $key, $default, $extra, $pos)
+        {
+            $sql = "ALTER TABLE " . $table;
+
+            for($i = 0; $i < count($names); ++$i)
+            {
+                $namesCombo = "";
+                if($newNames[$i] == "")
+                {
+                    $namesCombo = $names[$i] . " " . $names[$i];
+                }
+                else
+                {
+                    $namesCombo = $names[$i] . " " . $newNames[$i];
+                }
+
+                $sql .= " CHANGE COLUMN " . $namesCombo . " " . $types[$i] . " " . $null[$i]
+                    . " " . $default[$i] . " " . $extra[$i] . " " . $pos[$i];
+            }
+
+            return false;
+        }
+
+        /*
+         * Deletes a column in an existing table
+         * @param $table
+         * @param $cols
+         */
+        public function dropFields($table, $cols)
+        {
+            $sql = "ALTER TABLE " . $table;
+
+            foreach($cols as $col)
+            {
+                $sql .= " DROP COLUMN " . $col;
+            }
+
+            if($this->query($sql) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /*
+         * Creates a new entry in a databsetable
+         * $keys	= array of field parameters
+         * $values	= array of field values
+         */
+        public function insertEntry($table, $keys, $values)
+        {
+            $statementTable = $this->db_tb;
+            $statementKey   = "";
+            $statementValue = "";
+
+            if($table != "")
+            {
+                $statementTable = $table;
+            }
+            for($i = 0; $i < count($keys); $i++)
+            {
+                if(!($i == count($keys) - 1))
+                {
+                    $statementKey .= $keys[$i] . ", ";
+                }
+                else
+                {
+                    $statementKey .= $keys[$i];
+                }
+            }
+            for($i = 0; $i < count($values); $i++)
+            {
+                if(!($i == count($keys) - 1))
+                {
+                    $statementValue .= "'" . $values[$i] . "', ";
+                }
+                else
+                {
+                    $statementValue .= "'" . $values[$i] . "'";
+                }
+            }
+            $query = $this->query("INSERT INTO " . $statementTable . " (" . $statementKey . ") "
+                . "VALUES (" . $statementValue . ")");
+            if($query != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /*
+         * Returns an associative array from a query result
+         * $table 	= the name of the table to pull information
+         * $fields	= the name of the fields
+         * $key		= the key of the field
+         * $value	= the value of the field
+         * $like	=
+         * $limit	=
+         */
+        public function selectEntry($table, $fields, $key, $value)
+        {
+            $entry          = [];
+            $selection      = "";
+            $identification = "";
+
+            if(empty($fields))
+            {
+                $selection = "*";
             }
             else
             {
-                $this->log->war("Table '$name' does not exist. (No table was renamed)");
+                for($i = 0; $i < count($fields); ++$i)
+                {
+                    if(!($i == count($fields) - 1))
+                    {
+                        $selection .= $fields[$i] . ", ";
+                    }
+                    else
+                    {
+                        $selection .= $fields[$i];
+                    }
+                }
             }
-            return $success;
-		}
+            if(!empty($key) and !empty($value))
+            {
+                $identification .= $key . " = '" . $value . "'";
+            }
+            else
+            {
+                $identification = "1";
+            }
+            if($this->query("SELECT " . $selection . " FROM " . $table . " WHERE " . $identification))
+            {
+                $entry = mysqli_fetch_assoc($this->db_query_result);
+            }
+            return $entry;
+        }
 
-		/*
-		 * Deletes a table if it does exist
-		 * @param $name 	= Name der Tabelle
-		 * @return success
-		 */
-		public function dropTable($name)
-		{
-			$success = false;
-			if(@mysqli_num_rows($this->query("SHOW TABLES LIKE '".$name."'"))==1)
-			{
-				if($this->query("DROP TABLE ".$name) != null)
-				{
-                    $success = true;
-                    $this->log->log("Table $name was deleted.");
-				}
-			}
-			else
-				$this->log->war("No table with the name $name found. (No table was deleted)");
-			return $success;
-		}
+        /*
+         *	Modifies a database entry
+         * 	$table	= database table
+         *	$keys	= key of the entry
+         *	$values	= value of the entry
+         *	$index	= primary key
+         *	$index 	= primary number
+         */
+        public function updateEntry($table, $keys, $values, $index, $indexValue)
+        {
+            if(count($keys) == count($values))
+            {
+                $statement = "";
+                for($i = 0; $i < count($keys); $i++)
+                {
+                    if(!($i == count($keys) - 1))
+                    {
+                        $statement .= $keys[$i] . "='" . $values[$i] . "', ";
+                    }
+                    else
+                    {
+                        $statement .= $keys[$i] . "='" . $values[$i] . "'";
+                    }
+                }
+                $query = $this->query("UPDATE " . $this->db_tb . " SET " . $statement
+                    . " WHERE " . $index . "='" . $indexValue . "'");
+                if($query != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
-		/*
-		 * Checks if a database table does exist
-		 * @param $name	= $table name
-		 */
-		public function existsTable($name)
-		{
-			$success = false;
+        /*
+         *	Deletes a database entry
+         *	$index	= primary Key
+         *	$index 	= primary number
+         */
+        public function deleteEntry($index, $indexValue)
+        {
+            $query   = $this->query("DELETE FROM " . $this->db_tb . " WHERE " . $index . "='" . $indexValue . "'");
+            if($query != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
-			if(@mysqli_num_rows($this->query("SHOW TABLES LIKE '".$name."'"))==1)
-				$success = true;
+        /*
+         * Checks if a table entry with the given key value pair exists
+         * $key		= key of the entry
+         * $value	= value of the entry
+         */
+        public function existsEntry($key, $value)
+        {
+            return mysqli_num_rows($this->query("SELECT " . $key . " FROM " . $this->db_tb
+                    . " WHERE " . $key . "='" . $value . "'"));
+        }
 
-			return $success;
-		}
-
-		/*
-		 * Adds columns to an existing table if it does exist
-		 * @param $table	 	= name of the table
-		 * @param $names		= array of field identifiers
-		 * @param $type			= array of field types
-		 * @param $null			= array of
-		 * @param $key			= array of
-		 * @param $default		= array of field default value
-		 * @param $extra		= array of
-		 * @param $pos			= array of
-		 * @return success
-		*/
-		public function insertFields($table, $names, $types, $null, $key, $default, $extra, $pos)
-		{
-			$success = false;
-
-			$sql = "ALTER TABLE " . $table;
-
-			for($i = 0; $i < count($names); ++$i)
-			{
-				$sql .= " ADD COLUMN " . $names[$i] . " " . $types[$i] . " " . $null[$i]
-								. " " . $default[$i] . " " . $extra[$i] . " " . @$pos[$i];
-			}
-
-			if($this->query($sql) != null)
-				$success = true;
-
-			return $success;
-		}
-
-		/*
-		 * Modifies a existing table if it does exist
-		 * @param $table	 	= name of the table
-		 * @param $names		= array of field identifiers
-		 * @param $newNames		= array of new field identifiers
-		 * @param $type			= array of field types
-		 * @param $null			= array of
-		 * @param $key			= array of
-		 * @param $default		= array of field default value
-		 * @param $extra		= array of
-		 * @param $pos			= array of
-		 * @return success
-		*/
-		public function modifyFields($table, $names, $newNames, $types, $null, $key, $default, $extra, $pos)
-		{
-			$success = false;
-
-			$sql = "ALTER TABLE " . $table;
-
-			for($i = 0; $i < count($names); ++$i)
-			{
-				$namesCombo = "";
-				if($newNames[$i] == "")
-					$namesCombo = $names[$i] . " " . $names[$i];
-				else
-					$namesCombo = $names[$i] . " " . $newNames[$i];
-
-				$sql .= " CHANGE COLUMN " . $namesCombo . " " . $types[$i] . " " . $null[$i]
-								. " " . $default[$i] . " " . $extra[$i] . " " . $pos[$i];
-			}
-
-			return $success;
-		}
-
-		/*
-		 * Deletes a column in an existing table
-		 * @param $table
-		 * @param $cols
-		 */
-		public function dropFields($table, $cols)
-		{
-			$success = false;
-
-			$sql = "ALTER TABLE " . $table;
-
-			foreach($cols as $col)
-			{
-				$sql .= " DROP COLUMN " . $col;
-			}
-
-			if($this->query($sql) != null)
-				$success = true;
-
-			return $success;
-		}
-
-		/*
-		 * Creates a new entry in a databsetable
-		 * $keys	= array of field parameters
-		 * $values	= array of field values
-		 */
-		public function insertEntry($table, $keys, $values)
-		{
-			$success = false;
-
-			$statementTable = $this->db_tb;
-			$statementKey 	= "";
-			$statementValue = "";
-
-			if($table != "")
-			{
-				$statementTable = $table;
-			}
-			for($i = 0; $i < count($keys); $i++)
-			{
-				if(! ($i == count($keys)-1))
-				{
-					$statementKey .= $keys[$i].", ";
-				}
-				else
-				{
-					$statementKey .= $keys[$i];
-				}
-			}
-			for($i = 0; $i < count($values); $i++)
-			{
-				if(! ($i == count($keys)-1))
-				{
-					$statementValue .= "'".$values[$i]."', ";
-				}
-				else
-				{
-					$statementValue .= "'".$values[$i]."'";
-				}
-			}
-			$query = $this->query("INSERT INTO ".$statementTable." (".$statementKey.") "
-								 ."VALUES (".$statementValue.")");
-			if($query != null)
-				$success = true;
-			return $success;
-		}
-
-		/*
-		 * Returns an associative array from a query result
-		 * $table 	= the name of the table to pull information
-		 * $fields	= the name of the fields
-		 * $key		= the key of the field
-		 * $value	= the value of the field
-		 * $like	=
-		 * $limit	=
-		 */
-		public function selectEntry($table, $fields, $key, $value)
-		{
-			$entry 			= [];
-			$selection 		= "";
-			$identification = "";
-
-			if(empty($fields))
-			{
-				$selection = "*";
-			}
-			else
-			{
-				for($i = 0; $i < count($fields); ++$i)
-				{
-					if(! ($i == count($fields)-1))
-						$selection .= $fields[$i].", ";
-					else
-						$selection .= $fields[$i];
-				}
-			}
-			if(!empty($key) and !empty($value))
-			{
-				$identification .= $key." = '".$value."'";
-			}
-			else
-			{
-				$identification = "1";
-			}
-			if($this->query("SELECT ".$selection." FROM ".$table." WHERE ".$identification))
-			{
-				$entry = mysqli_fetch_assoc($this->db_query_result);
-			}
-			return $entry;
-		}
-
-		/*
-		 *	Modifies a database entry
-		 * 	$table	= database table
-		 *	$keys	= key of the entry
-		 *	$values	= value of the entry
-		 *	$index	= primary key
-		 *	$index 	= primary number
-		 */
-		public function updateEntry($table, $keys, $values, $index, $indexValue)
-		{
-			$success = false;
-			$statementTable = $this->db_tb;
-			if($table != "")
-			{
-				$statementTable = $table;
-			}
-			if(count($keys) == count($values))
-			{
-				$statement = "";
-				for($i = 0; $i < count($keys); $i++)
-				{
-					if(! ($i == count($keys)-1))
-					{
-						$statement .= $keys[$i]."='".$values[$i]."', ";
-					}
-					else
-					{
-						$statement .= $keys[$i]."='".$values[$i]."'";
-					}
-				}
-				$query = $this->query("UPDATE ".$this->db_tb." SET ".$statement
-									 ." WHERE ".$index."='".$indexValue."'");
-				if($query != null)
-					$success = true;
-				return $success;
-			}
-		}
-
-		/*
-		 *	Deletes a database entry
-		 *	$index	= primary Key
-		 *	$index 	= primary number
-		 */
-		public function deleteEntry($index, $indexValue)
-		{
-			$success = false;
-			$query = $this->query("DELETE FROM ".$this->db_tb." WHERE ".$index."='".$indexValue."'");
-			if($query != null)
-				$success = true;
-			return $success;
-		}
-
-		/*
-		 * Checks if a table entry with the given key value pair exists
-		 * $key		= key of the entry
-		 * $value	= value of the entry
-		 */
-		public function existsEntry($key, $value)
-		{
-			$success = false;
-			if(@mysqli_num_rows($this->query("SELECT ".$key." FROM ".$this->db_tb
-											." WHERE ".$key."='".$value."'")) == 1)
-			{
-				$success = true;
-			}
-			return $success;
-		}
-
-		/*
-		 * Saves a database table to a file
-		 * $filename 	= the filename to which the contents will be saved
-		 * $table		= the table to pull information from
-		 */
-		public function saveTable($filename, $table)
-		{
-		    $success = false;
-		    $filename = str_replace("\\", "/", $filename);
-			if(file_exists(substr($filename, 0, strrpos($filename, '/'))))
-			{
+        /*
+         * Saves a database table to a file
+         * $filename 	= the filename to which the contents will be saved
+         * $table		= the table to pull information from
+         */
+        public function saveTable($filename, $table)
+        {
+            $filename = str_replace("\\", "/", $filename);
+            if(file_exists(substr($filename, 0, strrpos($filename, '/'))))
+            {
                 $this->selectDatabase($this->db_name);
-			    if($this->selectTable($table))
+                if($this->selectTable($table))
                 {
                     @unlink($filename);
                     $this->query("SELECT * INTO OUTFILE '$filename' FIELDS TERMINATED BY '%'
@@ -793,28 +764,41 @@
 
                     $tableQuery = $this->query("SHOW COLUMNS FROM " . $table);
 
-                    $names = array();
-                    $types = array();
-                    $null = array();
-                    $key = array();
+                    $names   = array();
+                    $types   = array();
+                    $null    = array();
+                    $key     = array();
                     $default = array();
-                    $extra = array();
+                    $extra   = array();
                     while($columns = mysqli_fetch_array($tableQuery))
                     {
                         array_push($names, $columns[0]);
                         array_push($types, $columns[1]);
 
                         if($columns[2] == "NO")
+                        {
                             array_push($null, "NOT NULL");
+                        }
                         else
+                        {
                             array_push($null, "");
+                        }
 
                         if($columns[3] == "PRI")
+                        {
                             array_push($key, "PRIMARY KEY");
-                        else if($columns[3] == "UNI")
-                            array_push($key, "UNIQUE INDEX");
+                        }
                         else
-                            array_push($key, "");
+                        {
+                            if($columns[3] == "UNI")
+                            {
+                                array_push($key, "UNIQUE INDEX");
+                            }
+                            else
+                            {
+                                array_push($key, "");
+                            }
+                        }
 
                         array_push($default, $columns[4]);
                         array_push($extra, $columns[5]);
@@ -830,274 +814,280 @@
                     $content = file_get_contents($filename);
                     file_put_contents($filename, $prepend . $content);
                     $this->log->log("Saved table $table.");
-				    $success = true;
+                    return true;
                 }
-			}
-			else
-			{
-			    mkdir(substr($filename, 0, strrpos($filename, '/')), 0777, true);
-				$this->saveTable($filename, $table);
-			}
-			return $success;
-		}
+            }
+            else
+            {
+                mkdir(substr($filename, 0, strrpos($filename, '/')), 0777, true);
+                return $this->saveTable($filename, $table);
+            }
+            return false;
+        }
 
-		/*
-		 * Loads a database table from a file into the database
-		 * $filename	=   the path and filename to the sql file
-		 * $table		=   the name of the table that will be created
-		                    if not used,...
-		 */
-		public function loadTable($filename, $table = "")
-		{
-		    $success = false;
-		    $filename = str_replace("\\", "/", $filename);
-			if($this->existsTable($table))
+        /*
+         * Loads a database table from a file into the database
+         * $filename	=   the path and filename to the sql file
+         * $table		=   the name of the table that will be created
+                            if not used,...
+         */
+        public function loadTable($filename, $table = "")
+        {
+            $filename = str_replace("\\", "/", $filename);
+            if($this->existsTable($table))
             {
                 $this->query("LOAD DATA INFILE '$filename' INTO TABLE $table FIELDS TERMINATED BY '%'
                               OPTIONALLY ENCLOSED BY '#' LINES TERMINATED BY '$\n' IGNORE 7 LINES");
                 $this->log->log("Loaded table $table.");
-                $success = true;
+                return true;
             }
             else
             {
-                $handle = fopen($filename, "r");
+                $handle    = fopen($filename, "r");
                 $tableName = str_replace("\n", "", fgets($handle));
-                $names = explode(",", str_replace("\n", "", fgets($handle)));
-                $types = explode(",", str_replace("\n", "", fgets($handle)));
-                $null = explode(",", str_replace("\n", "", fgets($handle)));
-                $key = explode(",", str_replace("\n", "", fgets($handle)));
-                $default = explode(",", str_replace("\n", "", fgets($handle)));
-                $extra = explode(",", str_replace("\n", "", fgets($handle)));
+                $names     = explode(",", str_replace("\n", "", fgets($handle)));
+                $types     = explode(",", str_replace("\n", "", fgets($handle)));
+                $null      = explode(",", str_replace("\n", "", fgets($handle)));
+                $key       = explode(",", str_replace("\n", "", fgets($handle)));
+                $default   = explode(",", str_replace("\n", "", fgets($handle)));
+                $extra     = explode(",", str_replace("\n", "", fgets($handle)));
                 fclose($handle);
 
                 $this->createTable($tableName, $names, $types, $null, $key, $default, $extra);
-                $this->loadTable($filename, $table);
+                return $this->loadTable($filename, $table);
             }
-            return $success;
-		}
+            return false;
+        }
 
-		/*
-		 * Saves all tables in a database to the given path
-		 * $path	= the path where the tables files will be stored
-		 * $name	= the name of the database
-		 */
-		public function saveDatabase($path, $name)
-		{
-			$success = false;
-			if($path == "")
-			    $path = dirname(__FILE__) . "/backup/";
-			if($this->selectDatabase($name) > 0)
-			{
-				$query = $this->query("SHOW TABLES");
-				while($table = mysqli_fetch_array($query))
-				{
-					$this->saveTable($path . "/" . $table[0] . ".sql", $table[0]);
-				}
-				$success = true;
-				$this->log->log("Saved database $name to $path.");
-			}
-			return $success;
-		}
+        /*
+         * Saves all tables in a database to the given path
+         * $path	= the path where the tables files will be stored
+         * $name	= the name of the database
+         */
+        public function saveDatabase($path, $name)
+        {
+            if($path == "")
+            {
+                $path = dirname(__FILE__) . "/backup/";
+            }
+            if($this->selectDatabase($name) > 0)
+            {
+                $query = $this->query("SHOW TABLES");
+                while($table = mysqli_fetch_array($query))
+                {
+                    $this->saveTable($path . "/" . $table[0] . ".sql", $table[0]);
+                }
+                $this->log->log("Saved database $name to $path.");
+                return true;
+            }
+            return false;
+        }
 
-		/*
-		 * Loads all database tables from the given path into the database
-		 * $path	= the path to the sql files
-		 * $name	= the name of the database where contents will be loaded, will be created if it does not exist
-		 */
-		public function loadDatabase($path, $name)
-		{
-			$success = false;
-			if($path == "")
-			    $path = dirname(__FILE__) . "/backup/";
-			if($this->existsDatabase($name))
-			{
-				if($handle = opendir($path))
-				{
-					while(($entry = readdir($handle)) !== false)
-					{
-						if(!is_dir($path . "/" . $entry))
-							$this->loadTable($path . "/" . $entry, substr($entry, 0, strpos($entry, ".sql")));
-					}
-					$success = true;
-					$this->log->log("Loaded database $name from $path.");
-				}
-			}
-			else
-			{
-				$this->createDatabase($name);
-				$this->loadDatabase($path, $name);
-			}
-			return $success;
-		}
+        /*
+         * Loads all database tables from the given path into the database
+         * $path	= the path to the sql files
+         * $name	= the name of the database where contents will be loaded, will be created if it does not exist
+         */
+        public function loadDatabase($path, $name)
+        {
+            if($path == "")
+            {
+                $path = dirname(__FILE__) . "/backup/";
+            }
+            if($this->existsDatabase($name))
+            {
+                if($handle = opendir($path))
+                {
+                    while(($entry = readdir($handle)) !== false)
+                    {
+                        if(!is_dir($path . "/" . $entry))
+                        {
+                            $this->loadTable($path . "/" . $entry, substr($entry, 0, strpos($entry, ".sql")));
+                        }
+                    }
+                    $this->log->log("Loaded database $name from $path.");
+                    return true;
+                }
+            }
+            else
+            {
+                $this->createDatabase($name);
+                return $this->loadDatabase($path, $name);
+            }
+            return false;
+        }
 
-		/*
-		 * Gibt alle Datenbanken aus
-		 */
-		public function showLocalhost()
-		{
-			$echo = "";
-			$query = $this->query("SHOW DATABASES");
+        /*
+         * Gibt alle Datenbanken aus
+         */
+        public function showLocalhost()
+        {
+            $echo  = "";
+            $query = $this->query("SHOW DATABASES");
 
-			$echo .= "<table border='0' cellspacing='0'>";
+            $echo .= "<table border='0' cellspacing='0'>";
 
-			while($db = mysqli_fetch_array($query))
-			{
-				$this->selectDatabase($db[0]);
-				$echo .= $this->showDatabase($db[0]);
-			}
-			$echo .= "</table>";
-			return $echo;
-		}
+            while($db = mysqli_fetch_array($query))
+            {
+                $this->selectDatabase($db[0]);
+                $echo .= $this->showDatabase($db[0]);
+            }
+            $echo .= "</table>";
+            return $echo;
+        }
 
-		/*
-		 * Gibt alle Datenbanken mit Werten aus
-		 */
-		public function showLocalhostValue()
-		{
-			$echo = "";
-			$query = $this->query("SHOW DATABASES");
+        /*
+         * Gibt alle Datenbanken mit Werten aus
+         */
+        public function showLocalhostValue()
+        {
+            $echo  = "";
+            $query = $this->query("SHOW DATABASES");
 
-			$echo .= "<table border='0' cellspacing='0'>";
+            $echo .= "<table border='0' cellspacing='0'>";
 
-			while($db = mysqli_fetch_array($query))
-			{
-				$this->selectDatabase($db[0]);
-				$echo .= $this->showDatabaseValue($db[0]);
-			}
-			$echo .= "</table>";
-			return $echo;
-		}
+            while($db = mysqli_fetch_array($query))
+            {
+                $this->selectDatabase($db[0]);
+                $echo .= $this->showDatabaseValue($db[0]);
+            }
+            $echo .= "</table>";
+            return $echo;
+        }
 
-		/*
-		 * Gibt die ausgewählte Datenbank mit Tabellen und Feldern aus
-		 */
-		public function showDatabase($name)
-		{
-			$echo = "";
-			$result = $this->selectDatabase($name);
-			if(!empty($result))
-			{
-				$echo .= "<table border='0' cellspacing='0'>"
-							."<tr>"
-								."<td><h1>Datenbank:&nbsp;&nbsp;</h1></td><td align='right'><h1>".$this->db_name ."</h1></td>"
-							."</tr>"
-						."</table>";
+        /*
+         * Gibt die ausgewählte Datenbank mit Tabellen und Feldern aus
+         */
+        public function showDatabase($name)
+        {
+            $echo   = "";
+            $result = $this->selectDatabase($name);
+            if(!empty($result))
+            {
+                $echo .= "<table border='0' cellspacing='0'>"
+                    . "<tr>"
+                    . "<td><h1>Datenbank:&nbsp;&nbsp;</h1></td><td align='right'><h1>" . $this->db_name . "</h1></td>"
+                    . "</tr>"
+                    . "</table>";
 
-				$query = $this->query("SHOW TABLES");
+                $query = $this->query("SHOW TABLES");
 
-				if(@mysqli_num_rows($query))
-				{
-					while($tables = mysqli_fetch_array($query))
-					{
-						$tableQuery = $this->query("SHOW COLUMNS FROM ".$tables[0]);
+                if(@mysqli_num_rows($query))
+                {
+                    while($tables = mysqli_fetch_array($query))
+                    {
+                        $tableQuery = $this->query("SHOW COLUMNS FROM " . $tables[0]);
 
-						if(mysqli_num_rows($tableQuery) > 0)
-						{
-							$echo .= "<table border='0' cellspacing='0'>"
-										."<tr>"
-											."<td><h2>Tabelle:&nbsp;&nbsp;</h2></td><td align='right'><h2>".$tables[0]."</h2></td>"
-										."</tr>"
-									."</table>";
+                        if(mysqli_num_rows($tableQuery) > 0)
+                        {
+                            $echo .= "<table border='0' cellspacing='0'>"
+                                . "<tr>"
+                                . "<td><h2>Tabelle:&nbsp;&nbsp;</h2></td><td align='right'><h2>" . $tables[0] . "</h2></td>"
+                                . "</tr>"
+                                . "</table>";
 
-							$echo .= "<table border='1' cellspacing='0'>"
-									."<tr>"
-										."<td><b>Name</b></td>"
-										."<td><b>Typ</b></td>"
-										."<td><b>NULL</b></td>"
-										."<td><b>Primary</b></td>"
-										."<td><b>Default</b></td>"
-										."<td><b>Extra</b></td>"
-									."</tr>";
+                            $echo .= "<table border='1' cellspacing='0'>"
+                                . "<tr>"
+                                . "<td><b>Name</b></td>"
+                                . "<td><b>Typ</b></td>"
+                                . "<td><b>NULL</b></td>"
+                                . "<td><b>Primary</b></td>"
+                                . "<td><b>Default</b></td>"
+                                . "<td><b>Extra</b></td>"
+                                . "</tr>";
 
-							while($columns = mysqli_fetch_array($tableQuery))
-							{
-								$echo .= "<tr>"
-											."<td>".$columns[0]."</td>"
-											."<td>".$columns[1]."</td>"
-											."<td>".$columns[2]."</td>"
-											."<td>".$columns[3]."</td>"
-											."<td>".$columns[4]."</td>"
-											."<td>".$columns[5]."</td>"
-										."</tr>";
-							}
-							$echo .= "</table>";
-						}
-					}
-				}
-			}
-			return $echo;
-		}
+                            while($columns = mysqli_fetch_array($tableQuery))
+                            {
+                                $echo .= "<tr>"
+                                    . "<td>" . $columns[0] . "</td>"
+                                    . "<td>" . $columns[1] . "</td>"
+                                    . "<td>" . $columns[2] . "</td>"
+                                    . "<td>" . $columns[3] . "</td>"
+                                    . "<td>" . $columns[4] . "</td>"
+                                    . "<td>" . $columns[5] . "</td>"
+                                    . "</tr>";
+                            }
+                            $echo .= "</table>";
+                        }
+                    }
+                }
+            }
+            return $echo;
+        }
 
-		/*
-		 *	Gibt die ausgewählte Datenbank mit Tabellen und Werten aus
-		 */
-		public function showDatabaseValue($name)
-		{
-			$echo = "";
-			$result = $this->selectDatabase($name);
-			if($result)
-			{
-				$echo .= "<table border='0' cellspacing='0'>"
-							."<tr>"
-								."<td><h1>Datenbank:&nbsp;&nbsp;</h1></td><td align='right'><h1>".$this->db_name ."</h1></td>"
-							."</tr>"
-						."</table>";
+        /*
+         *	Gibt die ausgewählte Datenbank mit Tabellen und Werten aus
+         */
+        public function showDatabaseValue($name)
+        {
+            $echo   = "";
+            $result = $this->selectDatabase($name);
+            if($result)
+            {
+                $echo .= "<table border='0' cellspacing='0'>"
+                    . "<tr>"
+                    . "<td><h1>Datenbank:&nbsp;&nbsp;</h1></td><td align='right'><h1>" . $this->db_name . "</h1></td>"
+                    . "</tr>"
+                    . "</table>";
 
-				$query = $this->query("SHOW TABLES");
+                $query = $this->query("SHOW TABLES");
 
-				if(@mysqli_num_rows($query))
-				{
-					while($tables = mysqli_fetch_array($query))
-					{
-						$tableQuery = $this->query("SELECT * FROM ".$tables[0]);
+                if(@mysqli_num_rows($query))
+                {
+                    while($tables = mysqli_fetch_array($query))
+                    {
+                        $tableQuery = $this->query("SELECT * FROM " . $tables[0]);
 
-						if(mysqli_num_rows($tableQuery) > 0)
-						{
-							$echo .= "<table border='0'>"
-										."<tr>"
-											."<td><h2>Tabelle:&nbsp;&nbsp;</h2></td><td align='right'><h2>".$tables[0]."</h2></td>"
-										."</tr>"
-									."</table>";
+                        if(mysqli_num_rows($tableQuery) > 0)
+                        {
+                            $echo .= "<table border='0'>"
+                                . "<tr>"
+                                . "<td><h2>Tabelle:&nbsp;&nbsp;</h2></td><td align='right'><h2>" . $tables[0] . "</h2></td>"
+                                . "</tr>"
+                                . "</table>";
 
-							$echo .= $this->showTable($tables[0]);
-						}
-					}
-				}
-			}
-			return $echo;
-		}
+                            $echo .= $this->showTable($tables[0]);
+                        }
+                    }
+                }
+            }
+            return $echo;
+        }
 
-		public function showTable($table)
-		{
-			$echo = "";
-			$echo .= "<table border='1' cellspacing='0'>";
-			if(!empty($this->db_name))
-			{
-				$cols = $this->query("SHOW COLUMNS FROM ".$table);
-				$datas = $this->query("SELECT * FROM ".$table);
+        public function showTable($table)
+        {
+            $echo = "";
+            $echo .= "<table border='1' cellspacing='0'>";
+            if(!empty($this->db_name))
+            {
+                $cols  = $this->query("SHOW COLUMNS FROM " . $table);
+                $datas = $this->query("SELECT * FROM " . $table);
 
 
-				if(($datanum = mysqli_num_rows($cols)) > 0 && (mysqli_num_rows($datas)) > 0)
-				{
-					$echo .= "<tr>";
-					while($col = mysqli_fetch_array($cols))
-						$echo .= "<td><b>".$col[0]."</b></td>";
-					$echo .= "</tr>";
+                if(($datanum = mysqli_num_rows($cols)) > 0 && (mysqli_num_rows($datas)) > 0)
+                {
+                    $echo .= "<tr>";
+                    while($col = mysqli_fetch_array($cols))
+                    {
+                        $echo .= "<td><b>" . $col[0] . "</b></td>";
+                    }
+                    $echo .= "</tr>";
 
-					while($data = mysqli_fetch_array($datas))
-					{
-						$echo .= "<tr>";
-						for($i = 0; $i < $datanum; $i++)
-						{
-							$echo .= "<td>".$data[$i]."</td>";
-						}
-						$echo .= "</tr>";
-					}
-				}
-			}
-			$echo .= "</table>";
-			return $echo;
-		}
-	}
+                    while($data = mysqli_fetch_array($datas))
+                    {
+                        $echo .= "<tr>";
+                        for($i = 0; $i < $datanum; $i++)
+                        {
+                            $echo .= "<td>" . $data[$i] . "</td>";
+                        }
+                        $echo .= "</tr>";
+                    }
+                }
+            }
+            $echo .= "</table>";
+            return $echo;
+        }
+    }
+
 ?>
 

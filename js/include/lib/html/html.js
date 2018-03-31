@@ -1,112 +1,177 @@
-var STYLE =
+/**
+ * This is the default style of the framework.
+ * @TODO the default look should look like normal CSS
+ */
+var DEFAULT_STYLE =
     {
         Button:
         {
-            background:   "#CCCCCC",
-            border:       "1px solid #555555",
-            borderRadius: "2px",
-            fontSize:     "11pt",
-            margin:       "3px 3px 3px 3px",
-            minWidth:     "60px",
-            outline:      "0",
-            padding:      "2px 5px 2px 5px"
+            background:   "",
+            border:       "",
+            borderRadius: "",
+            fontSize:     "",
+            margin:       "",
+            minWidth:     "",
+            outline:      "",
+            padding:      ""
         },
         Text:
         {
-            padding: "2px 5px 2px 5px"
+            fontSize: "12pt"
+        },
+        TextArea:
+        {
+            outline: "0",
+            border: "1px solid black",
+            background: "#FFFFFF",
+            lineHeight: "12px",
+            fontSize: "12px"
+        },
+        TextEditLineNumber:
+        {
+            display: "block",
+            fontSize: "12px",
+            lineHeight: "12px",
+            textAlign: "right"
+        },
+        TextEditLineNumbers:
+        {
+            background: "#AAAAAA",
+            borderRight: "1px solid black",
+            color: "#333333",
+            padding: "5px 3px 5px 3px"
+        },
+        TextEditTextArea:
+        {
+            border: "none",
+            fontSize: "12px",
+            lineHeight: "12px",
+            overflow: "hidden",
+            padding: "5px 2px 5px 2px",
+            resize: "none",
+            width: "100%"
+        },
+        TextEdit:
+        {
+            border: "1px solid black",
+            background: "#EEEEEE",
+            display: "flex",
+            fontFamily: "Consolas, monaco, monospace",
+            minHeight: "500px",
+            overflow: "auto",
+            width: "100%"
+        },
+        CollapseWidget:
+        {
+            background: "#EEEEEE",
+            border: "1px solid black",
+            borderRadius: "3px"
         },
         TextInputWidget:
         {
-            background:   "#DDDDDD",
-            border:       "none",
-            borderBottom: "1px solid #555555",
-            fontSize:     "11pt",
-            margin:       "-1px 0",
-            outline:      "0",
-            padding:      "3px 5px 2px 5px"
+            background:   "",
+            border:       "",
+            borderBottom: "",
+            fontSize:     "",
+            margin:       "",
+            outline:      "",
+            padding:      ""
         },
         TableWidget:
         {
-            border:         "none",
+            border:         "1px solid black",
             borderCollapse: "collapse",
-            borderStyle:    "hidden",
-            margin:         "5px 0px 5px 0px"
+            borderStyle:    "",
+            margin:         ""
         },
         TableWidgetHead:
         {
-            background: "#BBBBBB"
+            background: ""
         },
         TableWidgetBody:
         {
-            background: "#DDDDDD"
+            background: ""
         },
         TableWidgetHeaderRow:
         {
-            borderBottom: "1px solid #222222"
+            borderBottom: ""
         },
         TableWidgetHeader:
         {
-            minWidth: "100px",
-            padding:  "2px 2px 2px 2px"
+            border:   "1px solid black",
+            minWidth: "",
+            padding:  ""
         },
         TableWidgetRow:
         {
-            borderBottom: "1px solid #999999"
+            borderBottom: ""
         },
         TableWidgetCell:
         {
-            borderRight: "1px solid #AAAAAA",
-            padding:     "2px 5px 2px 5px",
-            textAlign:   "left"
+            border:    "1px solid black",
+            padding:   "",
+            textAlign: ""
         },
         ListWidget:
         {
-            background:   "#CCCCCC",
-            border:       "1px solid #555555",
-            borderRadius: "5px"
+            background:   "",
+            border:       "",
+            borderRadius: ""
         },
         ListWidgetEntry:
         {
-            padding: "2px 5px 2px 15px"
+            padding: ""
         },
         TabWidget:
         {
-            minWidth:  "300px"
+            minWidth: ""
         },
         TabWidgetHeader:
         {
-            height:    "20px",
-            margin:    "0 10px 0 10px",
-            maxHeight: "20px",
-            minWidth:  "400px",
-            whiteSpace: "nowrap"
+            height:     "14pt",
+            margin:     "",
+            maxHeight:  "14pt",
+            minWidth:   "",
+            lineHeight: "14pt",
+            whiteSpace: ""
         },
         TabWidgetTab:
         {
-            background:   "linear-gradient(#DDDDDD, #AAAAAA)",
-            border:       "1px solid #333333",
-            borderRadius: "3px",
+            background:   "",
+            border:       "1px solid black",
+            borderRadius: "",
             cursor:       "pointer",
             display:      "inline-block",
             float:        "left",
-            fontFamily:   "Verdana, Arial, sans-serif",
+            fontFamily:   "Times New Roman, sans-serif",
             fontWeight:   "bold",
-            height: "100%",
-            padding:      "3px",
+            height:       "",
+            padding:      "0 3px 0 3px",
             textAlign:    "center",
-            width:        "150px"
+            width:        ""
         },
         TabWidgetContent:
         {
-            background: "#EEEEEE",
-            border:     "1px solid #333333",
-            height:     "200px",
-            padding:    "10px 0",
-            textAlign:  "left",
-            width:      "100%"
+            background: "",
+            border:     "1px solid black",
+            height:     "auto",
+            padding:    "1px 0",
+            textAlign:  "",
+            width:      ""
         }
     };
 
+/********************
+ * Helper functions *
+ *******************/
+
+/**
+ * Returns a list depending on the given parameters
+ * @param from
+ * @param to
+ * @param step
+ * @returns {Array}
+ */
 function range(from, to, step)
 {
     var l = [];
@@ -117,6 +182,11 @@ function range(from, to, step)
     return l;
 }
 
+/**
+ * Filters a list to just even elements
+ * @param list
+ * @returns {Array}
+ */
 function even(list)
 {
     var l = [];
@@ -130,6 +200,11 @@ function even(list)
     return l;
 }
 
+/**
+ * Filters a list to just odd elements
+ * @param list
+ * @returns {Array}
+ */
 function odd(list)
 {
     var l = [];
@@ -163,6 +238,15 @@ function init(obj, def)
     return def;
 }
 
+/*****************
+ * GUI functions *
+ ****************/
+
+/**
+ *
+ * @param obj
+ * @param style
+ */
 function cascadeStyle(obj, style)
 {
     if(obj.children !== undefined)
@@ -177,7 +261,59 @@ function cascadeStyle(obj, style)
             cascadeStyle(obj.children[child], style);
         }
     }
+    else if(obj.child !== null)
+    {
+        if(style[obj.child.class] !== undefined)
+        {
+            obj.child.setStyles(style[obj.child.class]);
+        }
+        cascadeStyle(obj.child, style);
+    }
 }
+
+/**
+ * TODO optimize search
+ * @param id
+ * @param parent
+ * @returns {*}
+ */
+function getWidget(id, parent)
+{
+    if(parent === undefined)
+    {
+        parent = GUI.doc;
+    }
+
+    for(var child in parent.children)
+    {
+        var wid = parseInt(parent.children[child].id);
+        id = parseInt(id);
+
+        if(wid === id)
+        {
+            return parent.children[child];
+        }
+        var rec_child = getWidget(id, parent.children[child]);
+        if(rec_child !== false)
+        {
+            if(rec_child !== undefined && rec_child.id === id)
+            {
+                return rec_child;
+            }
+        }
+    }
+    return false;
+}
+
+/***********************
+ * GUI Element classes *
+ **********************/
+
+var GUI =
+{
+    id : 0,
+    doc : null
+};
 
 /**
  *
@@ -190,11 +326,22 @@ function Document()
     this.class = "Document";
     this.append = function(object)
     {
-        this.children.push(object);
-        document.body.appendChild(object.element);
+        if(object instanceof Array)
+        {
+            for(var c in object)
+            {
+                this.append(object[c]);
+            }
+        }
+        else
+        {
+            this.children.push(object);
+            object.parent = this;
+            document.body.appendChild(object.element);
+        }
         return this;
     };
-
+    GUI.doc = this;
     return this;
 }
 
@@ -205,6 +352,24 @@ function Document()
  */
 function Object()
 {
+    this.createElement = function(type)
+    {
+        this.id = GUI.id++;
+        this.element = document.createElement(type);
+        this.setId(this.id);
+        this.setClassName(this.class);
+    };
+
+    // this.getElementById = function(id)
+    // {
+    //     this.element = document.getElementById(id)
+    // };
+    //
+    // this.getElement = function()
+    // {
+    //     this.element = document.getElementById(this.id);
+    // };
+
     this.setStyle = function(key, value)
     {
         if(this.element.style.hasOwnProperty(key))
@@ -246,6 +411,26 @@ function Object()
     {
         this.element.innerHTML = "";
         this.element.appendChild(object.element);
+        this.child = object;
+        object.parent = this;
+        return this;
+    };
+
+    this.setId = function(id)
+    {
+        this.element.id = id;
+        return this;
+    };
+
+    this.setClassName = function(name)
+    {
+        this.element.className = name;
+        return this;
+    };
+
+    this.addClassName = function(name)
+    {
+        this.element.className += " " + name;
         return this;
     };
 
@@ -255,10 +440,45 @@ function Object()
         return this;
     };
 
+    this.addText = function(text)
+    {
+        this.element.innerHTML += text;
+        return this;
+    };
+
     this.setValue = function(value)
     {
         this.element.value = value;
         return this;
+    };
+
+    this.onClick = function(callback)
+    {
+        this.element.onclick = callback;
+    };
+
+    this.show = function(soft)
+    {
+        if(soft)
+        {
+            this.setStyle("display", "inline-block");
+        }
+        else
+        {
+            this.setStyle("display", "block");
+        }
+        return this;
+    };
+
+    this.hide = function()
+    {
+        this.setStyle("display", "none");
+        return this;
+    };
+
+    this.setDraggable = function(draggable)
+    {
+        this.setAttribute("draggable", draggable);
     };
 
     this.getObject = function()
@@ -266,8 +486,12 @@ function Object()
         return this.element;
     };
 
-    this.element = document.createElement("div");
     this.class = "Object";
+    this.child = null;
+    this.parent = null;
+    this.id = -1;
+    this.createElement("div");
+    this.setAttribute("class", this.class);
     return this;
 }
 
@@ -286,10 +510,10 @@ function Widget()
 function Text(text)
 {
     Widget.call(this);
-    this.element = document.createElement("p");
     this.class = "Text";
+    this.createElement("p");
     this.setText(text);
-    this.setStyles(STYLE.Text);
+    this.setStyles(DEFAULT_STYLE.Text);
     return this;
 }
 
@@ -301,10 +525,10 @@ function Text(text)
 function Button(text)
 {
     Widget.call(this);
-    this.element = document.createElement("button");
     this.class = "Button";
+    this.createElement("button");
     this.setText(text);
-    this.setStyles(STYLE.Button);
+    this.setStyles(DEFAULT_STYLE.Button);
     return this;
 }
 
@@ -317,12 +541,30 @@ function Button(text)
 function TextInputWidget(text, placeholder)
 {
     Widget.call(this);
-    this.element = document.createElement("input");
     this.class = "TextInputWidget";
+    this.createElement("input");
     this.setValue(text);
-    this.setStyles(STYLE.TextInputWidget);
+    this.setStyles(DEFAULT_STYLE.TextInputWidget);
     this.setAttribute("type", "text");
     this.setAttribute("placeholder", placeholder);
+    return this;
+}
+
+/**
+ *
+ * @param text
+ * @param placeholder
+ * @returns {TextArea}
+ * @constructor
+ */
+function TextArea(text, placeholder)
+{
+    Widget.call(this);
+    this.class = "TextArea";
+    this.createElement("textarea");
+    this.setText(init(text, ""));
+    this.setStyles(DEFAULT_STYLE.TextArea);
+    this.setAttribute("placeholder", init(placeholder, ""));
     return this;
 }
 
@@ -332,12 +574,32 @@ function TextInputWidget(text, placeholder)
  */
 function Layout()
 {
-    this.appendChild = function(child)
+    this.append = function(child)
     {
-        this.children.push(child);
-        this.element.appendChild(child.element);
+        if(child instanceof Array)
+        {
+            for(var c in child)
+            {
+                this.append(child[c]);
+            }
+        }
+        else 
+        {
+            this.children.push(child);
+            child.parent = this;
+            this.element.appendChild(child.element);
+        }
         return this;
     };
+
+    this.remove = function()
+    {
+        this.element.removeChild(this.element.children[this.element.children.length - 1]);
+        //TODO
+        // this.children.splice(this.children.length - 1, 1);
+        // console.log(this.children.length);
+    };
+
     Object.call(this);
     this.children = [];
     this.class = "Layout";
@@ -360,6 +622,163 @@ function Box(orientation)
 
 /**
  *
+ * @constructor
+ */
+function TextEditLineNumber(number)
+{
+    Object.call(this);
+    this.class = "TextEditLineNumber";
+    this.createElement('span');
+    this.setText(number);
+    this.setStyles(DEFAULT_STYLE.TextEditLineNumber);
+    return this;
+}
+
+/**
+ *
+ * @constructor
+ */
+function TextEditLineNumbers(lines)
+{
+    this.addLine = function()
+    {
+        this.append(new TextEditLineNumber((this.lines++ + 1)));
+        return this;
+    };
+
+    this.removeLine = function()
+    {
+        this.remove();
+        this.lines--;
+        return this;
+    };
+
+    this.addLines = function(lines)
+    {
+        for(var i in range(0, lines - 1, 1))
+        {
+            this.addLine();
+        }
+        return this;
+    };
+
+    Layout.call(this);
+    this.lines = 0;
+    this.class = "TextEditLineNumbers";
+    this.createElement('div');
+    this.addLines(lines);
+    this.setStyles(DEFAULT_STYLE.TextEditLineNumbers);
+    return this;
+}
+
+/**
+ *
+ * @param text
+ * @constructor
+ */
+function TextEditTextArea(text)
+{
+    Widget.call(this);
+    this.class = "TextEditTextArea";
+    this.createElement("div");
+    this.setAttribute("contenteditable", "true")
+    this.setStyles(DEFAULT_STYLE.TextEditTextArea);
+    return this;
+}
+
+/**
+ *
+ * @param text
+ * @constructor
+ */
+function TextEdit(text)
+{
+    this.onNewline = function(event)
+    {
+        var key = event.keyCode ? event.keyCode : event.which;
+        var w = getWidget(this.id);
+        if(key === 13)
+        {
+            document.execCommand('insertHTML', false, '<br><br>');
+            w.parent.line_area.addLine();
+            return false;
+        }
+        else if(key === 8)
+        {
+            document.execCommand('insertHTML', false, "");
+
+            var lines = w.element.innerText.split(/\r|\r\n|\n/).length;
+            while(w.parent.line_area.lines > lines)
+            {
+                w.parent.line_area.removeLine();
+            }
+            return false;
+        }
+    };
+
+    Layout.call(this);
+    this.class = "TextEdit";
+    this.line_area = new TextEditLineNumbers(1);
+    this.text_area = new TextEditTextArea();
+    this.text_area.element.onkeydown = this.onNewline;
+    this.text_area.element.onclick = function(){
+        var char = 3, sel; // character at which to place caret
+        var content = this;
+        content.focus();
+        if (document.selection) {
+            sel = document.selection.createRange();
+            sel.moveStart('character', char);
+            sel.select();
+        }
+        else {
+            sel = window.getSelection();
+            sel.moveStart('character', char);
+            sel.select();
+        }
+    };
+    this.createElement("div");
+    this.append([this.line_area, this.text_area]);
+    this.setStyles(DEFAULT_STYLE.TextEdit);
+    return this;
+}
+
+function CollapseWidget(text)
+{
+    Layout.call(this);
+    this.class = "CollapseWidget";
+    this.status = "open";
+    this.text_content = new Text(text).setStyles(
+    {
+        margin: "20px 5px 5px 5px",
+        padding: "5px 50px 5px 50px"
+    });
+    this.collapse_button = new Button("-").setStyles(
+    {
+        display: "block",
+        right: "0px"
+    });
+    this.collapse_button.element.onclick = function()
+    {
+        var w = getWidget(this.id);
+        if(w.parent.status === "open")
+        {
+             w.parent.text_content.hide();
+             w.parent.status = "closed";
+        }
+        else
+        {
+            w.parent.text_content.show(true);
+            w.parent.status = "open";
+        }
+    };
+    this.createElement("div");
+    this.append([this.collapse_button, this.text_content]);
+    this.setStyles(DEFAULT_STYLE.CollapseWidget);
+    return this;
+}
+
+/**
+ *
  * @param value
  * @returns {TableWidgetCell}
  * @constructor
@@ -367,10 +786,10 @@ function Box(orientation)
 function TableWidgetCell(value)
 {
     Widget.call(this);
-    this.element = document.createElement("td");
     this.class = "TableWidgetCell";
+    this.createElement("td");
     this.setText(init(value, ""));
-    this.setStyles(STYLE.TableWidgetCell);
+    this.setStyles(DEFAULT_STYLE.TableWidgetCell);
     return this;
 }
 
@@ -382,10 +801,10 @@ function TableWidgetCell(value)
 function TableWidgetHeader(value)
 {
     Widget.call(this);
-    this.element = document.createElement("th");
     this.class = "TableWidgetHeader";
+    this.createElement("th");
     this.setText(init(value, ""));
-    this.setStyles(STYLE.TableWidgetHeader);
+    this.setStyles(DEFAULT_STYLE.TableWidgetHeader);
     return this;
 }
 
@@ -411,11 +830,11 @@ function TableWidgetRow(entries)
     {
         if(entry instanceof TableWidgetCell)
         {
-            this.appendChild(entry);
+            this.append(entry);
         }
         else
         {
-            this.appendChild(new TableWidgetCell(entry));
+            this.append(new TableWidgetCell(entry));
         }
         return this;
     };
@@ -430,10 +849,10 @@ function TableWidgetRow(entries)
     };
 
     Layout.call(this);
-    this.element = document.createElement("tr");
     this.class = "TableWidgetRow";
+    this.createElement("tr");
     this.addEntries(init(entries, []));
-    this.setStyles(STYLE.TableWidgetRow);
+    this.setStyles(DEFAULT_STYLE.TableWidgetRow);
     return this;
 }
 
@@ -459,11 +878,11 @@ function TableWidgetHeaderRow(entries)
     {
         if(entry instanceof TableWidgetHeader)
         {
-            this.appendChild(entry);
+            this.append(entry);
         }
         else
         {
-            this.appendChild(new TableWidgetHeader(entry));
+            this.append(new TableWidgetHeader(entry));
         }
         return this;
     };
@@ -478,10 +897,10 @@ function TableWidgetHeaderRow(entries)
     };
 
     Layout.call(this);
-    this.element = document.createElement("tr");
     this.class = "TableWidgetHeaderRow";
+    this.createElement("tr");
     this.addEntries(init(entries, []));
-    this.setStyles(STYLE.TableWidgetHeaderRow);
+    this.setStyles(DEFAULT_STYLE.TableWidgetHeaderRow);
     return this;
 }
 
@@ -516,11 +935,11 @@ function TableWidgetHead(entries)
     };
 
     Layout.call(this);
-    this.element = document.createElement("thead");
     this.class = "TableWidgetHead";
     this.row = new TableWidgetHeaderRow(entries);
-    this.appendChild(this.row);
-    this.setStyles(STYLE.TableWidgetHead);
+    this.createElement("thead");
+    this.append(this.row);
+    this.setStyles(DEFAULT_STYLE.TableWidgetHead);
     return this;
 }
 
@@ -546,11 +965,11 @@ function TableWidgetBody(rows)
     {
         if(row instanceof TableWidgetRow)
         {
-            this.appendChild(row);
+            this.append(row);
         }
         else
         {
-            this.appendChild(new TableWidgetRow(row));
+            this.append(new TableWidgetRow(row));
         }
         return this;
     };
@@ -565,10 +984,10 @@ function TableWidgetBody(rows)
     };
 
     Layout.call(this);
-    this.element = document.createElement("tbody");
     this.class = "TableWidgetBody";
+    this.createElement("tbody");
     this.addRows(init(rows, []));
-    this.setStyles(STYLE.TableWidgetBody);
+    this.setStyles(DEFAULT_STYLE.TableWidgetBody);
     return this;
 }
 
@@ -630,11 +1049,10 @@ function TableWidget(rows, headers)
     };
 
     Layout.call(this);
-    this.element = document.createElement("table");
     this.class = "TableWidget";
-
     if(init(headers, true))
     {
+
         this.table_header = new TableWidgetHead(rows[0]);
         rows.splice(0, 1);
         this.table_body = new TableWidgetBody(rows);
@@ -644,9 +1062,9 @@ function TableWidget(rows, headers)
         this.table_header = new TableWidgetHead();
         this.table_body = new TableWidgetBody(rows);
     }
-    this.appendChild(this.table_header);
-    this.appendChild(this.table_body);
-    this.setStyles(STYLE.TableWidget);
+    this.createElement("table");
+    this.append([this.table_header, this.table_body]);
+    this.setStyles(DEFAULT_STYLE.TableWidget);
     return this;
 }
 
@@ -659,10 +1077,10 @@ function TableWidget(rows, headers)
 function ListWidgetEntry(value)
 {
     Widget.call(this);
-    this.element = document.createElement("li");
     this.class = "ListWidgetEntry";
+    this.createElement("li");
     this.setText(init(value, ""));
-    this.setStyles(STYLE.ListWidgetEntry);
+    this.setStyles(DEFAULT_STYLE.ListWidgetEntry);
     return this;
 }
 
@@ -679,11 +1097,11 @@ function ListWidget(entries, type)
     {
         if(entry instanceof ListWidgetEntry)
         {
-            this.appendChild(entry);
+            this.append(entry);
         }
         else
         {
-            this.appendChild(new ListWidgetEntry(entry));
+            this.append(new ListWidgetEntry(entry));
         }
         return this;
     };
@@ -699,58 +1117,56 @@ function ListWidget(entries, type)
 
     Layout.call(this);
     type = (type === "ol") ? "ol" : "ul";
-    this.element = document.createElement(type);
     this.class = "ListWidget";
+    this.createElement(type);
     this.addEntries(init(entries, []));
-    this.setStyles(STYLE.ListWidget);
+    this.setStyles(DEFAULT_STYLE.ListWidget);
     return this;
 }
 
 /**
  *
- * @param parent
  * @param text
  * @param content
  * @returns {TabWidgetTab}
  * @constructor
  */
-function TabWidgetTab(parent, text, content)
+function TabWidgetTab(text, content)
 {
     Widget.call(this);
-    this.element = document.createElement("div");
     this.class = "TabWidgetTab";
-    this.parent = parent;
     this.content = content;
+    this.createElement("div");
     this.element.onclick = function()
     {
-        parent.setContent(content)
+        console.log(getWidget(this.id))
+        getWidget(this.id).parent.parent.setContent(content)
     };
     this.setText(text);
-    this.setStyles(STYLE.TabWidgetTab);
+    this.setStyles(DEFAULT_STYLE.TabWidgetTab);
     return this;
 }
 
 /**
  *
- * @param parent
  * @param tabs
  * @param contents
  * @returns {TabWidgetHeader}
  * @constructor
  */
-function TabWidgetHeader(parent, tabs, contents)
+function TabWidgetHeader(tabs, contents)
 {
     this.addTab = function(tab, content)
     {
         if(tab instanceof TabWidgetTab)
         {
-            this.appendChild(tab);
+            this.append(tab);
             this.tabs.push(tab);
         }
         else
         {
-            var tab_widget = new TabWidgetTab(this.parent, tab, content);
-            this.appendChild(tab_widget);
+            var tab_widget = new TabWidgetTab(tab, content);
+            this.append(tab_widget);
             this.tabs.push(tab_widget);
         }
         return this;
@@ -766,12 +1182,11 @@ function TabWidgetHeader(parent, tabs, contents)
     };
 
     Layout.call(this);
-    this.element = document.createElement("div");
     this.class = "TabWidgetHeader";
-    this.parent = parent;
     this.tabs = [];
+    this.createElement("div");
     this.addTabs(init(tabs, [""]), init(contents, [""]));
-    this.setStyles(STYLE.TabWidgetHeader);
+    this.setStyles(DEFAULT_STYLE.TabWidgetHeader);
     return this;
 }
 
@@ -797,10 +1212,10 @@ function TabWidgetContent(content)
     };
 
     Widget.call(this);
-    this.element = document.createElement("div");
     this.class = "TabWidgetContent";
+    this.createElement("div");
     this.setContent(init(content, ""));
-    this.setStyles(STYLE.TabWidgetContent);
+    this.setStyles(DEFAULT_STYLE.TabWidgetContent);
     return this;
 }
 
@@ -831,7 +1246,7 @@ function TabWidget(headers, contents)
 
     this.addTab = function(tab, content)
     {
-        this.tabs.addTab(tab, content);
+        this.tab_header.addTab(tab, content);
         return this;
     };
 
@@ -845,12 +1260,11 @@ function TabWidget(headers, contents)
     };
 
     Layout.call(this);
-    this.element = document.createElement("div");
     this.class = "TabWidget";
-    this.tabs = new TabWidgetHeader(this, init(headers, [""]), init(contents, [""]));
-    this.content = new TabWidgetContent(this.tabs.tabs[0].content);
-    this.appendChild(this.tabs);
-    this.appendChild(this.content);
-    this.setStyles(STYLE.TabWidget);
+    this.tab_header = new TabWidgetHeader(init(headers, ["new*"]), init(contents, ["empty"]));
+    this.content = new TabWidgetContent(this.tab_header.tabs[0].content);
+    this.createElement("div");
+    this.append([this.tab_header, this.content]);
+    this.setStyles(DEFAULT_STYLE.TabWidget);
     return this;
 }
