@@ -4,38 +4,103 @@
     <meta charset="UTF-8">
     <title>Test</title>
     <link rel="stylesheet" href="../css/style_code.css"/>
+    <link rel="stylesheet" href="../css/editor.css"/>
 </head>
 <body>
     <body>
         <script src="../js/include/lib/html/bright_style.js"></script>
         <script src="../js/include/lib/html/dark_style.js"></script>
+        <script src="../js/include/lib/html/editor_style.js"></script>
         <script src="../js/include/lib/html/html.js"></script>
         <script>
-            var state = 1;
-            var doc = Document();
-            var list = new ListWidget(["a", "b", "c"]);
-            var table = new TableWidget([["a", "b"], ["c", "d"]], true)
-                .addRows([["a", "b"], ["asd", "das"]]);
-            var tab = new TabWidget(["Tab1", "Tab2"], ["asd", "sad"]);
-            var button = new Button("Test");
-            var input = new TextInputWidget("", "text");
-            var box = new Box("v");
-            box.appendChild(button).appendChild(input);
-
-            button.element.onclick = function()
+            function a(event)
             {
-                state = (state === 0) ? 1 : 0;
-                if(state === 0)
+                event.dataTransfer.setData("data", this.innerHTML);
+            }
+            function b(event)
+            {
+                event.preventDefault();
+            }
+            function c(event)
+            {
+                event.preventDefault();
+                if(event.dataTransfer.files.length > 0)
                 {
-                    cascadeStyle(doc, DARK_STYLE);
+                    var reader = new FileReader();
+                    reader.onload = function(event)
+                    {
+                        console.log(event.target.result);
+                        text.text_area.addText(encode(event.target.result));
+                    };
+                    for(var i = 0; i < event.dataTransfer.files.length; i++)
+                    {
+                        var file = event.dataTransfer.files[i];
+                        console.log(i, file);
+                        reader.readAsText(file)
+                    }
                 }
-                else if(state === 1)
+                else
                 {
-                    cascadeStyle(doc, BRIGHT_STYLE);
+                    var data = event.dataTransfer.getData("data");
+                    console.log(data);
+                    event.target.innerHTML = data;
                 }
-            };
+            }
 
-            doc.append(list).append(table).append(tab.addTab("Test3", box));
+            function encode(str)
+            {
+                var buf = [];
+                for (var i = str.length - 1; i >= 0; i--)
+                {
+                    buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+                }
+                return buf.join('');
+            }
+
+            function decode(str)
+            {
+                return str.replace(/&#(\d+);/g, function(match, dec)
+                {
+                    return String.fromCharCode(dec);
+                });
+            }
+
+            function setStyle()
+            {
+                cascadeStyle(text_edit4, EDITOR_STYLE);
+            }
+
+            var doc = Document();
+
+            //DEFAULT_STYLE = EDITOR_STYLE;
+
+            var tab_widget = new TabWidget();
+            var text_edit1 = new TextEdit("1");
+            var text_edit2 = new TextEdit("2");
+            var text_edit3 = new TextEdit("3");
+            var text_edit4 = new TextEdit("4");
+
+            var bt_toggle = new Button("Toggle Style");
+
+            text_edit1.text_area.setDraggable(true);
+            text_edit1.text_area.element.ondragstart = a ;
+            text_edit1.text_area.element.ondragover = b;
+            text_edit1.text_area.element.ondrop = c;
+
+            text_edit4.append(bt_toggle);
+            bt_toggle.onClick(setStyle);
+
+            tab_widget.addTab("Edit1", text_edit1);
+            tab_widget.addTab("Edit2", text_edit2);
+            tab_widget.addTab("Edit3", text_edit3);
+            tab_widget.addTab("My File", text_edit4);
+
+            text_edit3.setWidgetStyle(EDITOR_STYLE);
+            cascadeStyle(text_edit2, EDITOR_STYLE);
+
+            //var text_edit = new TextEdit();
+
+            doc.append([tab_widget]);
         </script>
 </body>
 </html>

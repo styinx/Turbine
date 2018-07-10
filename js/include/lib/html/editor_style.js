@@ -34,7 +34,7 @@ var EDITOR_STYLE =
         TextEditLineNumbers:
         {
             background: "#333333",
-            borderRight: "1px solid black",
+            borderRight: "1px solid red",
             padding: "5px 3px 5px 3px"
         },
         TextEditTextArea:
@@ -58,7 +58,7 @@ var EDITOR_STYLE =
             fontFamily: "Consolas, monaco, monospace",
             minHeight: "500px",
             overflow: "auto",
-            width: "100%"
+            width: "calc(100% - 2px)"
         },
         CollapseWidget:
         {
@@ -154,7 +154,7 @@ var EDITOR_STYLE =
             background: "",
             border:     "1px solid black",
             height:     "auto",
-            padding:    "1px 0",
+            padding:    "0",
             textAlign:  "",
             width:      ""
         }

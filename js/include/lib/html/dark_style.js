@@ -2,107 +2,158 @@ var DARK_STYLE =
     {
         Button:
         {
-            background:   "#333333",
-            border:       "1px solid #555555",
-            borderRadius: "2px",
-            fontSize:     "11pt",
-            margin:       "3px 3px 3px 3px",
-            minWidth:     "60px",
-            outline:      "0",
-            padding:      "2px 5px 2px 5px"
+            background:   "",
+            border:       "",
+            borderRadius: "",
+            fontSize:     "",
+            margin:       "",
+            minWidth:     "",
+            outline:      "",
+            padding:      ""
         },
         Text:
         {
-            padding: "2px 5px 2px 5px"
+            fontSize: "12pt"
+        },
+        TextArea:
+        {
+            outline: "0",
+            border: "1px solid black",
+            background: "#FFFFFF",
+            lineHeight: "12px",
+            fontSize: "12px"
+        },
+        TextEditLineNumber:
+        {
+            display: "block",
+            fontSize: "12px",
+            lineHeight: "12px",
+            textAlign: "right"
+        },
+        TextEditLineNumbers:
+        {
+            background: "#AAAAAA",
+            borderRight: "1px solid black",
+            color: "#333333",
+            padding: "5px 3px 5px 3px"
+        },
+        TextEditTextArea:
+        {
+            border: "none",
+            fontSize: "12px",
+            lineHeight: "12px",
+            overflow: "hidden",
+            padding: "5px 2px 5px 2px",
+            resize: "none",
+            background: "#00EE00",
+            width: "100%"
+        },
+        TextEdit:
+        {
+            border: "1px solid black",
+            background: "#00EE00",
+            display: "flex",
+            fontFamily: "Consolas, monaco, monospace",
+            minHeight: "500px",
+            overflow: "auto",
+            width: "100%"
+        },
+        CollapseWidget:
+        {
+            background: "#EEEEEE",
+            border: "1px solid black",
+            borderRadius: "3px"
         },
         TextInputWidget:
         {
-            background:   "#555555",
-            border:       "none",
-            borderBottom: "1px solid #555555",
-            fontSize:     "11pt",
-            margin:       "-1px 0",
-            outline:      "0",
-            padding:      "3px 5px 2px 5px"
+            background:   "",
+            border:       "",
+            borderBottom: "",
+            fontSize:     "",
+            margin:       "",
+            outline:      "",
+            padding:      ""
         },
         TableWidget:
         {
-            border:         "none",
+            border:         "1px solid black",
             borderCollapse: "collapse",
-            borderStyle:    "hidden",
-            margin:         "5px 0px 5px 0px"
+            borderStyle:    "",
+            margin:         ""
         },
         TableWidgetHead:
         {
-            background: "#BBBBBB"
+            background: ""
         },
         TableWidgetBody:
         {
-            background: "#555555"
+            background: ""
         },
         TableWidgetHeaderRow:
         {
-            borderBottom: "1px solid #222222"
+            borderBottom: ""
         },
         TableWidgetHeader:
         {
-            minWidth: "100px",
-            padding:  "2px 2px 2px 2px"
+            border:   "1px solid black",
+            minWidth: "",
+            padding:  ""
         },
         TableWidgetRow:
         {
-            borderBottom: "1px solid #999999"
+            borderBottom: ""
         },
         TableWidgetCell:
         {
-            borderRight: "1px solid #AAAAAA",
-            padding:     "2px 5px 2px 5px",
-            textAlign:   "left"
+            border:    "1px solid black",
+            padding:   "",
+            textAlign: ""
         },
         ListWidget:
         {
-            background:   "#333333",
-            border:       "1px solid #555555",
-            borderRadius: "5px"
+            background:   "",
+            border:       "",
+            borderRadius: ""
         },
         ListWidgetEntry:
         {
-            padding: "2px 5px 2px 15px"
+            padding: ""
         },
         TabWidget:
         {
-            minWidth: "300px"
+            minWidth: ""
         },
         TabWidgetHeader:
         {
-            height:     "20px",
-            margin:     "0 10px 0 10px",
-            maxHeight:  "20px",
-            minWidth:   "400px",
-            whiteSpace: "nowrap"
+            height:     "14pt",
+            margin:     "",
+            maxHeight:  "14pt",
+            minWidth:   "",
+            lineHeight: "14pt",
+            whiteSpace: ""
         },
         TabWidgetTab:
         {
-            background:   "linear-gradient(#555555, #AAAAAA)",
-            border:       "1px solid #333333",
-            borderRadius: "3px",
+            background:   "",
+            border:       "1px solid black",
+            borderRadius: "",
             cursor:       "pointer",
             display:      "inline-block",
             float:        "left",
-            fontFamily:   "Verdana, Arial, sans-serif",
+            fontFamily:   "Times New Roman, sans-serif",
             fontWeight:   "bold",
-            height:       "100%",
-            padding:      "3px",
+            height:       "",
+            padding:      "0 3px 0 3px",
             textAlign:    "center",
-            width:        "150px"
+            width:        ""
         },
         TabWidgetContent:
         {
-            background: "#EEEEEE",
-            border:     "1px solid #333333",
-            height:     "200px",
-            padding:    "10px 0",
-            textAlign:  "left",
-            width:      "100%"
+            background: "",
+            border:     "1px solid black",
+            height:     "auto",
+            padding:    "1px 0",
+            textAlign:  "",
+            width:      ""
         }
     };

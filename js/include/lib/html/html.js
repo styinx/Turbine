@@ -59,7 +59,7 @@ var DEFAULT_STYLE =
             fontFamily: "Consolas, monaco, monospace",
             minHeight: "500px",
             overflow: "auto",
-            width: "100%"
+            width: "calc(100% - 2px)"
         },
         CollapseWidget:
         {
@@ -155,7 +155,7 @@ var DEFAULT_STYLE =
             background: "",
             border:     "1px solid black",
             height:     "auto",
-            padding:    "1px 0",
+            padding:    "0",
             textAlign:  "",
             width:      ""
         }
@@ -216,6 +216,11 @@ function odd(list)
         }
     }
     return l;
+}
+
+function print(message)
+{
+    console.log(message);
 }
 
 function empty(obj)
@@ -279,29 +284,59 @@ function cascadeStyle(obj, style)
  */
 function getWidget(id, parent)
 {
+    id = parseInt(id);
     if(parent === undefined)
     {
         parent = GUI.doc;
     }
 
-    for(var child in parent.children)
+    if(parent !== null)
     {
-        var wid = parseInt(parent.children[child].id);
-        id = parseInt(id);
+        var rec_child;
+        var w_id;
 
-        if(wid === id)
+        if(parent.hasOwnProperty("children"))
         {
-            return parent.children[child];
-        }
-        var rec_child = getWidget(id, parent.children[child]);
-        if(rec_child !== false)
-        {
-            if(rec_child !== undefined && rec_child.id === id)
+            for(var child in parent.children)
             {
-                return rec_child;
+                w_id = parseInt(parent.children[child].id);
+
+                if(w_id === id)
+                {
+                    return parent.children[child];
+                }
+                rec_child = getWidget(id, parent.children[child]);
+                if(rec_child !== false)
+                {
+                    if(rec_child !== undefined && rec_child.id === id)
+                    {
+                        return rec_child;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(parent.child !== null)
+            {
+                w_id = parseInt(parent.child.id);
+                if(w_id === id)
+                {
+                    return parent.child;
+                }
+                rec_child = getWidget(id, parent.child);
+                if(rec_child !== false)
+                {
+                    if(rec_child !== undefined && rec_child.id === id)
+                    {
+                        return rec_child;
+                    }
+                }
             }
         }
     }
+
+
     return false;
 }
 
@@ -388,6 +423,19 @@ function Object()
         for(var style in styles)
         {
             this.setStyle(style, styles[style]);
+        }
+        return this;
+    };
+
+    this.setWidgetStyle = function(style)
+    {
+        if(style.hasOwnProperty(this.class))
+        {
+            this.setStyles(style[this.class])
+        }
+        else
+        {
+            this.setStyles(style)
         }
         return this;
     };
@@ -693,24 +741,24 @@ function TextEditTextArea(text)
  */
 function TextEdit(text)
 {
+    //var r = window.getSelection().getRangeAt(0);
     this.onKeyDown = function(event)
     {
         var key = event.keyCode ? event.keyCode : event.which;
-        var w = getWidget(this.id);
-        if(key === 13)
+        var w;
+        if(key === 13) // Newline
         {
-            document.execCommand('insertHTML', false, '<br><br>');
+            w = getWidget(this.id);
             w.parent.line_area.addLine();
-            return false;
         }
-        else if(key === 8 || key === 46)
+        else if(key === 8 || key === 46) // Delete / Erase
         {
+            w = getWidget(this.id);
             var lines = w.element.innerText.split(/\r|\r\n|\n/).length;
-            while(w.parent.line_area.lines >= lines)
+            while(w.parent.line_area.lines > lines)
             {
                 w.parent.line_area.removeLine();
             }
-            return false;
         }
     };
 
@@ -1035,7 +1083,6 @@ function TableWidget(rows, headers)
     this.class = "TableWidget";
     if(init(headers, true))
     {
-
         this.table_header = new TableWidgetHead(rows[0]);
         rows.splice(0, 1);
         this.table_body = new TableWidgetBody(rows);
@@ -1122,8 +1169,10 @@ function TabWidgetTab(text, content)
     this.createElement("div");
     this.element.onclick = function()
     {
-        console.log(getWidget(this.id))
-        getWidget(this.id).parent.parent.setContent(content)
+        var w = getWidget(this.id);
+        w.parent.parent.setContent(content);
+        //w.parent.parent.children.append(w.parent.parent.tab_header.tab[text]);
+
     };
     this.setText(text);
     this.setStyles(DEFAULT_STYLE.TabWidgetTab);

@@ -1,10 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>active line</title>
+    <script>
+        function checkActive()
+        {
+            var textarea = document.getElementById('textarea');
+            var value = textarea.innerText;
+            var caret = getCaretPosition(textarea);
+            var active = document.getElementById('active');
+
+
+            var stop = value.indexOf("\n", caret);
+
+            if(stop === -1)
+            {
+                stop = value.length - 1;
+            }
+
+            var start = value.substr(0, stop - 1).lastIndexOf("\n");
+
+            if(start === -1)
+            {
+                start = 0;
+            }
+
+            var new_value = value.substr(0, start)
+                + "<span style='background: grey'><span style='background:red'>_</span>"
+                + value.substr(start, caret - start)
+                + "<span style='background:blue'>|</span>"
+                + value.substr(caret, stop - caret + 1)
+                + "<span style='background:red'>_</span></span>"
+                + value.substr(stop, value.length - 1 - stop);
+
+            active.innerHTML = new_value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            //textarea.innerHTML = "<span style='background: red'>" + new_value + "</span>";
+            textarea.innerText = "<span style='background: grey'>asdasdasd<span style='background:red'>_</span>"
+        }
+        function getCaretPosition(editableDiv) {
+            var caretPos = 0,
+                sel, range;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.rangeCount) {
+                    range = sel.getRangeAt(0);
+                    if (range.commonAncestorContainer.parentNode === editableDiv) {
+                        caretPos = range.endOffset;
+                    }
+                }
+            } else if (document.selection && document.selection.createRange) {
+                range = document.selection.createRange();
+                if (range.parentElement() === editableDiv) {
+                    var tempEl = document.createElement("span");
+                    editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+                    var tempRange = range.duplicate();
+                    tempRange.moveToElementText(tempEl);
+                    tempRange.setEndPoint("EndToEnd", range);
+                    caretPos = tempRange.text.length;
+                }
+            }
+            return caretPos;
+        }
+
+    </script>
 </head>
 <body>
-$END$
+    <div id="textarea" contenteditable="true" onclick="checkActive()" oninput="checkActive()" onkeydown="checkActive()" style="width: 200px; height: 200px"></div>
+    <p id="active"></p>
 </body>
 </html>
