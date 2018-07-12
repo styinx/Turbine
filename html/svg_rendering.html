@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>active line</title>
+    <style>
+        body {background: #333333}
+        #image
+        {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+    <script src="../js/include/lib/chart/svg_chart.js"></script>
+</head>
+<body height="500">
+    <div id="image"></div>
+    <script>
+        LineChart()
+        .attach("image")
+        .drawGrid()
+        .draw([2, 6, 9, 3, 15, 6, 8, 12]);
+    </script>
+</body>
+</html>

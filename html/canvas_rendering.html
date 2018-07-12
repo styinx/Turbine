@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>active line</title>
+    <script src="../js/include/lib/chart/canvas_chart.js"></script>
+</head>
+<body>
+    <div id="image"></div>
+    <script>
+        var canvas = new LineChart(501, 501)
+            .attach("image")
+            .setDrawColor("#FFFF00")
+            .drawCircle(250, 250, 10)
+            .setDrawColor("#FF0000")
+            .drawCircle(300, 250, 10)
+            .drawLine(150, 150, 100, 100)
+            .drawGrid();
+    </script>
+</body>
+</html>
