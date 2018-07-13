@@ -4,22 +4,37 @@
     <meta charset="UTF-8">
     <title>active line</title>
     <style>
-        body {background: #333333}
+        body {background: #555555}
+        svg
+        {
+            padding: 60px;
+        }
         #image
         {
             width: 500px;
             height: 500px;
         }
+
+        .series:hover *
+        {
+            stroke-width: 3;
+        }
     </style>
     <script src="../js/include/lib/chart/svg_chart.js"></script>
 </head>
-<body height="500">
+<body>
     <div id="image"></div>
     <script>
-        LineChart()
+        LineChart([2, 6, 9, 3, 15, 6, 8, 12])
         .attach("image")
-        .drawGrid()
-        .draw([2, 6, 9, 3, 15, 6, 8, 12]);
+        .drawBackground()
+        .drawXGrid()
+        .drawMajorYGrid()
+        .drawXAxis()
+        .drawYAxis()
+        .drawXTicks()
+        .drawYTicks()
+        .draw();
     </script>
 </body>
 </html>
