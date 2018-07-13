@@ -865,33 +865,25 @@ function LineChart(data)
         var height_max = data.max();
         var height_factor = chart_height / height_max;
         var step_x = chart_width / data.length;
-        var start_x = step_x / 2;
 
         this.x_factor = data.length / chart_width;
         this.y_factor = height_max / chart_height;
 
         if(data instanceof Array)
         {
-            var x = start_x;
-            var point_x = x;
-            var point_y = chart_height + (height_factor / 2) - data[0] * height_factor;
-            var points = {};
+            var x = 0;
+            var points = [];
 
-            points[x] = chart_height + (height_factor / 2) - data[0] * height_factor;
-
-            for(var index = 1; index < data.length;)
+            for(var index = 0; index < data.length; index++)
             {
+                points.push([x, chart_height - data[index] * height_factor]);
                 x += step_x;
-                points[x] = chart_height + (height_factor / 2) - data[index] * height_factor;
-                point_x = x;
-                point_y = chart_height + (height_factor / 2) - data[index] * height_factor;
-                index++;
             }
 
             var p = "";
-            for(var k in points)
+            for(var i = 0; i < points.length; ++i)
             {
-                p += k + "," + points[k] + " ";
+                p += points[i][0] + "," + points[i][1] + " ";
             }
 
             this.path = p;
