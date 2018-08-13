@@ -3,104 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
-    <link rel="stylesheet" href="../css/style_code.css"/>
-    <link rel="stylesheet" href="../css/editor.css"/>
+    <script src="../js/html/html.js"></script>
 </head>
 <body>
     <body>
-        <script src="../js/include/lib/html/bright_style.js"></script>
-        <script src="../js/include/lib/html/dark_style.js"></script>
-        <script src="../js/include/lib/html/editor_style.js"></script>
-        <script src="../js/include/lib/html/html.js"></script>
+        <p class="asd">asd</p>
+        <p class="asd">asd</p>
+        <p class="asd">asd</p>
         <script>
-            function a(event)
-            {
-                event.dataTransfer.setData("data", this.innerHTML);
-            }
-            function b(event)
-            {
-                event.preventDefault();
-            }
-            function c(event)
-            {
-                event.preventDefault();
-                if(event.dataTransfer.files.length > 0)
-                {
-                    var reader = new FileReader();
-                    reader.onload = function(event)
-                    {
-                        console.log(event.target.result);
-                        text.text_area.addText(encode(event.target.result));
-                    };
-                    for(var i = 0; i < event.dataTransfer.files.length; i++)
-                    {
-                        var file = event.dataTransfer.files[i];
-                        console.log(i, file);
-                        reader.readAsText(file)
-                    }
-                }
-                else
-                {
-                    var data = event.dataTransfer.getData("data");
-                    console.log(data);
-                    event.target.innerHTML = data;
-                }
-            }
+            let box = new Box(ORIENTATION.VERTICAL)
+            .addWidget(new Widget("p").setInnerText("eins"))
+            .addWidget(new Box(ORIENTATION.HORIZONTAL)
+                       .addWidget(new Widget("p").setInnerText("eins"), 50)
+                       .addWidget(new Widget("p").setInnerText("zwei"), 0));
 
-            function encode(str)
-            {
-                var buf = [];
-                for (var i = str.length - 1; i >= 0; i--)
-                {
-                    buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
-                }
-                return buf.join('');
-            }
+            let grid = new Grid(5, 5)
+            .addWidget(new Widget("p").setInnerText("zwei"), 2, 2)
+            .addWidget(new Select("Se", [{"asd" : "test"}]), 2, 3);
 
-            function decode(str)
-            {
-                return str.replace(/&#(\d+);/g, function(match, dec)
-                {
-                    return String.fromCharCode(dec);
-                });
-            }
+            Document.append(box.get());
+            Document.append(grid.get());
+            Document.append(new Slider(ORIENTATION.VERTICAL, 0, 100, 1, 50).get());
+            Document.append(new Checkbox("test").get());
+            Document.append(new Radio("test").get());
 
-            function setStyle()
-            {
-                cascadeStyle(text_edit4, EDITOR_STYLE);
-            }
-
-            var doc = Document();
-
-            //DEFAULT_STYLE = EDITOR_STYLE;
-
-            var tab_widget = new TabWidget();
-            var text_edit1 = new TextEdit("1");
-            var text_edit2 = new TextEdit("2");
-            var text_edit3 = new TextEdit("3");
-            var text_edit4 = new TextEdit("4");
-
-            var bt_toggle = new Button("Toggle Style");
-
-            text_edit1.text_area.setDraggable(true);
-            text_edit1.text_area.element.ondragstart = a ;
-            text_edit1.text_area.element.ondragover = b;
-            text_edit1.text_area.element.ondrop = c;
-
-            text_edit4.append(bt_toggle);
-            bt_toggle.onClick(setStyle);
-
-            tab_widget.addTab("Edit1", text_edit1);
-            tab_widget.addTab("Edit2", text_edit2);
-            tab_widget.addTab("Edit3", text_edit3);
-            tab_widget.addTab("My File", text_edit4);
-
-            text_edit3.setWidgetStyle(EDITOR_STYLE);
-            cascadeStyle(text_edit2, EDITOR_STYLE);
-
-            //var text_edit = new TextEdit();
-
-            doc.append([tab_widget]);
         </script>
 </body>
 </html>
