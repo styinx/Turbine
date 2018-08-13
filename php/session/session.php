@@ -1,22 +1,4 @@
 <?php
-
-/**
- * The Session class controls the visit on a website. If the user opens the website a
- * session object is created. This session is valid until the page gets closed again.
- * After a login the session object can create a user object that holds information about
- * a user account. This object gets destroyed after the logout.
- */
-
- 	//require_once(dirname(__FILE__) . "/../db/database.php");
-
-	$USER_ACCESS = array	(
-								0	=> "Blocked",
-								10	=> "Guest",
-								20	=> "Member",
-								30	=> "",
-								100	=> "Administrator"
-							);
-
 	function start_session()
 	{
 		$success = session_start();
