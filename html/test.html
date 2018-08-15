@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
+    <script src="../js/util/util.js"></script>
     <script src="../js/html/html.js"></script>
+    <script src="../js/gui/gui.js"></script>
 </head>
 <body>
     <body>
-        <p class="asd">asd</p>
-        <p class="asd">asd</p>
-        <p class="asd">asd</p>
         <script>
-            let box = new Box(ORIENTATION.VERTICAL)
-            .addWidget(new Widget("p").setInnerText("eins"))
-            .addWidget(new Box(ORIENTATION.HORIZONTAL)
-                       .addWidget(new Widget("p").setInnerText("eins"), 50)
-                       .addWidget(new Widget("p").setInnerText("zwei"), 0));
+            let da = new DropArea("drop here");
+            let grid = new Grid(5, 5).addWidget(new Widget("p").setInnerText("zwei"), 2, 2)
+                                     .addWidget(new Select("Se", [{"asd": "test"}]), 2, 3)
+                                     .addWidget(new Slider(ORIENTATION.HORIZONTAL, 0, 100, 1, 50), 3, 1)
+                                     .addWidget(new ProgressBar(ORIENTATION.HORIZONTAL, 50), 3, 3)
+                                     .addWidget(new ProgressBar(ORIENTATION.VERTICAL, 75), 3, 4)
+                                     .addWidget(da, 4, 4)
+                                     .addWidget(new FileUpload(), 1, 1)
+                                     .addWidget(new Button("Click").onClick(d), 1, 2)
+                                     .addWidget(new Splitter(ORIENTATION.HORIZONTAL)
+                                                .addWidget(new Radio("asd"))
+                                                .addWidget(new Radio("dsa"))
+                                                .addWidget(new Radio("dsa"), 1)
+                                                .addWidget(new Radio("dsa"), 0), 4, 3);
 
-            let grid = new Grid(5, 5)
-            .addWidget(new Widget("p").setInnerText("zwei"), 2, 2)
-            .addWidget(new Select("Se", [{"asd" : "test"}]), 2, 3);
+            Document.append(new MainWidget().attach(grid).get());
 
-            Document.append(box.get());
-            Document.append(grid.get());
-            Document.append(new Slider(ORIENTATION.VERTICAL, 0, 100, 1, 50).get());
-            Document.append(new Checkbox("test").get());
-            Document.append(new Radio("test").get());
-
+            function d()
+            {
+                console.dir(da.content);
+            }
         </script>
 </body>
 </html>
