@@ -10,8 +10,11 @@
 <body>
     <body>
         <script>
-            let da = new DropArea("drop here");
+            let da = new FileDropArea("drop here");
             let grid = new Grid(6, 6).addWidget(new FileUpload(), 1, 1)
+                                     .addWidget(new DragDropArea(new Label("Drag&Drop me")
+                                                                 .setId("asd")), 1, 2)
+                                     .addWidget(new DragDropArea(), 1, 3)
                                      .addWidget(new Label("zwei"), 2, 2)
                                      .addWidget(new Select("Se", [{"asd": "test"}]), 2, 3)
                                      .addWidget(new Checkbox("Ads"), 2, 4)

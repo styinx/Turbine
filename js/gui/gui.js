@@ -89,7 +89,8 @@ class Widget
     {
         if(value === undefined && key instanceof Object)
         {
-            let obj_key = Object.keys(key).toString();
+            let obj_key = Object.keys(key)
+                                .toString();
             if(this.container.hasOwnProperty(obj_key))
             {
                 this.container[obj_key] = key[obj_key];
@@ -128,7 +129,8 @@ class Widget
     {
         if(value === undefined && key instanceof Object)
         {
-            let obj_key = Object.keys(key).toString();
+            let obj_key = Object.keys(key)
+                                .toString();
             if(this.container.style.hasOwnProperty(obj_key))
             {
                 this.container.style[obj_key] = key[obj_key];
@@ -546,7 +548,7 @@ class Group extends Widget
     }
 }
 
-class DropArea extends Widget
+class FileDropArea extends Widget
 {
     constructor(text)
     {
@@ -608,6 +610,136 @@ class DropArea extends Widget
         this.container.addEventListener("dragover", function(event)
         {
             event.preventDefault();
+        });
+    }
+}
+
+class DragArea extends Widget
+{
+    constructor(element = undefined)
+    {
+        super("div");
+
+        let that = this;
+        this.child = element;
+        this.container.draggable = true;
+        this.setStyles([
+                           {"min-width": "1em"},
+                           {"min-height": "1em"},
+                           {"border": "1px dashed black"},
+                       ]);
+
+        this.container.appendChild(element.get());
+
+        this.container.addEventListener("dragstart", function(event)
+        {
+            if(that.child !== undefined)
+            {
+                if(that.child instanceof Widget)
+                {
+                    event.dataTransfer.setData("data", that.child.container.id);
+                }
+                else
+                {
+                    event.dataTransfer.setData("data", that.child.id);
+                }
+            }
+        });
+    }
+}
+
+class DropArea extends Widget
+{
+    constructor()
+    {
+        super("div");
+        let that = this;
+
+        this.setStyles([
+                           {"min-width": "1em"},
+                           {"min-height": "1em"},
+                           {"border": "1px dashed black"},
+                       ]);
+
+        this.container.addEventListener("dragover", function(event)
+        {
+            event.preventDefault();
+        });
+
+        this.container.addEventListener("drop", function(event)
+        {
+            event.preventDefault();
+            let element = document.getElementById(event.dataTransfer.getData("data"));
+            if(element)
+            {
+                element.parentNode.innerHTML = "";
+                that.container.innerHTML = "";
+                that.container.appendChild(element);
+            }
+            else
+            {
+                console.warn("ID missing for drag element.");
+            }
+        });
+    }
+}
+
+class DragDropArea extends Widget
+{
+    constructor(element)
+    {
+        super("div");
+        let that = this;
+        this.child = element;
+        this.container.draggable = true;
+
+        this.setStyles([
+                           {"min-width": "1em"},
+                           {"min-height": "1em"},
+                           {"border": "1px dashed black"},
+                       ]);
+
+        if(element)
+        {
+            this.container.appendChild(element.get());
+        }
+
+        this.container.addEventListener("dragstart", function(event)
+        {
+            if(that.child !== undefined)
+            {
+                if(that.child instanceof Widget)
+                {
+                    event.dataTransfer.setData("data", that.child.container.id);
+                }
+                else
+                {
+                    event.dataTransfer.setData("data", that.child.id);
+                }
+            }
+        });
+
+        this.container.addEventListener("dragover", function(event)
+        {
+            event.preventDefault();
+        });
+
+        this.container.addEventListener("drop", function(event)
+        {
+            event.preventDefault();
+            let element = document.getElementById(event.dataTransfer.getData("data"));
+
+            if(element)
+            {
+                element.parentNode.innerHTML = "";
+                that.child = element;
+                that.container.innerHTML = "";
+                that.container.appendChild(element);
+            }
+            else
+            {
+                console.warn("ID missing for drag element.");
+            }
         });
     }
 }
