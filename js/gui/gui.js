@@ -3,6 +3,13 @@ let ORIENTATION = {
     "HORIZONTAL": 1
 };
 
+let DIRECTION = {
+    "TOP_DOWN":   0,
+    "BOTTOM_UP":  1,
+    "LEFT_RIGHT": 2,
+    "RIGHT_LEFT": 3
+};
+
 let ID = 0;
 
 /**
@@ -20,7 +27,7 @@ class Widget
         this.setTag(tag);
 
         this.setStyles([
-                           {"width": "100%"},
+                           {"width": "calc(100% - 2px)"},
                            {"border": "1px solid black"}
                        ]);
     }
@@ -39,15 +46,6 @@ class Widget
     setParent(parent)
     {
         this.parent = parent;
-        return this;
-    }
-
-    setAttribute(key, value)
-    {
-        if(this.container.hasOwnProperty(key))
-        {
-            this.container[key] = value;
-        }
         return this;
     }
 
@@ -87,11 +85,61 @@ class Widget
         return this;
     }
 
+    setAttribute(key, value)
+    {
+        if(value === undefined && key instanceof Object)
+        {
+            let obj_key = Object.keys(key).toString();
+            if(this.container.hasOwnProperty(obj_key))
+            {
+                this.container[obj_key] = key[obj_key];
+            }
+        }
+        else
+        {
+            if(this.container.hasOwnProperty(key))
+            {
+                this.container[key] = value;
+            }
+        }
+        return this;
+    }
+
+    setAttributes(styles)
+    {
+        if(styles instanceof Array)
+        {
+            for(let i = 0; i < styles.length; ++i)
+            {
+                this.setStyles(styles[i]);
+            }
+        }
+        else
+        {
+            for(let key in styles)
+            {
+                this.setStyle(key, styles[key]);
+            }
+        }
+        return this;
+    }
+
     setStyle(key, value)
     {
-        if(this.container.style.hasOwnProperty(key))
+        if(value === undefined && key instanceof Object)
         {
-            this.container.style[key] = value;
+            let obj_key = Object.keys(key).toString();
+            if(this.container.style.hasOwnProperty(obj_key))
+            {
+                this.container.style[obj_key] = key[obj_key];
+            }
+        }
+        else
+        {
+            if(this.container.style.hasOwnProperty(key))
+            {
+                this.container.style[key] = value;
+            }
         }
         return this;
     }
@@ -156,8 +204,13 @@ class Image extends Widget
 {
     constructor(path)
     {
-        super("img");
-        this.setAttribute("src", path);
+        super("div");
+        this.image = new Widget("img");
+        this.image.setAttribute("src", path);
+
+        this.image.setStyle({"border": "none"});
+
+        this.container.appendChild(this.image.get());
     }
 }
 
@@ -180,8 +233,14 @@ class Label extends Widget
 {
     constructor(text)
     {
-        super("p");
-        this.container.innerHTML = text;
+        super("div");
+
+        this.text = new Widget("p");
+        this.text.setInnerHTML(text);
+
+        this.text.setStyle({"border": "none"});
+
+        this.container.appendChild(this.text.get());
     }
 }
 
@@ -214,10 +273,16 @@ class ToggleButton extends Widget
 
 class TextInput extends Widget
 {
-    constructor()
+    constructor(placeholder = "")
     {
-        super("input");
-        this.container.type = "text";
+        super("div");
+
+        this.input = new Widget("input");
+
+        this.input.setAttribute("placeholder", placeholder);
+        this.input.container.type = "text";
+
+        this.container.appendChild(this.input.get());
     }
 }
 
@@ -225,9 +290,14 @@ class FileUpload extends Widget
 {
     constructor()
     {
-        super("input");
+        super("div");
 
-        this.container.type = "file";
+        this.input = new Widget("input");
+        this.input.container.type = "file";
+
+        this.input.setStyle({"border": "none"});
+
+        this.container.appendChild(this.input.get());
     }
 }
 
@@ -235,36 +305,42 @@ class Select extends Widget
 {
     constructor(title, values)
     {
-        super("select");
+        super("div");
+
+        this.select = new Widget("select");
 
         if(title)
         {
-            let caption = document.createElement("option");
-            caption.selected = true;
-            caption.disabled = true;
-            caption.innerHTML = title;
-            this.container.appendChild(caption);
+            let caption = new Widget("option");
+            caption.setAttribute("selected", true);
+            caption.setAttribute("disabled", true);
+            caption.setInnerHTML(title);
+            this.select.container.appendChild(caption.get());
         }
 
         for(let i = 0; i < values.length; ++i)
         {
-            let opt = document.createElement("option");
+            let opt = new Widget("option");
 
             if(typeof values[i] === "string")
             {
-                opt.value = values[i];
-                opt.innerHTML = values[i];
+                opt.setAttribute("value", values[i]);
+                opt.setInnerHTML(values[i]);
             }
             else
             {
                 let key = Object.keys(values[i])
                                 .toString();
-                opt.value = key;
-                opt.innerHTML = values[i][key];
+                opt.setAttribute("value", key);
+                opt.setInnerHTML(values[i][key]);
             }
 
-            this.container.appendChild(opt);
+            this.select.container.appendChild(opt.get());
         }
+
+        this.select.setStyle({"border": "none"});
+
+        this.container.appendChild(this.select.get());
     }
 }
 
@@ -274,14 +350,17 @@ class Checkbox extends Widget
     {
         super("div");
 
-        this.input = document.createElement("input");
-        this.label = document.createElement("label");
+        this.input = new Widget("input");
+        this.label = new Widget("label");
 
-        this.input.type = "checkbox";
-        this.label.innerHTML = text;
+        this.input.container.type = "checkbox";
+        this.label.setInnerHTML(text);
 
-        this.container.appendChild(this.input);
-        this.container.appendChild(this.label);
+        this.input.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
+        this.label.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
+
+        this.container.appendChild(this.input.get());
+        this.container.appendChild(this.label.get());
     }
 }
 
@@ -301,14 +380,17 @@ class Radio extends Widget
     {
         super("div");
 
-        this.input = document.createElement("input");
-        this.label = document.createElement("label");
+        this.input = new Widget("input");
+        this.label = new Widget("label");
 
-        this.input.type = "radio";
-        this.label.innerHTML = text;
+        this.input.container.type = "radio";
+        this.label.setInnerHTML(text);
 
-        this.container.appendChild(this.input);
-        this.container.appendChild(this.label);
+        this.input.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
+        this.label.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
+
+        this.container.appendChild(this.input.get());
+        this.container.appendChild(this.label.get());
     }
 }
 
@@ -330,8 +412,8 @@ class Slider extends Widget
 
         this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
 
-        this.input = document.createElement("input");
-        this.input.setAttribute("type", "range");
+        this.input = new Widget("input");
+        this.input.container.type = "range";
         this.input.setAttribute("orient", (orientation === ORIENTATION.HORIZONTAL) ? "horizontal" : "vertical");
         this.input.setAttribute("min", min);
         this.input.setAttribute("max", max);
@@ -340,22 +422,26 @@ class Slider extends Widget
 
         if(this.orientation === ORIENTATION.HORIZONTAL)
         {
-            this.input.style.marginLeft = "0";
-            this.input.style.marginRight = "0";
-            this.input.style.paddingLeft = "0";
-            this.input.style.paddingRight = "0";
-            this.input.style.width = "100%";
+            this.input.setStyles([
+                                     {"marginLeft": "0"},
+                                     {"marginRight": "0"},
+                                     {"paddingLeft": "0"},
+                                     {"paddingRight": "0"},
+                                     {"width": "100%"}
+                                 ]);
         }
         else if(this.orientation === ORIENTATION.VERTICAL)
         {
-            this.input.style.marginTop = "0";
-            this.input.style.marginBottom = "0";
-            this.input.style.paddingTop = "0";
-            this.input.style.paddingBottom = "0";
-            this.input.style.height = "100%";
+            this.input.setStyles([
+                                     {"marginTop": "0"},
+                                     {"marginBottom": "0"},
+                                     {"paddingTop": "0"},
+                                     {"paddingBottom": "0"},
+                                     {"height": "100%"}
+                                 ]);
         }
 
-        this.container.appendChild(this.input);
+        this.container.appendChild(this.input.get());
     }
 }
 
@@ -367,48 +453,65 @@ class ProgressBar extends Widget
 
         this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
         this.value = value;
-        this.text = new Label(value + "%");
+        this.text = new Widget("p");
         this.progress = new Widget("div");
 
-        this.text.setStyle("position", "absolute");
-        this.text.setStyle("padding", "0");
-        this.text.setStyle("margin", "0");
-        this.text.setStyle("top", "0");
-        this.text.setStyle("left", "0");
-        this.text.setStyle("border", "none");
-        this.text.setStyle("height", "100%");
-        this.text.setStyle("width", "100%");
-        this.text.setStyle("text-align", "center");
+        this.text.setInnerHTML(value + "%");
 
-        this.progress.setStyle("position", "absolute");
-        this.progress.setStyle("padding", "0");
-        this.progress.setStyle("margin", "0");
-        this.progress.setStyle("top", "0");
-        this.progress.setStyle("left", "0");
-        this.progress.setStyle("border", "none");
-        this.progress.setStyle("background", "#00CC00");
+        this.text.setStyles([
+                                {"position": "absolute"},
+                                {"padding": "0"},
+                                {"margin": "0"},
+                                {"top": "0"},
+                                {"left": "0"},
+                                {"border": "none"},
+                                {"height": "100%"},
+                                {"width": "100%"},
+                                {"text-align": "center"}
+                            ]);
 
-        this.setStyle("position", "relative");
+        this.progress.setStyles([
+                                    {"position": "absolute"},
+                                    {"left": "0"},
+                                    {"padding": "0"},
+                                    {"margin": "0"},
+                                    {"border": "none"},
+                                    {"background": "#00CC00"}
+                                ]);
+
+        this.setStyle({"position": "relative"});
 
         if(this.orientation === ORIENTATION.HORIZONTAL)
         {
-            this.setStyle("height", "1em");
-            this.setStyle("min-width", "100px");
-            this.progress.setStyle("width", value + "%");
-            this.progress.setStyle("height", "100%");
+            this.setStyles([
+                               {"height": "1em"},
+                               {"min-width": "100px"}
+                           ]);
+            this.progress.setStyles([
+                                        {"top": "0"},
+                                        {"width": value + "%"},
+                                        {"height": "100%"}
+                                    ]);
         }
         else if(this.orientation === ORIENTATION.VERTICAL)
         {
-            this.setStyle("width", "1em");
-            this.setStyle("min-height", "100px");
-            this.text.setStyle("writing-mode", "vertical-rl");
-            this.text.setStyle("text-orientation", "mixed");
-            this.progress.setStyle("width", "100%");
-            this.progress.setStyle("height", value + "%");
+            this.setStyles([
+                               {"width": "1em"},
+                               {"min-height": "100px"}
+                           ]);
+            this.text.setStyles([
+                                    {"writing-mode": "vertical-rl"},
+                                    {"text-orientation": "mixed"}
+                                ]);
+            this.progress.setStyles([
+                                        {"bottom": "0"},
+                                        {"width": "100%"},
+                                        {"height": value + "%"}
+                                    ]);
         }
 
-        this.container.appendChild(this.progress.get())
-        this.container.appendChild(this.text.get())
+        this.container.appendChild(this.progress.get());
+        this.container.appendChild(this.text.get());
     }
 }
 
@@ -451,12 +554,18 @@ class DropArea extends Widget
 
         let that = this;
         this.content = [];
-        this.setInnerText(text);
+        this.text = new Label(text);
 
         this.setStyles([
+                           {"width": "100%"},
+                           {"height": "100%"},
                            {"border": "1px dashed black"},
                            {"text-align": "center"}
                        ]);
+
+        this.text.setStyles([{"border": "none"}]);
+
+        this.container.appendChild(this.text.get());
 
         this.container.addEventListener("drop", function(event)
         {
@@ -509,6 +618,12 @@ class Layout extends Widget
     {
         super("table");
         this.children = null;
+
+        this.setStyles([
+                           {"padding": "0"},
+                           {"border-spacing": "0"},
+                           {"border-collapse": "separate"}
+                       ]);
     }
 }
 
@@ -550,6 +665,8 @@ class Splitter extends Layout
         super();
         this.children = [];
         this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+
+        this.setStyle({"border": "none"});
     }
 
     addWidget(element, index = -1)
@@ -742,6 +859,11 @@ class Grid extends Layout
                 row.appendChild(col);
             }
         }
+    }
+
+    getWidget(x, y)
+    {
+        return this.children[{x: y}];
     }
 
     addWidget(element, x, y)

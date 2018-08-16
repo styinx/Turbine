@@ -11,19 +11,20 @@
     <body>
         <script>
             let da = new DropArea("drop here");
-            let grid = new Grid(5, 5).addWidget(new Widget("p").setInnerText("zwei"), 2, 2)
+            let grid = new Grid(6, 6).addWidget(new FileUpload(), 1, 1)
+                                     .addWidget(new Label("zwei"), 2, 2)
                                      .addWidget(new Select("Se", [{"asd": "test"}]), 2, 3)
+                                     .addWidget(new Checkbox("Ads"), 2, 4)
                                      .addWidget(new Slider(ORIENTATION.HORIZONTAL, 0, 100, 1, 50), 3, 1)
                                      .addWidget(new ProgressBar(ORIENTATION.HORIZONTAL, 50), 3, 3)
                                      .addWidget(new ProgressBar(ORIENTATION.VERTICAL, 75), 3, 4)
                                      .addWidget(da, 4, 4)
-                                     .addWidget(new FileUpload(), 1, 1)
-                                     .addWidget(new Button("Click").onClick(d), 1, 2)
                                      .addWidget(new Splitter(ORIENTATION.HORIZONTAL)
                                                 .addWidget(new Radio("asd"))
                                                 .addWidget(new Radio("dsa"))
                                                 .addWidget(new Radio("dsa"), 1)
-                                                .addWidget(new Radio("dsa"), 0), 4, 3);
+                                                .addWidget(new Radio("dsa"), 0), 4, 3)
+                                     .addWidget(new Button("Show DropArea Content").onClick(d), 4, 5);
 
             Document.append(new MainWidget().attach(grid).get());
 
