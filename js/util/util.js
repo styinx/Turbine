@@ -94,4 +94,21 @@ class Util
         }
         return parameters;
     }
+
+    /**
+     *
+     * @param url
+     */
+    static buildURL(url)
+    {
+        let result = "?";
+        if(url instanceof Object)
+        {
+            for(let key in url)
+            {
+                result += key + "=" + url[key] + "&";
+            }
+        }
+        return result.substr(0, result.length - 1);
+    }
 }
