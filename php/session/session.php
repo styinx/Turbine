@@ -72,8 +72,6 @@
 		private $realname 		= "Guest";
 		private $registerDate 	= null;
 		private $access			= 10;
-		private $rankTitle 		= "";
-		private $rank 			= "";
 		private $logintime		= 0;
 		private $ontime			= 0;
 		private $browser		= null;
@@ -147,26 +145,6 @@
 		public function getAccess()
 		{
 			return $this->access;
-		}
-
-		public function setRankTitle($rankTitle)
-		{
-			$this->rankTitle = $rankTitle;
-		}
-
-		public function getRankTitle()
-		{
-			return $this->rankTitle;
-		}
-
-		public function setRank($rank)
-		{
-			$this->rank = $rank;
-		}
-
-		public function getRank()
-		{
-			return $this->rank;
 		}
 
 		/**
