@@ -1,6 +1,7 @@
 let STYLE = {
-    Widget:         {
+    Widget:                   {
         "background":       "",
+        "border":           "",
         "bottom":           "",
         "border":           "",
         "cursor":           "",
@@ -21,41 +22,44 @@ let STYLE = {
         "width":            "",
         "writing-mode":     ""
     },
-    MainWidget:     {
+    MainWidget:               {
         "border":   "none",
         "height":   "100%",
         "left":     "0",
         "margin":   "0",
-        "overflow": "scroll",
+        "overflow": "auto",
         "padding":  "0",
         "position": "absolute",
         "top":      "0",
         "width":    "100%"
     },
-    Image:          {
+    Image:                    {
         "border": ""
     },
-    Filler:         {
+    Filler:                   {
         "border": "none",
         "height": "1em",
         "width":  "1em",
         "margin": "auto"
     },
-    Label:          {
-        "border": "none",
+    Label:                    {
+        "border":     "none",
         "text-align": "center"
     },
-    Button:         {},
-    ToggleButton:   {},
-    TextInput:      {},
-    FileUpload:     {
+    Button:                   {
+        "height": "100%",
+        "width":  "100%"
+    },
+    ToggleButton:             {},
+    TextInput:                {},
+    FileUpload:               {
         "border": ""
     },
-    Select:         {},
-    Checkbox:       {},
-    Radio:          {},
-    Slider:         {},
-    ProgressBar:    {
+    Select:                   {},
+    Checkbox:                 {},
+    Radio:                    {},
+    Slider:                   {},
+    ProgressBar:              {
         "border":     "",
         "height":     "",
         "min-height": "",
@@ -64,35 +68,57 @@ let STYLE = {
         "top":        "",
         "width":      ""
     },
-    TabWidget:      {},
-    Group:          {},
-    FileDropArea:   {
+    TabWidget:                {},
+    Group:                    {},
+    FileDropArea:             {
         "border":     "1px dashed black",
         "height":     "100%",
         "text-align": "center",
         "width":      "100%"
     },
-    DragArea:       {
+    DragArea:                 {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    DropArea:       {
+    DropArea:                 {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    DragDropArea:   {
+    DragDropArea:             {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    Layout:         {
+    Layout:                   {
         "border-collapse": "separate",
         "border-spacing":  "0",
-        "padding":         "0"
+        "padding":         "0",
+        "height":          "100%",
+        "width":           "100%"
     },
-    SplitterHandle: {
+    Box:                      {
+        "height": "100%",
+        "width":  "100%"
+    },
+    VBox:                     {
+        "height": "100%",
+        "width":  "100%"
+    },
+    HBox:                     {
+        "height": "100%",
+        "width":  "100%"
+    },
+    Grid:                     {
+        "height":       "100%",
+        "table-layout": "fixed  ",
+        "width":        "100%"
+    },
+    Table: {
+
+    },
+    SplitterHandle:           {
         "background": "black",
         "cursor":     "col-resize",
         "height":     "100%",
@@ -100,28 +126,19 @@ let STYLE = {
         "width":      "0.1em"
     },
     SplitterHandleHORIZONTAL: {
-        "cursor":     "col-resize",
-        "height":     "100%",
-        "width":      "0.1em"
+        "cursor": "col-resize",
+        "height": "100%",
+        "width":  "0.1em"
     },
-    SplitterHandleVERTICAL: {
-        "cursor":     "row-resize",
-        "height":     "0.1em",
-        "width":      "100%"
+    SplitterHandleVERTICAL:   {
+        "cursor": "row-resize",
+        "height": "0.1em",
+        "width":  "100%"
     },
-    Splitter:       {
+    Splitter:                 {
         "border":     "none",
         "backgorund": "none",
-        "width":  "100%"
-    },
-    Box:            {
-        "height": "100%",
-        "width":  "100%"
-    },
-    Grid:           {
-        "height": "100%",
-        "table-layout": "fixed  ",
-        "width":  "100%"
+        "width":      "100%"
     }
 };
 
@@ -152,6 +169,7 @@ class Widget
         this.parent = null;
 
         this.setTag(tag);
+        this.addClassName(this.constructor.name.toUpperCase());
 
         this.setStyles([
                            {"width": "calc(100% - 2px)"},
@@ -162,6 +180,19 @@ class Widget
     get()
     {
         return this.container;
+    }
+
+    hide()
+    {
+        this.setStyle({"display": "none"});
+        return this;
+    }
+
+    show(type)
+    {
+        type = type || "block";
+        this.setStyle({"display": type});
+        return this;
     }
 
     setChild(child)
@@ -182,9 +213,21 @@ class Widget
         return this;
     }
 
+    addInnerText(text)
+    {
+        this.container.innerText += text;
+        return this;
+    }
+
     setInnerHTML(text)
     {
         this.container.innerHTML = text;
+        return this;
+    }
+
+    addInnerHTML(text)
+    {
+        this.container.innerHTML += text;
         return this;
     }
 
@@ -206,9 +249,36 @@ class Widget
         return this;
     }
 
+    addClassName(class_name)
+    {
+        if(this.container.className === "")
+        {
+            this.container.className += class_name;
+        }
+        return this;
+    }
+
     setName(name)
     {
         this.container.name = name;
+        return this;
+    }
+
+    addEventListener(event, callback)
+    {
+        this.container.addEventListener(event, callback);
+        return this;
+    }
+
+    onClick(callback)
+    {
+        this.addEventListener("click", callback);
+        return this;
+    }
+
+    onChange(callback)
+    {
+        this.addEventListener("change", callback);
         return this;
     }
 
@@ -295,10 +365,19 @@ class Widget
         }
         return this;
     }
+}
 
-    onClick(callback)
+class FileWidget extends Widget
+{
+    constructor()
     {
-        this.container.addEventListener("click", callback);
+        super("div");
+        this.files = [];
+    }
+
+    onFilesChanged(callback)
+    {
+        this.container.addEventListener("filesChanged", callback);
         return this;
     }
 }
@@ -356,7 +435,8 @@ class Label extends Widget
         this.text = new Widget("p");
         this.text.setInnerHTML(text);
 
-        this.text.setStyles(STYLE.Label);
+        this.text.setStyles({"border" : "none"});
+        this.setStyles(STYLE.Label);
 
         this.container.appendChild(this.text.get());
     }
@@ -368,6 +448,8 @@ class Button extends Widget
     {
         super("button");
         this.container.innerHTML = text;
+
+        this.setStyles(STYLE.Button);
     }
 }
 
@@ -404,18 +486,48 @@ class TextInput extends Widget
     }
 }
 
-class FileUpload extends Widget
+class FileUpload extends FileWidget
 {
-    constructor()
+    constructor(multiple = true, directory = false)
     {
         super("div");
 
+        let that = this;
+
         this.input = new Widget("input");
         this.input.container.type = "file";
+        this.input.container.multiple = multiple;
+        if(directory)
+        {
+            this.input.container.setAttribute("directory", "");
+            this.input.container.setAttribute("webkitdirectory", "");
+        }
 
         this.input.setStyles(STYLE.FileUpload);
 
         this.container.appendChild(this.input.get());
+
+        this.input.addEventListener("change", function(event)
+        {
+            for(let i = 0; i < that.input.container.files.length; ++i)
+            {
+                let reader = new FileReader();
+                let file = that.input.container.files[i];
+                let el = {};
+                el.name = file.name;
+                el.type = file.type;
+                el.size = file.size;
+                el.last_modified = file.lastModified;
+                reader.readAsBinaryString(file);
+                reader.onloadend = function()
+                {
+                    el.content = reader.result;
+                    that.container.dispatchEvent(new CustomEvent("filesChanged"));
+                };
+                that.files.push(el);
+            }
+            that.container.dispatchEvent(new CustomEvent("filesChanged"));
+        });
     }
 }
 
@@ -664,45 +776,46 @@ class Group extends Widget
     }
 }
 
-class FileDropArea extends Widget
+class FileDropArea extends FileWidget
 {
-    constructor(text)
+    constructor(text = "Drop Files here")
     {
         super("div");
 
         let that = this;
-        this.content = [];
         this.text = new Label(text);
 
-        this.setStyles([
-                           {"width": "100%"},
-                           {"height": "100%"},
-                           {"border": "1px dashed black"},
-                           {"text-align": "center"}
-                       ]);
-
         this.text.setStyles([{"border": "none"}]);
+        this.setStyles(STYLE.FileDropArea);
 
         this.container.appendChild(this.text.get());
 
         this.container.addEventListener("drop", function(event)
         {
             event.preventDefault();
-            that.content = [];
 
             if(event.dataTransfer.items)
             {
-                console.log(event.dataTransfer.items.length)
                 for(let i = 0; i < event.dataTransfer.items.length; i++)
                 {
-                    let el = {};
                     if(event.dataTransfer.items[i].kind === 'file')
                     {
+                        let reader = new FileReader();
                         let file = event.dataTransfer.items[i].getAsFile();
-                        el.type = event.dataTransfer.items[i].kind;
+                        let el = {};
+                        el.kind = event.dataTransfer.items[i].kind;
                         el.name = file.name;
+                        el.type = file.type;
+                        el.size = file.size;
+                        el.last_modified = file.lastModified;
+                        reader.readAsBinaryString(file);
+                        reader.onloadend = function()
+                        {
+                            el.content = reader.result;
+                            that.container.dispatchEvent(new CustomEvent("filesChanged"));
+                        };
+                        that.files.push(el);
                     }
-                    that.content.push(el);
                 }
             }
 
@@ -732,11 +845,7 @@ class DragArea extends Widget
         let that = this;
         this.child = element;
         this.container.draggable = true;
-        this.setStyles([
-                           {"min-width": "1em"},
-                           {"min-height": "1em"},
-                           {"border": "1px dashed black"},
-                       ]);
+        this.setStyles(STYLE.DragArea);
 
         this.container.appendChild(element.get());
 
@@ -764,11 +873,7 @@ class DropArea extends Widget
         super("div");
         let that = this;
 
-        this.setStyles([
-                           {"min-width": "1em"},
-                           {"min-height": "1em"},
-                           {"border": "1px dashed black"}
-                       ]);
+        this.setStyles(STYLE.DropArea);
 
         this.container.addEventListener("dragover", function(event)
         {
@@ -802,11 +907,7 @@ class DragDropArea extends Widget
         this.child = element;
         this.container.draggable = true;
 
-        this.setStyles([
-                           {"min-width": "1em"},
-                           {"min-height": "1em"},
-                           {"border": "1px dashed black"}
-                       ]);
+        this.setStyles(STYLE.DragDropArea);
 
         if(element)
         {
@@ -860,11 +961,171 @@ class Layout extends Widget
         super("table");
         this.children = null;
 
-        this.setStyles([
-                           {"padding": "0"},
-                           {"border-spacing": "0"},
-                           {"border-collapse": "separate"}
-                       ]);
+        this.setStyles(STYLE.Layout);
+    }
+}
+
+class Box extends Layout
+{
+    constructor(orientation)
+    {
+        super();
+        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+        this.children = [];
+    }
+
+    addWidget(element, index = -1)
+    {
+        if(element instanceof Widget)
+        {
+            if(this.orientation === ORIENTATION.HORIZONTAL)
+            {
+                if(this.container.childNodes.length === 0)
+                {
+                    this.container.appendChild(document.createElement("tr"));
+                }
+
+                let col = document.createElement("td");
+                col.appendChild(element.get());
+
+                if(index === -1)
+                {
+                    this.container.childNodes[0].appendChild(col);
+                }
+                else
+                {
+                    index = Math.min(this.container.childNodes[0].childNodes.length, index);
+                    this.container.childNodes[0].insertBefore(col, this.container.childNodes[0].childNodes[index]);
+                }
+            }
+            if(this.orientation === ORIENTATION.VERTICAL)
+            {
+                let row = document.createElement("tr");
+                let col = document.createElement("td");
+                row.appendChild(col);
+                col.appendChild(element.get());
+
+                if(index === -1)
+                {
+                    this.container.appendChild(row);
+                }
+                else
+                {
+                    index = Math.min(this.container.childNodes.length, index);
+                    this.container.insertBefore(row, this.container.childNodes[index]);
+                }
+            }
+
+            if(index === -1)
+            {
+                this.children.push(element);
+            }
+            else
+            {
+                this.children.splice(index, 0, element)
+            }
+        }
+        return this;
+    }
+}
+
+class VBox extends Box
+{
+    constructor()
+    {
+        super(ORIENTATION.VERTICAL);
+    }
+}
+
+class HBox extends Box
+{
+    constructor()
+    {
+        super(ORIENTATION.HORIZONTAL);
+    }
+}
+
+class Grid extends Layout
+{
+    constructor(cols, rows)
+    {
+        super();
+        this.children = [];
+        this.cols = cols;
+        this.rows = rows;
+
+        for(let y = 0; y < rows; ++y)
+        {
+            let row = document.createElement("tr");
+            this.container.appendChild(row);
+            for(let x = 0; x < cols; ++x)
+            {
+                let col = document.createElement("td");
+                col.appendChild(document.createElement("p"));
+                row.appendChild(col);
+            }
+        }
+
+        this.setStyles({"table-layout": "fixed"});
+    }
+
+    getWidget(x, y)
+    {
+        return this.children[{x: x, y: y}];
+    }
+
+    addWidget(element, x, y, w = 1, h = 1)
+    {
+        if(element instanceof Widget)
+        {
+            if(x < this.cols && y < this.rows)
+            {
+                for(let i = x; i < x + w; ++i)
+                {
+                    for(let j = y; j < y + h; ++j)
+                    {
+                        // console.log(x, y, i, j);
+                        // this.children[{x: i, y: j}] = null;
+                        // if(this.container.childNodes[i].childNodes[j])
+                        // {
+                        //     this.container.childNodes[i].childNodes[j].remove();
+                        // }
+                    }
+                }
+                // let col = document.createElement("td");
+                // col.setAttribute("colspan", w + "");
+                // col.setAttribute("rowspan", h + "");
+                // col.appendChild(element.get());
+                // this.container.childNodes[y].insertBefore(col, this.container.childNodes[y].childNodes[x]);
+                this.container.childNodes[y].childNodes[x].appendChild(element.get());
+
+                this.children[{x: x, y: y}] = element;
+            }
+        }
+        return this;
+    }
+}
+
+class Table extends Layout
+{
+    constructor()
+    {
+        super()
+    }
+
+    addRow(values)
+    {
+        let row = document.createElement("tr");
+
+        for(let i = 0; i < values.length; ++i)
+        {
+            let entry = document.createElement("td");
+            entry.innerHTML = values[i];
+            row.appendChild(entry);
+        }
+
+        this.container.appendChild(row);
+        return this;
     }
 }
 
@@ -1000,131 +1261,6 @@ class Splitter extends Layout
             else
             {
                 this.children.splice(index, 0, element)
-            }
-        }
-        return this;
-    }
-}
-
-class Box extends Layout
-{
-    constructor(orientation)
-    {
-        super();
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
-        this.children = [];
-    }
-
-    addWidget(element, index = -1)
-    {
-        if(element instanceof Widget)
-        {
-            if(this.orientation === ORIENTATION.HORIZONTAL)
-            {
-                if(this.container.childNodes.length === 0)
-                {
-                    this.container.appendChild(document.createElement("tr"));
-                }
-
-                let col = document.createElement("td");
-                col.appendChild(element.get());
-
-                if(index === -1)
-                {
-                    this.container.childNodes[0].appendChild(col);
-                }
-                else
-                {
-                    index = Math.min(this.container.childNodes[0].childNodes.length, index);
-                    this.container.childNodes[0].insertBefore(col, this.container.childNodes[0].childNodes[index]);
-                }
-            }
-            if(this.orientation === ORIENTATION.VERTICAL)
-            {
-                let row = document.createElement("tr");
-                let col = document.createElement("td");
-                row.appendChild(col);
-                col.appendChild(element.get());
-
-                if(index === -1)
-                {
-                    this.container.appendChild(row);
-                }
-                else
-                {
-                    index = Math.min(this.container.childNodes.length, index);
-                    this.container.insertBefore(row, this.container.childNodes[index]);
-                }
-            }
-
-            if(index === -1)
-            {
-                this.children.push(element);
-            }
-            else
-            {
-                this.children.splice(index, 0, element)
-            }
-        }
-        return this;
-    }
-}
-
-class Grid extends Layout
-{
-    constructor(cols, rows)
-    {
-        super();
-        this.children = [];
-        this.cols = cols;
-        this.rows = rows;
-
-        for(let y = 0; y < rows; ++y)
-        {
-            let row = document.createElement("tr");
-            this.container.appendChild(row);
-            for(let x = 0; x < cols; ++x)
-            {
-                let col = document.createElement("td");
-                col.appendChild(document.createElement("p"));
-                row.appendChild(col);
-            }
-        }
-
-        this.setStyles({"table-layout" : "fixed"});
-    }
-
-    getWidget(x, y)
-    {
-        return this.children[{x: x, y: y}];
-    }
-
-    addWidget(element, x, y, w = 1, h = 1)
-    {
-        if(element instanceof Widget)
-        {
-            if(x < this.cols && y < this.rows)
-            {
-                for(let i = x; i < x + w; ++i)
-                {
-                    for(let j = y; j < y + h; ++j)
-                    {
-                        // console.log(x, y, i, j);
-                        // this.children[{x: i, y: j}] = null;
-                        // if(this.container.childNodes[i].childNodes[j])
-                        // {
-                        //     this.container.childNodes[i].childNodes[j].remove();
-                        // }
-                    }
-                }
-                // let col = document.createElement("td");
-                // col.setAttribute("colspan", w + "");
-                // col.setAttribute("rowspan", h + "");
-                // col.appendChild(element.get());
-                // this.container.childNodes[y].insertBefore(col, this.container.childNodes[y].childNodes[x]);
-                this.container.childNodes[y].childNodes[x].appendChild(element.get());
-
-                this.children[{x: x, y: y}] = element;
             }
         }
         return this;
