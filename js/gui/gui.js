@@ -237,6 +237,12 @@ class Widget
         return this;
     }
 
+    setNSTag(ns, tag)
+    {
+        this.container = document.createElementNS(ns, tag);
+        return this;
+    }
+
     setId(id)
     {
         this.container.id = id;
