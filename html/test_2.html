@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="../js/util/util.js"></script>
+    <script src="../js/html/html.js"></script>
+    <script src="../js/gui/gui.js"></script>
+</head>
+<body>
+    <body>
+        <script>
+            let da = new FileDropArea("drop Files here");
+            let dac = new Label("");
+            let grid = new Grid(6, 6).addWidget(new FileUpload(), 1, 1)
+                                     .addWidget(new DragDropArea(new Label("Drag&Drop me")
+                                                                 .setId("asd")), 1, 2)
+                                     .addWidget(new DragDropArea(), 1, 3)
+                                     .addWidget(new Label("zwei"), 2, 2)
+                                     .addWidget(new Select("Se", [{"asd": "test"}]), 2, 3)
+                                     .addWidget(new Checkbox("Ads"), 2, 4)
+                                     .addWidget(new Slider(ORIENTATION.HORIZONTAL, 0, 100, 1, 50), 3, 1)
+                                     .addWidget(new ProgressBar(ORIENTATION.HORIZONTAL, 50), 3, 3)
+                                     .addWidget(new ProgressBar(ORIENTATION.VERTICAL, 75), 3, 4)
+                                     .addWidget(new Splitter(ORIENTATION.HORIZONTAL)
+                                                .addWidget(new Radio("eins"))
+                                                .addWidget(new Radio("zwei"))
+                                                .addWidget(new Radio("drei"), 1)
+                                                .addWidget(new Radio("vier"), 0), 4, 3)
+                                     .addWidget(new Button("Show DropArea Content").onClick(d), 3, 5)
+                                     .addWidget(da, 4, 4, 2, 1)
+                                     .addWidget(dac, 4, 5, 2, 1);
+
+            Document.append(new MainWidget().attach(grid).get());
+
+            function d()
+            {
+                dac.setInnerHTML(JSON.stringify(da.content));
+            }
+            // Document.append(new Splitter().addWidget(new Button("asd"))
+            //                               // .addWidget(new Button("123"))
+            //                               .addWidget(new Button("asd")).get());
+        </script>
+</body>
+</html>

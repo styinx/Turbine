@@ -1,9 +1,9 @@
 let STYLE = {
-    Widget:                   {
+    Widget:                         {
         "background":       "",
         "border":           "",
         "bottom":           "",
-        "border":           "",
+        "color":           "",
         "cursor":           "",
         "height":           "",
         "left":             "",
@@ -22,7 +22,7 @@ let STYLE = {
         "width":            "",
         "writing-mode":     ""
     },
-    MainWidget:               {
+    MainWidget:                     {
         "border":   "none",
         "height":   "100%",
         "left":     "0",
@@ -33,112 +33,183 @@ let STYLE = {
         "top":      "0",
         "width":    "100%"
     },
-    Image:                    {
+    Image:                          {
         "border": ""
     },
-    Filler:                   {
+    Filler:                         {
         "border": "none",
         "height": "1em",
         "width":  "1em",
         "margin": "auto"
     },
-    Label:                    {
+    Label:                          {
         "border":     "none",
         "text-align": "center"
     },
-    Button:                   {
+    Button:                         {
         "height": "100%",
         "width":  "100%"
     },
-    ToggleButton:             {},
-    TextInput:                {},
-    FileUpload:               {
+    ToggleButton:                   {},
+    TextInput:                      {},
+    FileUpload:                     {
         "border": ""
     },
-    Select:                   {},
-    Checkbox:                 {},
-    Radio:                    {},
-    Slider:                   {},
-    ProgressBar:              {
+    Select:                         {},
+    Checkbox:                       {},
+    Radio:                          {},
+    Slider:                         {
+        "marginLeft":    "0",
+        "marginRight":   "0",
+        "marginTop":     "0",
+        "marginBottom":  "0",
+        "paddingLeft":   "0",
+        "paddingRight":  "0",
+        "paddingTop":    "0",
+        "paddingBottom": "0",
+        "width":         "",
+        "height":        ""
+    },
+    SliderHORIZONTAL:               {
+        "marginLeft":   "0",
+        "marginRight":  "0",
+        "paddingLeft":  "0",
+        "paddingRight": "0",
+        "width":        "100%"
+    },
+    SliderVERTICAL:                 {
+        "marginTop":     "0",
+        "marginBottom":  "0",
+        "paddingTop":    "0",
+        "paddingBottom": "0",
+        "height":        "100%"
+    },
+    ProgressBar:                    {
+        "position":   "relative",
         "border":     "",
         "height":     "",
         "min-height": "",
         "min-width":  "",
-        "position":   "",
         "top":        "",
         "width":      ""
     },
-    TabWidget:                {},
-    Group:                    {},
-    FileDropArea:             {
+    ProgressBarText:                {
+        "position":   "absolute",
+        "padding":    "0",
+        "margin":     "0",
+        "top":        "0",
+        "left":       "0",
+        "border":     "none",
+        "height":     "100%",
+        "width":      "100%",
+        "text-align": "center"
+    },
+    ProgressBarIndicator:           {
+        "position":   "absolute",
+        "left":       "0",
+        "padding":    "0",
+        "margin":     "0",
+        "border":     "none",
+        "background": "#00CC00"
+    },
+    ProgressBarHORIZONTAL:          {
+        "position":   "relative",
+        "height":    "1em",
+        "min-width": "100px"
+    },
+    ProgressBarIndicatorHORIZONTAL: {
+        "top":        "0",
+        "width":      "",
+        "height":     "100%"
+    },
+    ProgressBarVERTICAL:            {
+        "position":   "relative",
+        "width":      "1em",
+        "min-height": "100px"
+    },
+    ProgressBarTextVERTICAL:        {
+        "writing-mode":     "vertical-rl",
+        "text-orientation": "mixed"
+    },
+    ProgressBarIndicatorVERTICAL:   {
+        "bottom":     "0",
+        "width":      "100%",
+        "height":     ""
+    },
+    TabWidget:                      {},
+    Group:                          {},
+    FileDropArea:                   {
         "border":     "1px dashed black",
         "height":     "100%",
         "text-align": "center",
         "width":      "100%"
     },
-    DragArea:                 {
+    DragArea:                       {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    DropArea:                 {
+    DropArea:                       {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    DragDropArea:             {
+    DragDropArea:                   {
         "border":     "1px dashed black",
         "min-height": "1em",
         "min-width":  "1em"
     },
-    Layout:                   {
+    Layout:                         {
         "border-collapse": "separate",
         "border-spacing":  "0",
         "padding":         "0",
         "height":          "100%",
         "width":           "100%"
     },
-    Box:                      {
+    Box:                            {
         "height": "100%",
         "width":  "100%"
     },
-    VBox:                     {
+    VBox:                           {
         "height": "100%",
         "width":  "100%"
     },
-    HBox:                     {
+    HBox:                           {
         "height": "100%",
         "width":  "100%"
     },
-    Grid:                     {
+    Grid:                           {
         "height":       "100%",
         "table-layout": "fixed  ",
         "width":        "100%"
     },
-    Table: {
-
-    },
-    SplitterHandle:           {
+    Table:                          {},
+    SplitterHandle:                 {
         "background": "black",
         "cursor":     "col-resize",
         "height":     "100%",
-        "margin":     "auto",
-        "width":      "0.1em"
+        "margin":     "0",
+        "padding":    "0",
+        "width":      "0.2em"
     },
-    SplitterHandleHORIZONTAL: {
+    SplitterHandleHORIZONTAL:       {
         "cursor": "col-resize",
         "height": "100%",
-        "width":  "0.1em"
+        "width":  "0.5em"
     },
-    SplitterHandleVERTICAL:   {
+    SplitterHandleVERTICAL:         {
         "cursor": "row-resize",
-        "height": "0.1em",
+        "height": "0.2em",
         "width":  "100%"
     },
-    Splitter:                 {
-        "border":     "none",
-        "backgorund": "none",
-        "width":      "100%"
+    Splitter:                       {
+        "border-spacing":  "0",
+        "border-collapse": "collapse",
+        "margin":          "0",
+        "padding":         "0",
+        "border":          "none",
+        "backgorund":      "none",
+        "width":           "100%"
     }
 };
 
@@ -171,10 +242,7 @@ class Widget
         this.setTag(tag);
         this.addClassName(this.constructor.name.toUpperCase());
 
-        this.setStyles([
-                           {"width": "calc(100% - 2px)"},
-                           {"border": "1px solid black"}
-                       ]);
+        this.setStyles(STYLE.Widget);
     }
 
     get()
@@ -373,12 +441,16 @@ class Widget
     }
 }
 
+/**
+ * Abstract class
+ */
 class FileWidget extends Widget
 {
     constructor()
     {
         super("div");
         this.files = [];
+        this.file_contents = {};
     }
 
     onFilesChanged(callback)
@@ -434,14 +506,13 @@ class Filler extends Widget
 
 class Label extends Widget
 {
-    constructor(text)
+    constructor(text = "")
     {
         super("div");
 
         this.text = new Widget("p");
         this.text.setInnerHTML(text);
 
-        this.text.setStyles({"border" : "none"});
         this.setStyles(STYLE.Label);
 
         this.container.appendChild(this.text.get());
@@ -450,7 +521,7 @@ class Label extends Widget
 
 class Button extends Widget
 {
-    constructor(text)
+    constructor(text = "")
     {
         super("button");
         this.container.innerHTML = text;
@@ -461,7 +532,7 @@ class Button extends Widget
 
 class ToggleButton extends Widget
 {
-    constructor(text)
+    constructor(text = "")
     {
         super("div");
 
@@ -469,8 +540,10 @@ class ToggleButton extends Widget
         this.label = new Widget("label");
 
         this.input.container.type = "checkbox";
-        this.input.container.style.display = "none";
+        this.input.hide();
         this.label.container.innerHTML = text;
+
+        this.setStyle(STYLE.ToggleButton);
 
         this.container.appendChild(this.input.get());
         this.container.appendChild(this.label.get());
@@ -487,6 +560,8 @@ class TextInput extends Widget
 
         this.input.setAttribute("placeholder", placeholder);
         this.input.container.type = "text";
+
+        this.setStyle(STYLE.TextInput);
 
         this.container.appendChild(this.input.get());
     }
@@ -519,18 +594,13 @@ class FileUpload extends FileWidget
             {
                 let reader = new FileReader();
                 let file = that.input.container.files[i];
-                let el = {};
-                el.name = file.name;
-                el.type = file.type;
-                el.size = file.size;
-                el.last_modified = file.lastModified;
                 reader.readAsBinaryString(file);
                 reader.onloadend = function()
                 {
-                    el.content = reader.result;
+                    that.file_contents[file.name] = reader.result;
                     that.container.dispatchEvent(new CustomEvent("filesChanged"));
                 };
-                that.files.push(el);
+                that.files.push(file);
             }
             that.container.dispatchEvent(new CustomEvent("filesChanged"));
         });
@@ -582,7 +652,7 @@ class Select extends Widget
 
 class Checkbox extends Widget
 {
-    constructor(text)
+    constructor(text = "")
     {
         super("div");
 
@@ -592,8 +662,7 @@ class Checkbox extends Widget
         this.input.container.type = "checkbox";
         this.label.setInnerHTML(text);
 
-        this.input.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
-        this.label.setStyles([{"width": "auto"}, {"border": "none"}, {"display": "inline-block"}]);
+        this.setStyle(STYLE.Checkbox);
 
         this.container.appendChild(this.input.get());
         this.container.appendChild(this.label.get());
@@ -646,7 +715,7 @@ class Slider extends Widget
     {
         super("div");
 
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+        this.orientation = (orientation === ORIENTATION.VERTICAL) ? orientation : ORIENTATION.HORIZONTAL;
 
         this.input = new Widget("input");
         this.input.container.type = "range";
@@ -658,23 +727,11 @@ class Slider extends Widget
 
         if(this.orientation === ORIENTATION.HORIZONTAL)
         {
-            this.input.setStyles([
-                                     {"marginLeft": "0"},
-                                     {"marginRight": "0"},
-                                     {"paddingLeft": "0"},
-                                     {"paddingRight": "0"},
-                                     {"width": "100%"}
-                                 ]);
+            this.input.setStyles(STYLE.SliderHORIZONTAL);
         }
         else if(this.orientation === ORIENTATION.VERTICAL)
         {
-            this.input.setStyles([
-                                     {"marginTop": "0"},
-                                     {"marginBottom": "0"},
-                                     {"paddingTop": "0"},
-                                     {"paddingBottom": "0"},
-                                     {"height": "100%"}
-                                 ]);
+            this.input.setStyles(STYLE.SliderVERTICAL);
         }
 
         this.container.appendChild(this.input.get());
@@ -687,67 +744,44 @@ class ProgressBar extends Widget
     {
         super("div");
 
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
-        this.value = value;
+        this.orientation = (orientation === ORIENTATION.VERTICAL) ? orientation : ORIENTATION.HORIZONTAL;
         this.text = new Widget("p");
-        this.progress = new Widget("div");
+        this.indicator = new Widget("div");
 
-        this.text.setInnerHTML(value + "%");
-
-        this.text.setStyles([
-                                {"position": "absolute"},
-                                {"padding": "0"},
-                                {"margin": "0"},
-                                {"top": "0"},
-                                {"left": "0"},
-                                {"border": "none"},
-                                {"height": "100%"},
-                                {"width": "100%"},
-                                {"text-align": "center"}
-                            ]);
-
-        this.progress.setStyles([
-                                    {"position": "absolute"},
-                                    {"left": "0"},
-                                    {"padding": "0"},
-                                    {"margin": "0"},
-                                    {"border": "none"},
-                                    {"background": "#00CC00"}
-                                ]);
-
-        this.setStyle({"position": "relative"});
+        this.text.setStyles(STYLE.ProgressBarText);
+        this.indicator.setStyles(STYLE.ProgressBarIndicator);
+        this.setStyle(STYLE.ProgressBar);
 
         if(this.orientation === ORIENTATION.HORIZONTAL)
         {
-            this.setStyles([
-                               {"height": "1em"},
-                               {"min-width": "100px"}
-                           ]);
-            this.progress.setStyles([
-                                        {"top": "0"},
-                                        {"width": value + "%"},
-                                        {"height": "100%"}
-                                    ]);
+            this.setStyles(STYLE.ProgressBarHORIZONTAL);
+            this.indicator.setStyles(STYLE.ProgressBarIndicatorHORIZONTAL);
         }
         else if(this.orientation === ORIENTATION.VERTICAL)
         {
-            this.setStyles([
-                               {"width": "1em"},
-                               {"min-height": "100px"}
-                           ]);
-            this.text.setStyles([
-                                    {"writing-mode": "vertical-rl"},
-                                    {"text-orientation": "mixed"}
-                                ]);
-            this.progress.setStyles([
-                                        {"bottom": "0"},
-                                        {"width": "100%"},
-                                        {"height": value + "%"}
-                                    ]);
+            this.setStyles(STYLE.ProgressBarVERTICAL);
+            this.text.setStyles(STYLE.ProgressBarTextVERTICAL);
+            this.indicator.setStyles(STYLE.ProgressBarIndicatorVERTICAL);
         }
 
-        this.container.appendChild(this.progress.get());
+        this.setValue(value);
+        this.container.appendChild(this.indicator.get());
         this.container.appendChild(this.text.get());
+    }
+
+    setValue(val)
+    {
+        this.value = val;
+        this.text.setInnerHTML(this.value + "%");
+        if(this.orientation === ORIENTATION.HORIZONTAL)
+        {
+            this.indicator.setStyle({"width": this.value + "%"});
+        }
+        else if(this.orientation === ORIENTATION.VERTICAL)
+        {
+            this.indicator.setStyle({"height": this.value + "%"});
+        }
+        return this;
     }
 }
 
@@ -808,19 +842,13 @@ class FileDropArea extends FileWidget
                     {
                         let reader = new FileReader();
                         let file = event.dataTransfer.items[i].getAsFile();
-                        let el = {};
-                        el.kind = event.dataTransfer.items[i].kind;
-                        el.name = file.name;
-                        el.type = file.type;
-                        el.size = file.size;
-                        el.last_modified = file.lastModified;
                         reader.readAsBinaryString(file);
                         reader.onloadend = function()
                         {
-                            el.content = reader.result;
+                            that.file_contents[file.name] = reader.result;
                             that.container.dispatchEvent(new CustomEvent("filesChanged"));
                         };
-                        that.files.push(el);
+                        that.files.push(file);
                     }
                 }
             }
@@ -976,7 +1004,7 @@ class Box extends Layout
     constructor(orientation)
     {
         super();
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+        this.orientation = (orientation === ORIENTATION.VERTICAL) ? orientation : ORIENTATION.HORIZONTAL;
         this.children = [];
     }
 
@@ -1141,7 +1169,8 @@ class SplitterHandle extends Widget
     {
         super("div");
 
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+        this.dragged = false;
+        this.orientation = (orientation === ORIENTATION.VERTICAL) ? orientation : ORIENTATION.HORIZONTAL;
 
         this.setStyles(STYLE.SplitterHandle);
         if(this.orientation === ORIENTATION.HORIZONTAL)
@@ -1156,13 +1185,21 @@ class SplitterHandle extends Widget
     }
 }
 
+function el_off(el)
+{
+    var rect       = el.getBoundingClientRect(),
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop  = window.pageYOffset || document.documentElement.scrollTop;
+    return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
+}
+
 class Splitter extends Layout
 {
     constructor(orientation)
     {
         super();
         this.children = [];
-        this.orientation = (orientation === ORIENTATION.HORIZONTAL) ? orientation : ORIENTATION.VERTICAL;
+        this.orientation = (orientation === ORIENTATION.VERTICAL) ? orientation : ORIENTATION.HORIZONTAL;
 
         this.setStyle(STYLE.Splitter);
     }
@@ -1171,6 +1208,17 @@ class Splitter extends Layout
     {
         if(element instanceof Widget)
         {
+            let offset = index;
+            if(index === -1 || index === this.children.length)
+            {
+                offset = this.children.length;
+                this.children.push(element);
+            }
+            else
+            {
+                this.children.splice(index, 0, element)
+            }
+
             if(this.orientation === ORIENTATION.HORIZONTAL)
             {
                 if(this.container.childNodes.length === 0)
@@ -1199,6 +1247,28 @@ class Splitter extends Layout
                     let pane_col = document.createElement("td");
                     let handle = new SplitterHandle(this.orientation);
                     pane_col.appendChild(handle.get());
+                    pane_col.style.width = STYLE.SplitterHandleHORIZONTAL.width;
+                    handle.addEventListener("mousedown", function()
+                    {
+                        handle.dragged = true;
+                    });
+                    document.addEventListener("mouseup", function()
+                    {
+                        handle.dragged = false;
+                    });
+                    let that = this;
+                    document.addEventListener("mousemove", function()
+                    {
+                        if(handle.dragged)
+                        {
+                            let left_el = pane_col.previousSibling;
+                            let right_el = pane_col.nextSibling;
+                            let left = el_off(handle.container).left;
+                            let val = Math.floor(event.clientX - left);
+                            left_el.style.width = (left + val) + "px";
+                            right_el.style.width = (left - val) + "px";
+                        }
+                    });
 
                     if(index === -1)
                     {
@@ -1241,6 +1311,26 @@ class Splitter extends Layout
                     let pane_row = document.createElement("td");
                     let handle = new SplitterHandle(this.orientation);
                     pane_row.appendChild(handle.get());
+                    handle.addEventListener("mousedown", function()
+                    {
+                        handle.dragged = true;
+                    });
+                    handle.addEventListener("mouseup", function()
+                    {
+                        handle.dragged = false;
+                    });
+                    handle.addEventListener("mouseout", function()
+                    {
+                        handle.dragged = false;
+                    });
+                    handle.addEventListener("mousemove", function()
+                    {
+                        if(handle.dragged)
+                        {
+                            console.log(pane_row.previousSibling);
+                            console.log(pane_row.nextSibling);
+                        }
+                    });
 
                     if(index === -1)
                     {
@@ -1258,15 +1348,6 @@ class Splitter extends Layout
                         }
                     }
                 }
-            }
-
-            if(index === -1)
-            {
-                this.children.push(element);
-            }
-            else
-            {
-                this.children.splice(index, 0, element)
             }
         }
         return this;

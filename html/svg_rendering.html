@@ -15,6 +15,12 @@
             height: 500px;
         }
 
+        #sparkline
+        {
+            width: 100px;
+            height: 20px;
+        }
+
         .series:hover *
         {
             stroke-width: 3;
@@ -24,6 +30,7 @@
 </head>
 <body>
     <div id="image"></div>
+    <div id="sparkline"></div>
     <script>
         let lc = new LineChart([2, 6, 9, 3, 15, 6, 8, 12])
         .attach("image")
@@ -34,6 +41,10 @@
         .drawYAxis()
         .drawXTicks()
         .drawYTicks()
+        .draw();
+
+        let sp = new LineChart([2, 6, 9, 3, 15, 6, 8, 12])
+        .attach("sparkline")
         .draw();
     </script>
 </body>
